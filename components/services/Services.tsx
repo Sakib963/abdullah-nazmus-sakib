@@ -1,23 +1,19 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { services } from "./serviceData";
 import ServiceCard from "./ServiceCard";
 import { SectionHeading, AnimatedBlob } from "@/components/ui";
 
 export default function Services() {
   const headingRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<Array<React.RefObject<HTMLDivElement | null>>>(
-    services.map(() => ({ current: null }))
-  );
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Heading reveal
       gsap.from(headingRef.current, {
         opacity: 0,
-        y: 30,
+        y: 28,
         duration: 0.7,
         ease: "power3.out",
         scrollTrigger: {
@@ -26,56 +22,47 @@ export default function Services() {
           toggleActions: "play none none none",
         },
       });
-
-      // Cards stagger
-      cardRefs.current.forEach((ref, i) => {
-        if (!ref.current) return;
-        gsap.from(ref.current, {
-          opacity: 0,
-          y: 44,
-          duration: 0.65,
-          delay: i * 0.13,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ref.current,
-            start: "top 88%",
-            toggleActions: "play none none none",
-          },
-        });
-      });
     });
-
     return () => ctx.revert();
   }, []);
 
   return (
     <section id="Services" className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden">
-      {/* Soft grid overlay */}
-      <div className="absolute inset-0 soft-grid opacity-30 pointer-events-none" />
-
-      <AnimatedBlob color="bg-primary" position="top-[10%] -right-[5%]" duration={10} delay={0.5} />
+      <AnimatedBlob color="bg-primary" size="w-[380px] h-[380px]" position="top-[5%] -right-[6%]" duration={11} delay={0.5} />
+      <AnimatedBlob color="bg-secondary" size="w-[250px] h-[250px]" position="bottom-[10%] -left-[4%]" duration={13} delay={2} />
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Heading */}
-        <div ref={headingRef} className="mb-16">
+        <div ref={headingRef} className="mb-14">
           <SectionHeading
-            pre="Core"
-            accent="Ecosystem"
-            accentClassName="text-primary"
-            subtitle="End-to-end capabilities — from pixel-perfect UI to cloud-native infrastructure."
+            pre="What I"
+            accent="Offer"
+            accentClassName="text-primary text-glow"
+            subtitle="Clear, professional services built around your goals — from a first feature to a full product launch."
             dividerColor="from-primary"
           />
         </div>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* 2×2 grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {services.map((service, i) => (
-            <ServiceCard
-              key={service.title}
-              {...service}
-              cardRef={cardRefs.current[i]}
-            />
+            <ServiceCard key={service.number} {...service} index={i} />
           ))}
+        </div>
+
+        {/* CTA strip */}
+        <div className="mt-10 glass-panel rounded-2xl border-white/5 px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <p className="text-white font-bold font-headline text-sm">Have a project in mind?</p>
+            <p className="text-on-surface-variant text-xs font-body mt-0.5">Let's talk — I'm currently open to new opportunities.</p>
+          </div>
+          <a
+            href="#Contact"
+            className="shrink-0 inline-flex items-center gap-2 px-6 py-2.5 bg-primary text-on-primary font-bold font-headline text-sm rounded-xl glow-primary hover:scale-105 transition-all"
+          >
+            <span className="material-symbols-outlined text-[18px]">send</span>
+            Get in Touch
+          </a>
         </div>
       </div>
     </section>

@@ -1,63 +1,80 @@
 "use client";
 
-import { useRef } from "react";
-import { motion } from "framer-motion";
+import { ScrollReveal } from "@/components/ui";
 import type { Service } from "./serviceData";
-import { TagPill } from "@/components/ui";
-
-interface ServiceCardProps extends Service {
-  cardRef: React.RefObject<HTMLDivElement | null>;
-}
 
 export default function ServiceCard({
+  number,
   icon,
   title,
   description,
-  tags,
+  deliverables,
+  stack,
   accentColor,
-  iconBg,
-  tagColor,
-  tagBorder,
   glowColor,
-  cardRef,
-}: ServiceCardProps) {
+  borderColor,
+  index,
+}: Service & { index: number }) {
   return (
-    <div
-      ref={cardRef}
-      className="glass-panel p-6 md:p-8 rounded-2xl glass-card-hover group relative overflow-hidden border-white/10"
-    >
-      {/* Large ghost icon background */}
-      <div className="absolute top-0 right-0 p-6 opacity-[0.06] group-hover:opacity-[0.12] transition-all duration-500 pointer-events-none select-none">
-        <span className="material-symbols-outlined text-7xl">{icon}</span>
-      </div>
+    <ScrollReveal direction="up" delay={index * 0.1} amount={0.1}>
+      <div className="glass-panel rounded-2xl border-white/5 glass-card-hover group relative overflow-hidden p-6 flex flex-col gap-5 h-full">
 
-      {/* Glow orb bottom */}
-      <div
-        className={`absolute -right-4 -bottom-4 w-24 h-24 ${glowColor} rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-500`}
-      />
-
-      {/* Icon box */}
-      <motion.div
-        whileHover={{ scale: 1.1, rotate: 5 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className={`w-12 h-12 ${iconBg} rounded-xl flex items-center justify-center mb-6 transition-all duration-300`}
-      >
-        <span className={`material-symbols-outlined ${accentColor} text-2xl`}>
-          {icon}
+        {/* Large watermark number */}
+        <span className={`absolute -top-3 -right-1 text-[80px] font-black font-headline leading-none ${accentColor} opacity-[0.06] select-none pointer-events-none`}>
+          {number}
         </span>
-      </motion.div>
 
-      <h3 className="text-lg font-bold text-white mb-3 font-headline">{title}</h3>
-      <p className="text-on-surface-variant text-sm leading-relaxed mb-5 font-body">
-        {description}
-      </p>
+        {/* Subtle glow blob on hover */}
+        <div className={`absolute -bottom-6 -right-6 w-28 h-28 ${glowColor} rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700`} />
 
-      {/* Tag pills */}
-      <div className="flex flex-wrap gap-2">
-        {tags.map((tag) => (
-          <TagPill key={tag} label={tag} colorClass={tagColor} borderClass={tagBorder} />
-        ))}
+        {/* Header */}
+        <div className="flex items-start gap-4">
+          <div className={`w-11 h-11 rounded-xl glass-panel ${borderColor} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+            <span className={`material-symbols-outlined text-[22px] ${accentColor}`}>{icon}</span>
+          </div>
+          <div>
+            <p className={`text-[10px] font-bold font-label uppercase tracking-widest ${accentColor} mb-0.5`}>
+              Service {number}
+            </p>
+            <h3 className="text-base font-bold text-white font-headline leading-tight">
+              {title}
+            </h3>
+          </div>
+        </div>
+
+        {/* Description */}
+        <p className="text-on-surface-variant text-xs leading-relaxed font-body">
+          {description}
+        </p>
+
+        {/* Divider */}
+        <div className="h-px bg-gradient-to-r from-white/8 to-transparent" />
+
+        {/* Deliverables */}
+        <div className="flex flex-col gap-2 flex-1">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/50 font-label mb-0.5">
+            What you get
+          </p>
+          {deliverables.map((item) => (
+            <div key={item} className="flex items-start gap-2">
+              <span className={`material-symbols-outlined text-[14px] ${accentColor} mt-0.5 shrink-0`}>check_circle</span>
+              <span className="text-xs text-on-surface-variant font-body leading-snug">{item}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Stack pills */}
+        <div className="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+          {stack.map((tech) => (
+            <span
+              key={tech}
+              className={`text-[9px] font-bold font-label uppercase tracking-wider px-2 py-0.5 rounded-full glass-panel ${borderColor} ${accentColor}`}
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
       </div>
-    </div>
+    </ScrollReveal>
   );
 }

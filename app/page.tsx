@@ -1,5 +1,6 @@
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
+import { Services } from "@/components/services";
 import { Technologies } from "@/components/technologies";
 import { Skills } from "@/components/skills";
 import { Projects } from "@/components/projects";
@@ -13,6 +14,7 @@ export default function Home() {
       <main className="relative z-10">
         <Hero />
         <About />
+        <Services />
         <Technologies />
         <Skills />
         <Projects />

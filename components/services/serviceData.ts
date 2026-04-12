@@ -1,50 +1,82 @@
 export interface Service {
+  number: string;
   icon: string;
   title: string;
   description: string;
-  tags: string[];
+  deliverables: string[];
+  stack: string[];
   accentColor: string;
-  iconBg: string;
-  tagColor: string;
-  tagBorder: string;
   glowColor: string;
+  borderColor: string;
 }
 
 export const services: Service[] = [
   {
+    number: "01",
     icon: "web",
-    title: "Front-end Zenith",
+    title: "Full Stack Web Development",
     description:
-      "Forging cinematic user interfaces with React and Next.js, where every frame is a testament to quality.",
-    tags: ["High-Fidelity UI", "Motion Systems"],
+      "End-to-end web application development — from database schema to pixel-perfect UI. I take a feature from requirements to production, handling every layer in between.",
+    deliverables: [
+      "Responsive, performant web apps",
+      "RESTful API integration",
+      "Authentication & role management",
+      "Deployment & CI/CD pipeline setup",
+    ],
+    stack: ["Angular", "Next.js", "Node.js", "PostgreSQL"],
     accentColor: "text-primary",
-    iconBg: "bg-primary/10 group-hover:bg-primary/20",
-    tagColor: "text-primary",
-    tagBorder: "border-primary/20",
-    glowColor: "bg-primary/15",
+    glowColor: "bg-primary",
+    borderColor: "border-primary/20",
   },
   {
+    number: "02",
     icon: "hub",
-    title: "Neural Back-end",
+    title: "API & Backend Engineering",
     description:
-      "Architecting secure, scalable server-side systems that serve as the indestructible spine of your application.",
-    tags: ["Node Logic", "Cloud Native"],
+      "Designing scalable, well-documented REST APIs built for reliability. Clean architecture, proper error handling, structured logging, and database efficiency from day one.",
+    deliverables: [
+      "REST API design & implementation",
+      "Database modelling & indexing",
+      "Authentication (JWT / session)",
+      "Unit & integration testing",
+    ],
+    stack: ["Node.js", "Hapi.js", "Express.js", "PostgreSQL", "TypeScript"],
     accentColor: "text-secondary",
-    iconBg: "bg-secondary/10 group-hover:bg-secondary/20",
-    tagColor: "text-secondary",
-    tagBorder: "border-secondary/20",
-    glowColor: "bg-secondary/15",
+    glowColor: "bg-secondary",
+    borderColor: "border-secondary/20",
   },
   {
-    icon: "design_services",
-    title: "UX Narrative",
+    number: "03",
+    icon: "desktop_windows",
+    title: "Frontend & SPA Development",
     description:
-      "Designing end-to-end journeys that guide users through a story, ensuring retention and emotional impact.",
-    tags: ["Behavioral UX", "Prototyping"],
+      "Building fast, accessible single-page applications with clean component architecture. Focus on state management, smooth UX, and maintainable code that scales with the team.",
+    deliverables: [
+      "Component-driven UI development",
+      "State management (Signals / RxJS)",
+      "Performance & bundle optimisation",
+      "Cross-browser compatibility",
+    ],
+    stack: ["Angular", "React", "Next.js", "TypeScript", "Tailwind CSS"],
     accentColor: "text-tertiary",
-    iconBg: "bg-tertiary/10 group-hover:bg-tertiary/20",
-    tagColor: "text-tertiary",
-    tagBorder: "border-tertiary/20",
-    glowColor: "bg-tertiary/15",
+    glowColor: "bg-tertiary",
+    borderColor: "border-tertiary/20",
+  },
+  {
+    number: "04",
+    icon: "search_insights",
+    title: "Code Review & Technical Consulting",
+    description:
+      "Independent review of existing codebases to identify bottlenecks, security gaps, and architectural weaknesses — with actionable recommendations and concrete fixes.",
+    deliverables: [
+      "Codebase audit & report",
+      "Performance bottleneck analysis",
+      "Refactoring recommendations",
+      "Architecture & tech stack advice",
+    ],
+    stack: ["Angular", "Node.js", "PostgreSQL", "TypeScript"],
+    accentColor: "text-primary",
+    glowColor: "bg-primary",
+    borderColor: "border-primary/20",
   },
 ];
