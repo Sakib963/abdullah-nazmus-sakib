@@ -5,6 +5,7 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { motion, AnimatePresence } from "framer-motion";
 import { techs, categories } from "./techData";
 import TechCard from "./TechCard";
+import { SectionHeading, SectionBlob } from "@/components/ui";
 
 export default function Technologies() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -67,20 +68,20 @@ export default function Technologies() {
     <section id="Technologies" className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden">
       {/* Grid pattern accent */}
       <div className="absolute inset-0 soft-grid opacity-40 pointer-events-none" />
-      <div className="section-bg-blob bg-secondary w-[350px] h-[350px] top-[5%] -left-[5%]" />
-      <div className="section-bg-blob bg-tertiary w-[250px] h-[250px] bottom-[10%] -right-[4%]" />
+      <SectionBlob color="bg-secondary" position="top-[5%] -left-[5%]" />
+      <SectionBlob color="bg-tertiary" size="w-[250px] h-[250px]" position="bottom-[10%] -right-[4%]" />
 
       <div className="max-w-6xl mx-auto relative z-10">
 
         {/* Heading */}
-        <div ref={headingRef} className="text-center mb-10">
-          <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-3 font-headline">
-            Tech <span className="text-secondary">Arsenal</span>
-          </h2>
-          <p className="text-on-surface-variant text-sm max-w-md mx-auto font-body">
-            Tools and technologies I wield to build performant, scalable systems.
-          </p>
-          <div className="w-16 h-0.5 bg-gradient-to-r from-secondary to-transparent mx-auto rounded-full mt-3" />
+        <div ref={headingRef} className="mb-10">
+          <SectionHeading
+            pre="Tech"
+            accent="Arsenal"
+            accentClassName="text-secondary"
+            subtitle="Tools and technologies I wield to build performant, scalable systems."
+            dividerColor="from-secondary"
+          />
         </div>
 
         {/* Category filter */}

@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import type { Service } from "./serviceData";
+import { TagPill } from "@/components/ui";
 
 interface ServiceCardProps extends Service {
   cardRef: React.RefObject<HTMLDivElement | null>;
@@ -54,12 +55,7 @@ export default function ServiceCard({
       {/* Tag pills */}
       <div className="flex flex-wrap gap-2">
         {tags.map((tag) => (
-          <span
-            key={tag}
-            className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 glass-panel rounded-full border ${tagBorder} ${tagColor}`}
-          >
-            {tag}
-          </span>
+          <TagPill key={tag} label={tag} colorClass={tagColor} borderClass={tagBorder} />
         ))}
       </div>
     </div>

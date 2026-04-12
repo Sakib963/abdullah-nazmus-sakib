@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { services } from "./serviceData";
 import ServiceCard from "./ServiceCard";
+import { SectionHeading, SectionBlob } from "@/components/ui";
 
 export default function Services() {
   const headingRef = useRef<HTMLDivElement>(null);
@@ -52,16 +53,17 @@ export default function Services() {
       {/* Soft grid overlay */}
       <div className="absolute inset-0 soft-grid opacity-30 pointer-events-none" />
 
-      {/* Background blob */}
-      <div className="section-bg-blob bg-primary w-[350px] h-[350px] top-[10%] -right-[5%]" />
+      <SectionBlob color="bg-primary" position="top-[10%] -right-[5%]" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Heading */}
-        <div ref={headingRef} className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-3 font-headline">
-            Core <span className="text-primary">Ecosystem</span>
-          </h2>
-          <div className="w-16 h-0.5 bg-gradient-to-r from-primary to-transparent mx-auto rounded-full" />
+        <div ref={headingRef} className="mb-16">
+          <SectionHeading
+            pre="Core"
+            accent="Ecosystem"
+            accentClassName="text-primary"
+            dividerColor="from-primary"
+          />
         </div>
 
         {/* Cards grid */}

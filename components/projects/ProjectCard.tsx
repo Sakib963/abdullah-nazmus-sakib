@@ -5,6 +5,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import type { Project } from "./projectData";
+import { TagPill } from "@/components/ui";
 
 export default function ProjectCard({
   label,
@@ -110,12 +111,7 @@ export default function ProjectCard({
           {/* Tags */}
           <div className="flex flex-wrap gap-1.5 mt-1">
             {tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-[10px] font-bold font-label uppercase tracking-wider px-2 py-0.5 glass-panel rounded-full border-white/10 text-on-surface-variant"
-              >
-                {tag}
-              </span>
+              <TagPill key={tag} label={tag} />
             ))}
           </div>
 

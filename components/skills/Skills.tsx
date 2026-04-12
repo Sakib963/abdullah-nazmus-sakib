@@ -5,6 +5,7 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { featuredSkills, skillGroups } from "./skillData";
 import SkillRadial from "./SkillRadial";
 import SkillBar from "./SkillBar";
+import { SectionHeading, GlassCard, SectionBlob } from "@/components/ui";
 
 const accentMap = ["text-primary", "text-secondary", "text-tertiary"];
 
@@ -32,24 +33,24 @@ export default function Skills() {
 
   return (
     <section id="Skills" className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden">
-      <div className="section-bg-blob bg-primary w-[300px] h-[300px] top-[5%] -right-[4%]" />
-      <div className="section-bg-blob bg-tertiary w-[250px] h-[250px] bottom-[10%] -left-[4%]" />
+      <SectionBlob color="bg-primary" size="w-[300px] h-[300px]" position="top-[5%] -right-[4%]" />
+      <SectionBlob color="bg-tertiary" size="w-[250px] h-[250px]" position="bottom-[10%] -left-[4%]" />
 
       <div className="max-w-6xl mx-auto relative z-10 space-y-14">
 
         {/* Heading */}
-        <div ref={headingRef} className="text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-3 font-headline">
-            Skill <span className="text-tertiary">Matrix</span>
-          </h2>
-          <p className="text-on-surface-variant text-sm max-w-md mx-auto font-body">
-            Proficiency across the full stack — from pixel-perfect UI to cloud infrastructure.
-          </p>
-          <div className="w-16 h-0.5 bg-gradient-to-r from-tertiary to-transparent mx-auto rounded-full mt-3" />
+        <div ref={headingRef}>
+          <SectionHeading
+            pre="Skill"
+            accent="Matrix"
+            accentClassName="text-tertiary"
+            subtitle="Proficiency across the full stack — from pixel-perfect UI to cloud infrastructure."
+            dividerColor="from-tertiary"
+          />
         </div>
 
         {/* Featured radial indicators */}
-        <div className="glass-panel rounded-2xl p-6 md:p-8 border-white/5">
+        <GlassCard>
           <p className="text-[11px] uppercase tracking-widest text-on-surface-variant font-label mb-6 text-center">
             Core Proficiencies
           </p>
@@ -61,12 +62,12 @@ export default function Skills() {
               <SkillRadial key={skill.name} {...skill} index={i} />
             ))}
           </div>
-        </div>
+        </GlassCard>
 
         {/* Skill bar groups */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {skillGroups.map((group, gi) => (
-            <div key={group.category} className="glass-panel rounded-2xl p-6 border-white/5 space-y-4">
+            <GlassCard key={group.category} padding="p-6" className="space-y-4">
               {/* Group header */}
               <div className="flex items-center gap-2 mb-4">
                 <div className={`w-7 h-7 rounded-lg glass-panel flex items-center justify-center border-white/10`}>
@@ -91,7 +92,7 @@ export default function Skills() {
                   />
                 ))}
               </div>
-            </div>
+            </GlassCard>
           ))}
         </div>
 
