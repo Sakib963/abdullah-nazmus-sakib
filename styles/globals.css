@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: #c7b9f5;
+    --secondary: #c9e8ee;
+    --tertiary: #f4e2ff;
+    --background: #0f0c1c;
+    --surface: #0f0c1c;
+    --on-surface: #ece5fc;
+    --on-surface-variant: #aea8be;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-inter), "Inter", sans-serif;
+    cursor: default;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  .headline {
+    font-family: var(--font-space-grotesk), "Space Grotesk", sans-serif;
+  }
+
+  ::selection {
+    background-color: rgba(199, 185, 245, 0.3);
+  }
+}
+
+@layer components {
+  /* Glassmorphism system */
+  .glass-panel {
+    @apply bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+  }
+
+  .glass-card-hover {
+    @apply transition-all duration-500 hover:bg-white/[0.07] hover:border-white/[0.15] hover:shadow-[0_20px_50px_rgba(199,185,245,0.15)];
+  }
+
+  /* Glow effects */
+  .text-glow {
+    text-shadow: 0 0 15px rgba(199, 185, 245, 0.4);
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 40px rgba(199, 185, 245, 0.4);
+  }
+
+  .glow-primary-hover:hover {
+    box-shadow: 0 0 60px rgba(199, 185, 245, 0.6);
+  }
+
+  /* Background effects */
+  .ethereal-glow-bg {
+    background: radial-gradient(
+      600px circle at var(--x) var(--y),
+      rgba(199, 185, 245, 0.05),
+      transparent 40%
+    );
+  }
+
+  .section-bg-blob {
+    @apply absolute pointer-events-none opacity-20 blur-[100px] z-0;
+  }
+
+  /* Soft grid background */
+  .soft-grid {
+    background-image: linear-gradient(
+        to right,
+        rgba(199, 185, 245, 0.03) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        rgba(199, 185, 245, 0.03) 1px,
+        transparent 1px
+      );
+    background-size: 60px 60px;
+  }
+}
