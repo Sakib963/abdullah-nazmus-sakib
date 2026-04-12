@@ -56,6 +56,7 @@ export default function HeroImage() {
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6k6vANu0JWFMRdFp0B1fWKyvNblOmS9hRzVpUV3ijXL0rD6w3pF9Xoh0oyz0KmJnZX4wBm7nLolgrYixJ8UA-HSm2XnZExEflGZN9ZB7oZjQl5F2AsZkAO3X1yXL_Yred_O1E9ktTQdqSGQEtWQMu-s-KpqGoPRwbJVPnbWlV2jfKPnOnd3xsnTGN89Wh_skhC7HPAhTeiRXMiplzbkAtoTlt4y4jQ5FiswOq5NBCQluKF_xN0uHKSVjd3Ln4P3DZYwq3nFFUnsg-"
             alt="Abdullah Sakib"
             fill
+            sizes="(max-width: 768px) 160px, 220px"
             className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
             priority
           />
