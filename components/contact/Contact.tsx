@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import ContactForm from "./ContactForm";
+import { AnimatedBlob } from "@/components/ui";
 
 export default function Contact() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -28,8 +29,8 @@ export default function Contact() {
 
   return (
     <section id="Contact" ref={sectionRef} className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden">
-      <div className="section-bg-blob bg-primary w-[350px] h-[350px] -top-16 -right-16" />
-      <div className="section-bg-blob bg-secondary w-[200px] h-[200px] bottom-[5%] -left-[4%]" />
+      <AnimatedBlob color="bg-primary" size="w-[350px] h-[350px]" position="-top-16 -right-16" duration={10} />
+      <AnimatedBlob color="bg-secondary" size="w-[200px] h-[200px]" position="bottom-[5%] -left-[4%]" duration={8} delay={1} />
 
       <div className="max-w-3xl mx-auto relative z-10">
         <div

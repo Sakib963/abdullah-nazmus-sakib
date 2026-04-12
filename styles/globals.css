@@ -3,86 +3,112 @@
 @tailwind utilities;
 
 @layer base {
+  /* ─── Light mode (default) ─────────────────────────── */
   :root {
-    --primary: #c7b9f5;
-    --secondary: #c9e8ee;
-    --tertiary: #f4e2ff;
-    --background: #0f0c1c;
-    --surface: #0f0c1c;
-    --on-surface: #ece5fc;
-    --on-surface-variant: #aea8be;
+    /* Space-separated RGB for Tailwind opacity modifier support */
+    --color-background:        242 234 224;   /* #F2EAE0 */
+    --color-surface:           242 234 224;
+    --color-primary:           155 142 199;   /* #9B8EC7 */
+    --color-secondary:         180 211 217;   /* #B4D3D9 */
+    --color-tertiary:          189 166 206;   /* #BDA6CE */
+    --color-on-surface:        26  22  37;    /* #1a1625 */
+    --color-on-surface-variant:90  80  112;   /* #5a5070 */
+
+    /* Glass panel variables */
+    --glass-bg:     rgba(255, 255, 255, 0.5);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.12);
+    --glass-hover-bg:     rgba(255, 255, 255, 0.65);
+    --glass-hover-border: rgba(0, 0, 0, 0.14);
+
+    /* Selection */
+    --selection-bg: rgba(155, 142, 199, 0.25);
+  }
+
+  /* ─── Dark mode ──────────────────────────────────────── */
+  .dark {
+    --color-background:        15  12  28;    /* #0f0c1c */
+    --color-surface:           15  12  28;
+    --color-primary:           199 185 245;   /* #c7b9f5 */
+    --color-secondary:         201 232 238;   /* #c9e8ee */
+    --color-tertiary:          244 226 255;   /* #f4e2ff */
+    --color-on-surface:        236 229 252;   /* #ece5fc */
+    --color-on-surface-variant:174 168 190;   /* #aea8be */
+
+    --glass-bg:     rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glass-hover-bg:     rgba(255, 255, 255, 0.07);
+    --glass-hover-border: rgba(255, 255, 255, 0.15);
+
+    --selection-bg: rgba(199, 185, 245, 0.3);
   }
 
   html {
     scroll-behavior: smooth;
+    /* Smooth theme transition */
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   body {
     font-family: var(--font-inter), "Inter", sans-serif;
     cursor: default;
     overflow-x: hidden;
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-on-surface));
   }
 
-  h1,
-  h2,
-  h3,
-  .headline {
+  h1, h2, h3, .headline {
     font-family: var(--font-space-grotesk), "Space Grotesk", sans-serif;
   }
 
   ::selection {
-    background-color: rgba(199, 185, 245, 0.3);
+    background-color: var(--selection-bg);
   }
 }
 
 @layer components {
-  /* Glassmorphism system */
+  /* ─── Glassmorphism system ───────────────────────────── */
   .glass-panel {
-    @apply bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
   }
 
   .glass-card-hover {
-    @apply transition-all duration-500 hover:bg-white/[0.07] hover:border-white/[0.15] hover:shadow-[0_20px_50px_rgba(199,185,245,0.15)];
+    @apply transition-all duration-500;
+  }
+  .glass-card-hover:hover {
+    background: var(--glass-hover-bg);
+    border-color: var(--glass-hover-border);
+    box-shadow: 0 20px 50px rgba(var(--color-primary) / 0.15);
   }
 
-  /* Glow effects */
+  /* ─── Glow effects ───────────────────────────────────── */
   .text-glow {
-    text-shadow: 0 0 15px rgba(199, 185, 245, 0.4);
+    text-shadow: 0 0 15px rgba(var(--color-primary) / 0.5);
   }
 
   .glow-primary {
-    box-shadow: 0 0 40px rgba(199, 185, 245, 0.4);
+    box-shadow: 0 0 40px rgba(var(--color-primary) / 0.4);
   }
 
   .glow-primary-hover:hover {
-    box-shadow: 0 0 60px rgba(199, 185, 245, 0.6);
+    box-shadow: 0 0 60px rgba(var(--color-primary) / 0.6);
   }
 
-  /* Background effects */
-  .ethereal-glow-bg {
-    background: radial-gradient(
-      600px circle at var(--x) var(--y),
-      rgba(199, 185, 245, 0.05),
-      transparent 40%
-    );
-  }
-
+  /* ─── Background helpers ─────────────────────────────── */
   .section-bg-blob {
     @apply absolute pointer-events-none opacity-20 blur-[100px] z-0;
   }
 
-  /* Soft grid background */
+  /* ─── Soft grid ──────────────────────────────────────── */
   .soft-grid {
-    background-image: linear-gradient(
-        to right,
-        rgba(199, 185, 245, 0.03) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        rgba(199, 185, 245, 0.03) 1px,
-        transparent 1px
-      );
+    background-image:
+      linear-gradient(to right, rgba(var(--color-primary) / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(var(--color-primary) / 0.04) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 }

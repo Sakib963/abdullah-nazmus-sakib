@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { services } from "./serviceData";
 import ServiceCard from "./ServiceCard";
-import { SectionHeading, SectionBlob } from "@/components/ui";
+import { SectionHeading, AnimatedBlob } from "@/components/ui";
 
 export default function Services() {
   const headingRef = useRef<HTMLDivElement>(null);
@@ -53,7 +53,7 @@ export default function Services() {
       {/* Soft grid overlay */}
       <div className="absolute inset-0 soft-grid opacity-30 pointer-events-none" />
 
-      <SectionBlob color="bg-primary" position="top-[10%] -right-[5%]" />
+      <AnimatedBlob color="bg-primary" position="top-[10%] -right-[5%]" duration={10} delay={0.5} />
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Heading */}

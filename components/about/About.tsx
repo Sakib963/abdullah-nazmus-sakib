@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import StatCard from "./StatCard";
+import { AnimatedBlob } from "@/components/ui";
 
 const stats = [
   {
@@ -65,9 +66,8 @@ export default function About() {
 
   return (
     <section id="About" className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden">
-      {/* Background blobs */}
-      <div className="section-bg-blob bg-secondary w-[400px] h-[400px] bottom-0 -right-[8%]" />
-      <div className="section-bg-blob bg-primary w-[250px] h-[250px] top-[20%] -left-[5%]" />
+      <AnimatedBlob color="bg-secondary" size="w-[400px] h-[400px]" position="bottom-0 -right-[8%]" duration={11} />
+      <AnimatedBlob color="bg-primary" size="w-[250px] h-[250px]" position="top-[20%] -left-[5%]" duration={8} delay={1.5} />
 
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="flex flex-col gap-14">

@@ -1,3 +1,5 @@
+import { ScrollReveal } from "@/components/ui";
+
 const socialLinks = [
   { label: "LinkedIn", href: "#" },
   { label: "GitHub",   href: "#" },
@@ -7,6 +9,7 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="py-10 border-t border-white/5 relative overflow-hidden">
+      <ScrollReveal direction="up" amount={0.3}>
       <div className="max-w-6xl mx-auto px-6 md:px-16 lg:px-24 flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
 
         {/* Logo + tagline */}
@@ -56,6 +59,7 @@ export default function Footer() {
         </div>
 
       </div>
+      </ScrollReveal>
     </footer>
   );
 }

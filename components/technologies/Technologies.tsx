@@ -5,7 +5,7 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { motion, AnimatePresence } from "framer-motion";
 import { techs, categories } from "./techData";
 import TechCard from "./TechCard";
-import { SectionHeading, SectionBlob } from "@/components/ui";
+import { SectionHeading, AnimatedBlob } from "@/components/ui";
 
 export default function Technologies() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -68,8 +68,8 @@ export default function Technologies() {
     <section id="Technologies" className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden">
       {/* Grid pattern accent */}
       <div className="absolute inset-0 soft-grid opacity-40 pointer-events-none" />
-      <SectionBlob color="bg-secondary" position="top-[5%] -left-[5%]" />
-      <SectionBlob color="bg-tertiary" size="w-[250px] h-[250px]" position="bottom-[10%] -right-[4%]" />
+      <AnimatedBlob color="bg-secondary" position="top-[5%] -left-[5%]" duration={13} />
+      <AnimatedBlob color="bg-tertiary" size="w-[250px] h-[250px]" position="bottom-[10%] -right-[4%]" duration={9} delay={3} />
 
       <div className="max-w-6xl mx-auto relative z-10">
 

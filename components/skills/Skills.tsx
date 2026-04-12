@@ -5,7 +5,7 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { featuredSkills, skillGroups } from "./skillData";
 import SkillRadial from "./SkillRadial";
 import SkillBar from "./SkillBar";
-import { SectionHeading, GlassCard, SectionBlob } from "@/components/ui";
+import { SectionHeading, GlassCard, AnimatedBlob } from "@/components/ui";
 
 const accentMap = ["text-primary", "text-secondary", "text-tertiary"];
 
@@ -33,8 +33,8 @@ export default function Skills() {
 
   return (
     <section id="Skills" className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden">
-      <SectionBlob color="bg-primary" size="w-[300px] h-[300px]" position="top-[5%] -right-[4%]" />
-      <SectionBlob color="bg-tertiary" size="w-[250px] h-[250px]" position="bottom-[10%] -left-[4%]" />
+      <AnimatedBlob color="bg-primary" size="w-[300px] h-[300px]" position="top-[5%] -right-[4%]" duration={11} delay={1} />
+      <AnimatedBlob color="bg-tertiary" size="w-[250px] h-[250px]" position="bottom-[10%] -left-[4%]" duration={8} delay={2} />
 
       <div className="max-w-6xl mx-auto relative z-10 space-y-14">
 

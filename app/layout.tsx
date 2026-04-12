@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
+import Script from "next/script";
 import "@/styles/globals.css";
 import NavWrapper from "@/components/navbar/NavWrapper";
 import SmoothScroll from "@/components/ui/SmoothScroll";
@@ -34,7 +35,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${spaceGrotesk.variable} ${inter.variable}`}
+      className={`${spaceGrotesk.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -44,6 +45,10 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background text-on-surface selection:bg-primary/30 min-h-screen overflow-x-hidden soft-grid antialiased">
+        {/* Runs before hydration — prevents flash of wrong theme */}
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`(function(){try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(t===null&&d)){document.documentElement.classList.add('dark')}else{document.documentElement.classList.remove('dark')}}catch(e){}})();`}
+        </Script>
         <SmoothScroll>
           <NavWrapper />
           {children}

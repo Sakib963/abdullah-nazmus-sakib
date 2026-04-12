@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { projects } from "./projectData";
 import ProjectCard from "./ProjectCard";
-import { SectionBlob } from "@/components/ui";
+import { AnimatedBlob } from "@/components/ui";
 
 export default function Projects() {
   const headingRef = useRef<HTMLDivElement>(null);
@@ -29,8 +29,8 @@ export default function Projects() {
 
   return (
     <section id="Projects" className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden">
-      <SectionBlob color="bg-tertiary" size="w-[400px] h-[400px]" position="top-[15%] -left-[8%]" />
-      <SectionBlob color="bg-primary" size="w-[250px] h-[250px]" position="bottom-[10%] -right-[4%]" />
+      <AnimatedBlob color="bg-tertiary" size="w-[400px] h-[400px]" position="top-[15%] -left-[8%]" duration={14} />
+      <AnimatedBlob color="bg-primary" size="w-[250px] h-[250px]" position="bottom-[10%] -right-[4%]" duration={9} delay={2.5} />
 
       <div className="max-w-6xl mx-auto relative z-10">
 
