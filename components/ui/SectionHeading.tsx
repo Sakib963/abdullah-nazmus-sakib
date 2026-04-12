@@ -27,7 +27,7 @@ export default function SectionHeading({
         {post && <> {post}</>}
       </h2>
       {subtitle && (
-        <p className="text-on-surface-variant text-sm max-w-md mx-auto font-body mt-2">
+        <p className={`text-on-surface-variant text-sm max-w-md font-body mt-2 ${centered ? "mx-auto" : ""}`}>
           {subtitle}
         </p>
       )}

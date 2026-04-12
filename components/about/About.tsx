@@ -1,29 +1,31 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
+import { AnimatedBlob, SectionHeading } from "@/components/ui";
 import StatCard from "./StatCard";
-import { AnimatedBlob } from "@/components/ui";
+import EducationSection from "./Education";
+import ExperienceSection from "./Experience";
 
 const stats = [
   {
     value: "05+",
     label: "Years of Mastery",
-    sub: "Refining the craft across diverse industries and technologies.",
+    sub: "Refining the craft across diverse industries.",
     accentColor: "text-primary",
     glowColor: "bg-primary",
   },
   {
     value: "120+",
     label: "Realized Visions",
-    sub: "From startup MVPs to enterprise-grade cloud ecosystems.",
+    sub: "From startup MVPs to enterprise cloud ecosystems.",
     accentColor: "text-secondary",
     glowColor: "bg-secondary",
   },
   {
     value: "40+",
     label: "Global Alliances",
-    sub: "Collaborating with visionary clients around the world.",
+    sub: "Collaborating with visionary clients worldwide.",
     accentColor: "text-tertiary",
     glowColor: "bg-tertiary",
   },
@@ -31,36 +33,21 @@ const stats = [
 
 export default function About() {
   const headingRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(headingRef.current, {
         opacity: 0,
-        x: -40,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: "top 82%",
-          toggleActions: "play none none none",
-        },
-      });
-
-      gsap.from(textRef.current?.children ?? [], {
-        opacity: 0,
-        y: 24,
-        stagger: 0.15,
+        y: 28,
         duration: 0.7,
         ease: "power3.out",
         scrollTrigger: {
-          trigger: textRef.current,
-          start: "top 80%",
+          trigger: headingRef.current,
+          start: "top 85%",
           toggleActions: "play none none none",
         },
       });
     });
-
     return () => ctx.revert();
   }, []);
 
@@ -69,39 +56,32 @@ export default function About() {
       <AnimatedBlob color="bg-secondary" size="w-[400px] h-[400px]" position="bottom-0 -right-[8%]" duration={11} />
       <AnimatedBlob color="bg-primary" size="w-[250px] h-[250px]" position="top-[20%] -left-[5%]" duration={8} delay={1.5} />
 
-      <div className="max-w-6xl mx-auto relative z-10">
-        <div className="flex flex-col gap-14">
+      <div className="max-w-6xl mx-auto relative z-10 space-y-14">
 
-          {/* Text block */}
-          <div className="max-w-2xl">
-            <div ref={headingRef}>
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white tracking-tight font-headline">
-                Genesis of{" "}
-                <span className="text-secondary italic">Innovation</span>
-              </h2>
-            </div>
-
-            <div ref={textRef} className="space-y-5 text-on-surface-variant leading-relaxed text-sm md:text-base font-body">
-              <p className="border-l-2 border-secondary/40 pl-5">
-                In the vast expanse of the digital void, I find order in chaos.
-                My approach is simple: create systems that breathe and
-                interfaces that feel alive.
-              </p>
-              <p>
-                With half a decade spent in the trenches of full-stack
-                engineering, I've learned that the most complex solutions are
-                often the ones that feel the most invisible to the user.
-              </p>
-            </div>
-          </div>
-
-          {/* Stat cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            {stats.map((stat, i) => (
-              <StatCard key={stat.label} {...stat} index={i} />
-            ))}
-          </div>
+        {/* Heading */}
+        <div ref={headingRef}>
+          <SectionHeading
+            pre="About"
+            accent="Me"
+            accentClassName="text-secondary"
+            subtitle="Full-stack engineer with 5+ years building scalable web systems, clean APIs, and interfaces people actually enjoy using."
+            dividerColor="from-secondary"
+          />
         </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {stats.map((stat, i) => (
+            <StatCard key={stat.label} {...stat} index={i} />
+          ))}
+        </div>
+
+        {/* Education + Experience */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <EducationSection />
+          <ExperienceSection />
+        </div>
+
       </div>
     </section>
   );

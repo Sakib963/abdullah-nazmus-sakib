@@ -62,6 +62,7 @@ export default function Services() {
             pre="Core"
             accent="Ecosystem"
             accentClassName="text-primary"
+            subtitle="End-to-end capabilities — from pixel-perfect UI to cloud-native infrastructure."
             dividerColor="from-primary"
           />
         </div>
