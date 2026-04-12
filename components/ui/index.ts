@@ -6,3 +6,5 @@ export { default as AnimatedBlob } from "./AnimatedBlob";
 export { default as ScrollReveal } from "./ScrollReveal";
 export { default as Typewriter } from "./Typewriter";
 export { default as SmoothScroll } from "./SmoothScroll";
+export { default as BackToTop } from "./BackToTop";
+export { default as BrandIcon } from "./BrandIcon";

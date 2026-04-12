@@ -1,10 +1,12 @@
+import Link from "next/link";
+
 export default function NavLogo() {
   return (
-    <a href="#Home" className="flex items-center gap-2 group cursor-pointer">
+    <Link href="/#Home" className="flex items-center group cursor-pointer">
       <svg
         className="w-10 h-10 drop-shadow-[0_0_8px_rgba(199,185,245,0.5)]"
         viewBox="0 0 40 40"
-        aria-hidden="true"
+        aria-label="Abdullah Nazmus Sakib"
       >
         <defs>
           <linearGradient id="logoGrad" x1="0%" x2="100%" y1="0%" y2="100%">
@@ -27,9 +29,6 @@ export default function NavLogo() {
         />
         <circle cx="20" cy="20" fill="none" r="18" stroke="white" strokeOpacity="0.05" />
       </svg>
-      <span className="font-bold text-lg tracking-widest text-white group-hover:text-glow transition-all font-headline">
-        AS
-      </span>
-    </a>
+    </Link>
   );
 }

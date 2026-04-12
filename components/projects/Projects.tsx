@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { projects, MAX_HOMEPAGE_PROJECTS } from "./projectData";
 import ProjectCard from "./ProjectCard";
 import { AnimatedBlob, SectionHeading } from "@/components/ui";
+import Link from "next/link";
 
 export default function Projects() {
   const headingRef = useRef<HTMLDivElement>(null);
@@ -26,37 +27,34 @@ export default function Projects() {
       <AnimatedBlob color="bg-primary" size="w-[250px] h-[250px]" position="bottom-[10%] -right-[4%]" duration={9} delay={2.5} />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Heading */}
-        <div ref={headingRef} className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+        {/* Heading — centered, View All floated right */}
+        <div ref={headingRef} className="relative mb-12">
           <SectionHeading
             pre="Living"
             accent="Artifacts"
             accentClassName="text-primary text-glow"
             subtitle="Selected work across full-stack engineering, dashboards, and digital ecosystems."
             dividerColor="from-primary"
-            centered={false}
           />
-          <a
+          <Link
             href="/projects"
-            className="flex items-center gap-2 px-4 py-2 glass-panel text-xs text-on-surface-variant hover:text-white border-white/10 rounded-full hover:bg-white/5 transition-all font-headline shrink-0"
+            className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2 px-4 py-2 glass-panel text-xs text-on-surface-variant hover:text-white border-white/10 rounded-full hover:bg-white/5 transition-all font-headline"
           >
             View All
             <span className="material-symbols-outlined text-[14px]">open_in_new</span>
-          </a>
+          </Link>
         </div>
 
-        {/* 2-column grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {visible.map((project, i) => (
             <ProjectCard key={project.id} {...project} index={i} />
           ))}
         </div>
 
-        {/* Show count hint if more exist */}
         {projects.length > MAX_HOMEPAGE_PROJECTS && (
           <p className="text-center text-xs text-on-surface-variant mt-8 font-label">
             Showing {visible.length} of {projects.length} projects.{" "}
-            <a href="/projects" className="text-primary hover:underline">See all →</a>
+            <Link href="/projects" className="text-primary hover:underline">See all →</Link>
           </p>
         )}
       </div>

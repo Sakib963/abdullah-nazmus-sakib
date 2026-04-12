@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import NavLogo from "./NavLogo";
 import { navLinks, contactLink } from "./navLinks";
@@ -12,8 +14,22 @@ interface NavbarProps {
   isDark: boolean;
 }
 
+function getSectionId(href: string): string {
+  return href.includes("#") ? href.split("#")[1] : "";
+}
+
+/** On home page use bare #hash to avoid double-hash bug; on other pages use /path#hash */
+function resolveHref(href: string, isHome: boolean): string {
+  if (!href.includes("#")) return href;
+  const hash = href.split("#")[1];
+  return isHome ? `#${hash}` : href;
+}
+
 export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
   const active = useActiveSection();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -23,12 +39,20 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  function isActive(link: typeof navLinks[0]): boolean {
+    if (!isHome) {
+      // On sub-pages: highlight Blog when on /blogs, nothing else
+      return link.isPage ? pathname === link.href : false;
+    }
+    const sectionId = getSectionId(link.href);
+    return sectionId ? active === sectionId : false;
+  }
+
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      /* left-0 right-0 = full viewport width; inner div centers with max-w + mx-auto */
       className="fixed top-6 left-0 right-0 z-[60] px-6 md:px-16 lg:px-24"
     >
       <div className="max-w-6xl mx-auto">
@@ -43,13 +67,13 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => {
-              const isActive = active === link.href.replace("#", "");
+              const active = isActive(link);
               return (
-                <a
+                <Link
                   key={link.href}
-                  href={link.href}
+                  href={resolveHref(link.href, isHome)}
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-full transition-all group text-[11px] font-semibold uppercase tracking-tight whitespace-nowrap ${
-                    isActive
+                    active
                       ? "bg-white/5 text-primary"
                       : "text-on-surface-variant hover:bg-white/5 hover:text-primary"
                   }`}
@@ -58,22 +82,22 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
                     {link.icon}
                   </span>
                   <span className="hidden lg:inline">{link.label}</span>
-                </a>
+                </Link>
               );
             })}
           </div>
 
           {/* Right: Contact CTA + Theme toggle + Mobile burger */}
           <div className="flex items-center gap-2">
-            <a
-              href={contactLink.href}
+            <Link
+              href={resolveHref(contactLink.href, isHome)}
               className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all group text-[11px] font-semibold uppercase tracking-tight"
             >
               <span className="material-symbols-outlined text-[18px] group-hover:text-glow leading-none">
                 {contactLink.icon}
               </span>
               <span className="hidden lg:inline">{contactLink.label}</span>
-            </a>
+            </Link>
 
             <ThemeToggle isDark={isDark} onToggle={onThemeToggle} />
 
@@ -100,14 +124,14 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
               className="md:hidden mt-2 glass-panel rounded-2xl px-3 py-3 flex flex-col gap-1"
             >
               {[...navLinks, contactLink].map((link) => {
-                const isActive = active === link.href.replace("#", "");
+                const active = isActive(link);
                 return (
-                  <a
+                  <Link
                     key={link.href}
-                    href={link.href}
+                    href={resolveHref(link.href, isHome)}
                     onClick={() => setMobileOpen(false)}
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-[11px] font-semibold uppercase tracking-tight ${
-                      isActive
+                      active
                         ? "bg-white/5 text-primary"
                         : "text-on-surface-variant hover:bg-white/5 hover:text-primary"
                     }`}
@@ -116,7 +140,7 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
                       {link.icon}
                     </span>
                     {link.label}
-                  </a>
+                  </Link>
                 );
               })}
             </motion.div>
