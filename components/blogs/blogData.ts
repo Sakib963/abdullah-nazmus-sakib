@@ -20,7 +20,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Angular's new Signals API fundamentally changes how we think about reactivity. Here's how I migrated a production app away from RxJS Subject chains — what broke, what improved, and why I won't go back.",
     href: "#",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14431b9?w=800&q=80",
+    image: "https://picsum.photos/800/400?random=3",
     date: "Mar 2025",
     readTime: "6 min read",
     views: "1.8k views",
@@ -34,7 +34,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "When a query fetching 200k rows started taking 4 seconds in production, I had to learn indexing properly. Partial indexes, composite indexes, EXPLAIN ANALYZE — a practical breakdown of what I changed and the results.",
     href: "#",
-    image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&q=80",
+    image: "https://picsum.photos/800/400?random=4",
     date: "Feb 2025",
     readTime: "8 min read",
     views: "3.2k views",
@@ -48,7 +48,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Migrating from Pages Router to App Router wasn't just a folder rename. Server Components, nested layouts, and parallel routes completely changed how I architect frontends — here's my honest assessment after shipping a real project.",
     href: "#",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80",
+    image: "https://picsum.photos/800/400?random=5",
     date: "Jan 2025",
     readTime: "7 min read",
     views: "4.1k views",
@@ -62,7 +62,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Most Node.js tutorials skip error handling entirely. Here's the pattern I use across all Hapi.js and Express projects — centralized error classes, async wrappers, structured logging, and why it matters at scale.",
     href: "#",
-    image: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&q=80",
+    image: "https://picsum.photos/800/400?random=6",
     date: "Dec 2024",
     readTime: "5 min read",
     views: "2.6k views",
