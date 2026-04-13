@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Typewriter from "@/components/ui/Typewriter";
-import BrandIcon from "@/components/ui/BrandIcon";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -12,13 +11,6 @@ const fadeUp = {
     transition: { delay: i * 0.13, duration: 0.65, ease: [0.22, 1, 0.36, 1] },
   }),
 };
-
-const socialLinks = [
-  { label: "GitHub",   icon: "github"   as const, href: "https://github.com/sakib963",                       color: "hover:text-white hover:border-white/30 hover:shadow-[0_0_16px_rgba(255,255,255,0.1)]" },
-  { label: "LinkedIn", icon: "linkedin" as const, href: "https://linkedin.com/in/abdullahnazmussakib",         color: "hover:text-[#0A66C2] hover:border-[#0A66C2]/40 hover:shadow-[0_0_16px_rgba(10,102,194,0.2)]" },
-  { label: "Facebook", icon: "facebook" as const, href: "https://facebook.com",                               color: "hover:text-[#1877F2] hover:border-[#1877F2]/40 hover:shadow-[0_0_16px_rgba(24,119,242,0.2)]" },
-  { label: "Email",    icon: "email"    as const, href: "/#Contact",                                          color: "hover:text-primary hover:border-primary/40 hover:shadow-[0_0_16px_rgba(199,185,245,0.2)]" },
-];
 
 export default function HeroContent() {
   return (
@@ -70,39 +62,15 @@ export default function HeroContent() {
         animate="show"
         className="flex flex-wrap gap-3 pt-1"
       >
-        <button className="px-7 py-3 bg-primary text-on-primary font-semibold rounded-xl glow-primary glow-primary-hover hover:scale-105 transition-all flex items-center gap-2 font-headline text-sm">
+        <button className="relative px-7 py-3 rounded-xl font-semibold font-headline text-sm flex items-center gap-2 text-on-primary overflow-hidden transition-all duration-300 hover:scale-105 backdrop-blur-xl bg-primary/80 border border-primary/40 shadow-[0_0_30px_rgba(199,185,245,0.35),inset_0_1px_0_rgba(255,255,255,0.15)] hover:bg-primary/95 hover:shadow-[0_0_55px_rgba(199,185,245,0.6),inset_0_1px_0_rgba(255,255,255,0.2)]">
           <span className="material-symbols-outlined text-[18px]">cloud_download</span>
           Download Resume
         </button>
-        <button className="px-7 py-3 glass-panel text-white font-semibold rounded-xl hover:bg-white/10 transition-all border-white/20 font-headline text-sm">
+        <button className="px-7 py-3 rounded-xl font-semibold font-headline text-sm text-white transition-all duration-300 backdrop-blur-xl bg-white/[0.06] border border-white/[0.12] shadow-[0_4px_24px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.08)] hover:bg-white/[0.11] hover:border-white/[0.22] hover:shadow-[0_8px_40px_rgba(255,255,255,0.07),inset_0_1px_0_rgba(255,255,255,0.14)]">
           Hire Me
         </button>
       </motion.div>
 
-      {/* Social Icons */}
-      <motion.div
-        custom={3}
-        variants={fadeUp}
-        initial="hidden"
-        animate="show"
-        className="flex items-center gap-2 pt-1"
-      >
-        {socialLinks.map((s) => (
-          <motion.a
-            key={s.label}
-            href={s.href}
-            target={s.href.startsWith("http") ? "_blank" : undefined}
-            rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
-            aria-label={s.label}
-            whileHover={{ y: -3, scale: 1.12 }}
-            whileTap={{ scale: 0.92 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className={`w-10 h-10 rounded-full glass-panel border-white/10 flex items-center justify-center text-on-surface-variant transition-all duration-300 ${s.color}`}
-          >
-            <BrandIcon name={s.icon} className="w-4 h-4" />
-          </motion.a>
-        ))}
-      </motion.div>
     </div>
   );
 }

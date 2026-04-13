@@ -4,29 +4,74 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Field {
-  id: string;
+  id: "name" | "email" | "message";
   label: string;
   type: string;
-  accent: string;
-  accentBorder: string;
-  span?: boolean;
   textarea?: boolean;
+  focusBorder: string;
+  focusShadow: string;
+  focusLabel: string;
 }
 
 const fields: Field[] = [
-  { id: "name",    label: "Identity / Your Name",          type: "text",  accent: "focus:border-primary",   accentBorder: "bg-primary" },
-  { id: "email",   label: "Frequency / Your Email",        type: "email", accent: "focus:border-secondary", accentBorder: "bg-secondary" },
-  { id: "message", label: "The Transmission / Your Message", type: "text", accent: "focus:border-tertiary",  accentBorder: "bg-tertiary", span: true, textarea: true },
+  {
+    id: "name",
+    label: "Your Name",
+    type: "text",
+    focusBorder: "focus:border-primary/50",
+    focusShadow: "focus:shadow-[0_0_0_1px_rgba(199,185,245,0.15),0_0_24px_rgba(199,185,245,0.1)]",
+    focusLabel: "peer-focus:text-primary",
+  },
+  {
+    id: "email",
+    label: "Your Email",
+    type: "email",
+    focusBorder: "focus:border-secondary/50",
+    focusShadow: "focus:shadow-[0_0_0_1px_rgba(201,232,238,0.15),0_0_24px_rgba(201,232,238,0.1)]",
+    focusLabel: "peer-focus:text-secondary",
+  },
+  {
+    id: "message",
+    label: "Your Message",
+    type: "text",
+    textarea: true,
+    focusBorder: "focus:border-tertiary/50",
+    focusShadow: "focus:shadow-[0_0_0_1px_rgba(244,226,255,0.15),0_0_24px_rgba(244,226,255,0.1)]",
+    focusLabel: "peer-focus:text-tertiary",
+  },
 ];
 
 export default function ContactForm() {
   const [values, setValues] = useState({ name: "", email: "", message: "" });
+  const [trap, setTrap] = useState("");          // honeypot
   const [submitted, setSubmitted] = useState(false);
-  const [focused, setFocused] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSubmitted(true);
+    setError(null);
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, _trap: trap }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error ?? "Something went wrong. Please try again.");
+      } else {
+        setSubmitted(true);
+      }
+    } catch {
+      setError("Network error. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -41,7 +86,7 @@ export default function ContactForm() {
           <div className="w-14 h-14 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
             <span className="material-symbols-outlined text-primary text-2xl">check</span>
           </div>
-          <p className="text-white font-bold font-headline text-lg">Transmission Sent</p>
+          <p className="text-white font-bold font-headline text-lg">Message Sent!</p>
           <p className="text-on-surface-variant text-sm font-body">
             I&apos;ll get back to you soon.
           </p>
@@ -58,67 +103,104 @@ export default function ContactForm() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           onSubmit={handleSubmit}
-          className="space-y-8"
+          className="space-y-5"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {fields.filter((f) => !f.span).map((field) => (
-              <div key={field.id} className="relative group">
-                {field.textarea ? (
-                  <textarea
-                    value={values[field.id as keyof typeof values]}
-                    onChange={(e) => setValues((v) => ({ ...v, [field.id]: e.target.value }))}
-                    onFocus={() => setFocused(field.id)}
-                    onBlur={() => setFocused(null)}
-                    placeholder={field.label}
-                    rows={4}
-                    className={`w-full bg-transparent border-b-2 border-white/10 py-3 text-white text-sm ${field.accent} outline-none transition-all placeholder:text-white/20 font-body resize-none`}
-                  />
-                ) : (
-                  <input
-                    type={field.type}
-                    value={values[field.id as keyof typeof values]}
-                    onChange={(e) => setValues((v) => ({ ...v, [field.id]: e.target.value }))}
-                    onFocus={() => setFocused(field.id)}
-                    onBlur={() => setFocused(null)}
-                    placeholder={field.label}
-                    className={`w-full bg-transparent border-b-2 border-white/10 py-3 text-white text-sm ${field.accent} outline-none transition-all placeholder:text-white/20 font-body`}
-                  />
-                )}
-                <span
-                  className={`absolute bottom-0 left-0 h-[2px] ${field.accentBorder} transition-all duration-500 ${focused === field.id ? "w-full" : "w-0"}`}
+          {/* Honeypot — hidden from humans, bots fill it */}
+          <input
+            type="text"
+            name="_trap"
+            value={trap}
+            onChange={(e) => setTrap(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            style={{ position: "absolute", left: "-9999px", width: "1px", height: "1px", opacity: 0 }}
+          />
+
+          {/* Name + Email row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {fields.filter((f) => !f.textarea).map((field) => (
+              <div key={field.id} className="relative">
+                <input
+                  id={field.id}
+                  type={field.type}
+                  value={values[field.id]}
+                  onChange={(e) => setValues((v) => ({ ...v, [field.id]: e.target.value }))}
+                  placeholder=" "
+                  required
+                  className={`peer w-full bg-white/[0.05] backdrop-blur-sm border border-white/[0.10] rounded-xl px-4 pt-6 pb-3 text-white text-sm outline-none transition-all duration-300 focus:bg-white/[0.09] ${field.focusBorder} ${field.focusShadow}`}
                 />
+                <label
+                  htmlFor={field.id}
+                  className={`absolute left-4 top-[1.05rem] text-on-surface-variant/50 text-sm transition-all duration-200 pointer-events-none
+                    peer-focus:top-2 peer-focus:text-[10px] peer-focus:font-semibold peer-focus:tracking-widest peer-focus:uppercase
+                    peer-[&:not(:placeholder-shown)]:top-2 peer-[&:not(:placeholder-shown)]:text-[10px] peer-[&:not(:placeholder-shown)]:font-semibold peer-[&:not(:placeholder-shown)]:tracking-widest peer-[&:not(:placeholder-shown)]:uppercase peer-[&:not(:placeholder-shown)]:text-on-surface-variant/40
+                    ${field.focusLabel}`}
+                >
+                  {field.label}
+                </label>
               </div>
             ))}
           </div>
 
-          {/* Textarea row */}
-          {fields.filter((f) => f.span).map((field) => (
-            <div key={field.id} className="relative group">
+          {/* Message textarea */}
+          {fields.filter((f) => f.textarea).map((field) => (
+            <div key={field.id} className="relative">
               <textarea
-                value={values[field.id as keyof typeof values]}
+                id={field.id}
+                value={values[field.id]}
                 onChange={(e) => setValues((v) => ({ ...v, [field.id]: e.target.value }))}
-                onFocus={() => setFocused(field.id)}
-                onBlur={() => setFocused(null)}
-                placeholder={field.label}
-                rows={4}
-                className={`w-full bg-transparent border-b-2 border-white/10 py-3 text-white text-sm ${field.accent} outline-none transition-all placeholder:text-white/20 font-body resize-none`}
+                placeholder=" "
+                rows={5}
+                required
+                className={`peer w-full bg-white/[0.05] backdrop-blur-sm border border-white/[0.10] rounded-xl px-4 pt-8 pb-3 text-white text-sm outline-none transition-all duration-300 resize-none focus:bg-white/[0.09] ${field.focusBorder} ${field.focusShadow}`}
               />
-              <span
-                className={`absolute bottom-0 left-0 h-[2px] ${field.accentBorder} transition-all duration-500 ${focused === field.id ? "w-full" : "w-0"}`}
-              />
+              <label
+                htmlFor={field.id}
+                className={`absolute left-4 top-[1.1rem] text-on-surface-variant/50 text-sm transition-all duration-200 pointer-events-none
+                  peer-focus:top-2.5 peer-focus:text-[10px] peer-focus:font-semibold peer-focus:tracking-widest peer-focus:uppercase
+                  peer-[&:not(:placeholder-shown)]:top-2.5 peer-[&:not(:placeholder-shown)]:text-[10px] peer-[&:not(:placeholder-shown)]:font-semibold peer-[&:not(:placeholder-shown)]:tracking-widest peer-[&:not(:placeholder-shown)]:uppercase peer-[&:not(:placeholder-shown)]:text-on-surface-variant/40
+                  ${field.focusLabel}`}
+              >
+                {field.label}
+              </label>
             </div>
           ))}
 
-          <button
-            type="submit"
-            className="group relative px-8 py-3 bg-white text-background font-bold rounded-xl overflow-hidden hover:scale-105 transition-all text-sm font-headline flex items-center gap-2"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              Transmit Pulse
-              <span className="material-symbols-outlined text-[18px]">send</span>
-            </span>
-            <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </button>
+          {/* Error message */}
+          <AnimatePresence>
+            {error && (
+              <motion.p
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                className="text-red-400/90 text-xs font-body flex items-center gap-1.5"
+              >
+                <span className="material-symbols-outlined text-[14px]">error</span>
+                {error}
+              </motion.p>
+            )}
+          </AnimatePresence>
+
+          <div className="flex justify-end pt-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-8 py-3 rounded-xl font-bold font-headline text-sm flex items-center gap-2 text-on-primary transition-all duration-300 hover:scale-105 disabled:opacity-60 disabled:pointer-events-none backdrop-blur-xl bg-primary/80 border border-primary/40 shadow-[0_0_30px_rgba(199,185,245,0.35),inset_0_1px_0_rgba(255,255,255,0.15)] hover:bg-primary/95 hover:shadow-[0_0_55px_rgba(199,185,245,0.6),inset_0_1px_0_rgba(255,255,255,0.2)]"
+            >
+              {loading ? (
+                <>
+                  <span className="material-symbols-outlined text-[18px] animate-spin">progress_activity</span>
+                  Sending…
+                </>
+              ) : (
+                <>
+                  Send Message
+                  <span className="material-symbols-outlined text-[18px]">send</span>
+                </>
+              )}
+            </button>
+          </div>
         </motion.form>
       )}
     </AnimatePresence>

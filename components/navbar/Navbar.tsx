@@ -60,13 +60,14 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
           className={`glass-panel rounded-full px-5 py-2.5 flex items-center justify-between text-sm font-headline transition-all duration-300 ${
             scrolled ? "shadow-[0_8px_40px_rgba(0,0,0,0.4)]" : ""
           }`}
+          style={{ backdropFilter: "blur(56px)", WebkitBackdropFilter: "blur(56px)" }}
         >
           {/* Logo */}
           <NavLogo />
 
-          {/* Desktop nav links */}
+          {/* Desktop nav links + Contact */}
           <div className="hidden md:flex items-center gap-0.5">
-            {navLinks.map((link) => {
+            {[...navLinks, contactLink].map((link) => {
               const active = isActive(link);
               return (
                 <Link
@@ -87,18 +88,8 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
             })}
           </div>
 
-          {/* Right: Contact CTA + Theme toggle + Mobile burger */}
+          {/* Right: Theme toggle + Mobile burger */}
           <div className="flex items-center gap-2">
-            <Link
-              href={resolveHref(contactLink.href, isHome)}
-              className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all group text-[11px] font-semibold uppercase tracking-tight"
-            >
-              <span className="material-symbols-outlined text-[18px] group-hover:text-glow leading-none">
-                {contactLink.icon}
-              </span>
-              <span className="hidden lg:inline">{contactLink.label}</span>
-            </Link>
-
             <ThemeToggle isDark={isDark} onToggle={onThemeToggle} />
 
             <button
@@ -122,6 +113,7 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
               exit={{ opacity: 0, y: -8, scale: 0.97 }}
               transition={{ duration: 0.2 }}
               className="md:hidden mt-2 glass-panel rounded-2xl px-3 py-3 flex flex-col gap-1"
+              style={{ backdropFilter: "blur(56px)", WebkitBackdropFilter: "blur(56px)" }}
             >
               {[...navLinks, contactLink].map((link) => {
                 const active = isActive(link);

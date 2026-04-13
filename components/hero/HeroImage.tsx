@@ -54,7 +54,7 @@ export default function HeroImage() {
         <div className="absolute inset-14 md:inset-16 rounded-[2rem] overflow-hidden border-2 border-white/10 shadow-[0_0_60px_rgba(199,185,245,0.25)] z-10 bg-surface">
           <Image
             src="/abdullah_nazmus_sakib.png"
-            alt="Abdullah Sakib"
+            alt="Abdullah Nazmus Sakib"
             fill
             sizes="(max-width: 768px) 160px, 220px"
             className="object-cover object-top grayscale hover:grayscale-0 transition-all duration-1000"
