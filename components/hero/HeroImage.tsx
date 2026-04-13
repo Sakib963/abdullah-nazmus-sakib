@@ -3,26 +3,19 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const techBadges = [
-  { label: "React", color: "text-[#61DAFB]", border: "border-[#61DAFB]/30", bg: "bg-[#61DAFB]/10", top: "10%", left: "-8%", delay: 0 },
-  { label: "Next.js", color: "text-white", border: "border-white/20", bg: "bg-white/5", top: "0%", right: "0%", delay: 0.4 },
-  { label: "TypeScript", color: "text-[#3178C6]", border: "border-[#3178C6]/30", bg: "bg-[#3178C6]/10", bottom: "20%", left: "-10%", delay: 0.8 },
-  { label: "Node.js", color: "text-[#68A063]", border: "border-[#68A063]/30", bg: "bg-[#68A063]/10", bottom: "8%", right: "-4%", delay: 1.1 },
-  { label: "Python", color: "text-[#FFD43B]", border: "border-[#FFD43B]/30", bg: "bg-[#FFD43B]/10", top: "50%", right: "-12%", delay: 0.6 },
+// Container: 380px md. Image inset-16 = 64px from each side → image at x:64–316, y:64–316.
+// Align chip RIGHT edges to x≈64 (left chips) and chip LEFT edges to x≈316 (right chips).
+// right:"83%" → chip right edge lands at 17% of 380 ≈ 65px (image left edge) ✓
+// left:"83%"  → chip left edge lands at 83% of 380 ≈ 315px (image right edge) ✓
+const CHIPS = [
+  // ── Left side ──
+  { label: "Angular",    color: "rgba(221,0,49,0.18)",    border: "rgba(221,0,49,0.4)",    text: "#ff6b8a", side: "left",  top: "22%", dur: 4.8, delay: 0   },
+  { label: "TypeScript", color: "rgba(49,120,198,0.18)",  border: "rgba(49,120,198,0.4)",  text: "#6ab0f5", side: "left",  top: "60%", dur: 5.6, delay: 1.2 },
+  // ── Right side ──
+  { label: "Next.js",    color: "rgba(255,255,255,0.06)", border: "rgba(255,255,255,0.2)", text: "#e8e8e8", side: "right", top: "12%", dur: 5.2, delay: 0.5 },
+  { label: "Node.js",    color: "rgba(104,184,104,0.15)", border: "rgba(104,184,104,0.4)", text: "#7bcf7b", side: "right", top: "42%", dur: 4.4, delay: 1.8 },
+  { label: "PostgreSQL", color: "rgba(51,103,145,0.18)",  border: "rgba(51,103,145,0.4)",  text: "#5ba3d9", side: "right", top: "70%", dur: 6.0, delay: 0.9 },
 ];
-
-const floatAnim = (delay: number) => ({
-  animate: {
-    y: [0, -8, 0],
-    transition: {
-      duration: 3.5,
-      repeat: Infinity,
-      repeatType: "loop" as const,
-      ease: "easeInOut",
-      delay,
-    },
-  },
-});
 
 export default function HeroImage() {
   return (
@@ -34,7 +27,7 @@ export default function HeroImage() {
     >
       <div className="relative w-64 h-64 md:w-[380px] md:h-[380px]">
 
-        {/* Animated blob behind image */}
+        {/* Ambient glows */}
         <motion.div
           animate={{ scale: [1, 1.12, 1], rotate: [0, 15, 0] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -50,7 +43,7 @@ export default function HeroImage() {
         <div className="absolute inset-0 rounded-full border border-white/5 animate-[spin_60s_linear_infinite]" />
         <div className="absolute inset-6 rounded-full border border-primary/15 animate-[spin_40s_linear_infinite_reverse]" />
 
-        {/* Profile image frame */}
+        {/* Profile image */}
         <div className="absolute inset-14 md:inset-16 rounded-[2rem] overflow-hidden border-2 border-white/10 shadow-[0_0_60px_rgba(199,185,245,0.25)] z-10 bg-surface">
           <Image
             src="/abdullah_nazmus_sakib.png"
@@ -62,27 +55,46 @@ export default function HeroImage() {
           />
         </div>
 
-        {/* Floating tech badges */}
-        {techBadges.map((badge) => (
+        {/* Floating chips */}
+        {CHIPS.map((chip, i) => (
           <motion.div
-            key={badge.label}
-            {...floatAnim(badge.delay)}
+            key={i}
             className="absolute z-20"
             style={{
-              top: badge.top,
-              left: badge.left,
-              right: badge.right,
-              bottom: badge.bottom,
+              top:   chip.top,
+              right: chip.side === "left"  ? "83%" : undefined,
+              left:  chip.side === "right" ? "83%" : undefined,
+              willChange: "transform",
+            }}
+            animate={{ y: [0, -9] }}
+            transition={{
+              duration: chip.dur,
+              repeat: Infinity,
+              repeatType: "mirror",
+              ease: "easeInOut",
+              delay: chip.delay,
             }}
           >
-            <span
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold font-label backdrop-blur-xl border ${badge.color} ${badge.border} ${badge.bg} shadow-lg whitespace-nowrap`}
+            <div
+              style={{
+                backdropFilter: "blur(14px)",
+                WebkitBackdropFilter: "blur(14px)",
+                background: chip.color,
+                border: `1px solid ${chip.border}`,
+                boxShadow: "0 0 16px rgba(199,185,245,0.08), inset 0 1px 0 rgba(255,255,255,0.07)",
+              }}
+              className="flex items-center px-2.5 py-1.5 rounded-full whitespace-nowrap"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-current opacity-80" />
-              {badge.label}
-            </span>
+              <span
+                style={{ color: chip.text }}
+                className="text-[11px] font-bold font-headline leading-none"
+              >
+                {chip.label}
+              </span>
+            </div>
           </motion.div>
         ))}
+
       </div>
     </motion.div>
   );

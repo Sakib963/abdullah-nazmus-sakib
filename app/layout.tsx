@@ -5,6 +5,7 @@ import "@/styles/globals.css";
 import NavWrapper from "@/components/navbar/NavWrapper";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import BackToTop from "@/components/ui/BackToTop";
+import MouseEffect from "@/components/ui/MouseEffect";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -125,6 +126,7 @@ export default function RootLayout({
           {`(function(){try{var t=localStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(t===null&&d)){document.documentElement.classList.add('dark')}else{document.documentElement.classList.remove('dark')}}catch(e){}})();`}
         </Script>
         <SmoothScroll>
+          <MouseEffect />
           <NavWrapper />
           {children}
           <BackToTop />
