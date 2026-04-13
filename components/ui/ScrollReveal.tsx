@@ -14,7 +14,7 @@ interface ScrollRevealProps {
   amount?: number; // viewport threshold 0–1
 }
 
-const initial: Record<Direction, object> = {
+const initial: Record<Direction, Record<string, number>> = {
   up:    { opacity: 0, y: 32 },
   down:  { opacity: 0, y: -32 },
   left:  { opacity: 0, x: -32 },
@@ -23,7 +23,7 @@ const initial: Record<Direction, object> = {
   none:  { opacity: 0 },
 };
 
-const animate: Record<Direction, object> = {
+const animate: Record<Direction, Record<string, number>> = {
   up:    { opacity: 1, y: 0 },
   down:  { opacity: 1, y: 0 },
   left:  { opacity: 1, x: 0 },
@@ -42,8 +42,10 @@ export default function ScrollReveal({
 }: ScrollRevealProps) {
   return (
     <motion.div
-      initial={initial[direction]}
-      whileInView={animate[direction]}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      initial={initial[direction] as any}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      whileInView={animate[direction] as any}
       viewport={{ once: true, amount }}
       transition={{
         duration,

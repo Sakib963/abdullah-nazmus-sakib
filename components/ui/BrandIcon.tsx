@@ -1,9 +1,11 @@
+import React from "react";
+
 interface BrandIconProps {
   name: "github" | "linkedin" | "facebook" | "email";
   className?: string;
 }
 
-const paths: Record<BrandIconProps["name"], JSX.Element> = {
+const paths: Record<BrandIconProps["name"], React.ReactElement> = {
   github: (
     <path
       fill="currentColor"
