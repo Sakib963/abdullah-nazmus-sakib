@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(node -e \"const si = require\\('react-icons/si'\\); const keys = Object.keys\\(si\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\('nuxt'\\)\\)\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\('oracle'\\)\\)\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\('hapi'\\)\\)\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\('socket'\\)\\)\\);\")"
+    ]
+  }
+}

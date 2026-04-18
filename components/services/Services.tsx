@@ -38,7 +38,7 @@ export default function Services() {
             pre="What I"
             accent="Offer"
             accentClassName="text-primary text-glow"
-            subtitle="Clear, professional services built around your goals — from a first feature to a full product launch."
+            subtitle="You bring the problem. I figure out where to start, what to build, and how to ship it without wasting your time."
             dividerColor="from-primary"
           />
         </div>
@@ -54,7 +54,7 @@ export default function Services() {
         <div className="mt-10 glass-panel rounded-2xl border-white/5 px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <p className="text-white font-bold font-headline text-sm">Have a project in mind?</p>
-            <p className="text-on-surface-variant text-xs font-body mt-0.5">Let's talk — I'm currently open to new opportunities.</p>
+            <p className="text-on-surface-variant text-xs font-body mt-0.5">Worst case, we have a good conversation about your idea.</p>
           </div>
           <a
             href="#Contact"

@@ -28,7 +28,7 @@ export default function ServiceCard({
         <div className={`absolute -bottom-6 -right-6 w-28 h-28 ${glowColor} rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700`} />
 
         {/* Header */}
-        <div className="flex items-start gap-4">
+        <div className="flex items-center gap-4">
           <div className={`w-11 h-11 rounded-xl glass-panel ${borderColor} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300`}>
             <span className={`material-symbols-outlined text-[22px] ${accentColor}`}>{icon}</span>
           </div>
@@ -56,7 +56,7 @@ export default function ServiceCard({
             What you get
           </p>
           {deliverables.map((item) => (
-            <div key={item} className="flex items-start gap-2">
+            <div key={item} className="flex items-center gap-2">
               <span className={`material-symbols-outlined text-[14px] ${accentColor} mt-0.5 shrink-0`}>check_circle</span>
               <span className="text-xs text-on-surface-variant font-body leading-snug">{item}</span>
             </div>

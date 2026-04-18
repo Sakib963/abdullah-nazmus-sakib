@@ -48,7 +48,7 @@ export default function MouseEffect() {
     }
 
     function onContext(e: MouseEvent) {
-      e.preventDefault();
+      if (process.env.NODE_ENV === "production") e.preventDefault();
       const id = ++idRef.current;
       setBursts(prev => [...prev, { id, x: e.clientX, y: e.clientY, type: "right" }]);
       setTimeout(() => setBursts(prev => prev.filter(b => b.id !== id)), 900);

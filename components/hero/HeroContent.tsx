@@ -13,15 +13,14 @@ const fadeUp = {
 };
 
 const STATS = [
-  { value: "5+",  label: "Years Exp",  icon: "timeline" },
-  { value: "20+", label: "Projects",   icon: "folder_open" },
-  { value: "2",   label: "Continents", icon: "public" },
+  { value: "2+", label: "Years Exp", icon: "timeline" },
+  { value: "7+", label: "Projects", icon: "folder_open" },
+  { value: "Global", label: "Clients", icon: "public" },
 ];
 
 export default function HeroContent() {
   return (
     <div className="space-y-5">
-
       {/* Status badges row */}
       <motion.div
         custom={0}
@@ -32,13 +31,17 @@ export default function HeroContent() {
       >
         {/* Company */}
         <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-panel text-[10px] font-label tracking-widest uppercase border-white/10 text-on-surface-variant">
-          <span className="material-symbols-outlined text-[13px] text-secondary">business</span>
+          <span className="material-symbols-outlined text-[13px] text-secondary">
+            business
+          </span>
           Celloscope Ltd
         </span>
 
         {/* Location */}
         <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-panel text-[10px] font-label tracking-widest uppercase border-white/10 text-on-surface-variant">
-          <span className="material-symbols-outlined text-[13px] text-secondary">location_on</span>
+          <span className="material-symbols-outlined text-[13px] text-secondary">
+            location_on
+          </span>
           Dhaka, BD
         </span>
       </motion.div>
@@ -61,11 +64,11 @@ export default function HeroContent() {
           <span className="text-secondary opacity-60">//</span>
           <Typewriter
             phrases={[
-              "Full Stack Engineer",
-              "Angular · Next.js Specialist",
-              "API Architecture Expert",
-              "Scalable Systems Builder",
-              "PostgreSQL Power User",
+              "Software Engineer.",
+              "Full Stack Developer.",
+              "Angular · Node.js · PostgreSQL",
+              "Enterprise & Fintech Systems.",
+              "From Dhaka, Bangladesh.",
             ]}
             className="text-secondary"
           />
@@ -80,12 +83,12 @@ export default function HeroContent() {
         animate="show"
         className="text-on-surface-variant text-sm leading-relaxed font-body max-w-[420px]"
       >
-        I build the full picture — clean APIs, smart data layers, UI that actually behaves.
-        Five years in, still shipping things I&apos;m proud of. Currently at{" "}
-        <span className="text-on-surface font-medium">Celloscope Ltd</span> by day,
-        solving interesting problems whenever I get the chance.
+        I think about software the way a user thinks about a door. They never
+        wonder how it was built. They just know if it opened smoothly .{" "}
+        <strong className="text-on-surface font-medium">2+ years</strong>{" "}of
+        shipping production systems, and that&apos;s still the only metric I
+        trust. If the person using it has to think, something went wrong.
       </motion.p>
-
       {/* Stats row */}
       <motion.div
         custom={3}
@@ -96,8 +99,12 @@ export default function HeroContent() {
       >
         {STATS.map((s, i) => (
           <div key={i} className="flex flex-col items-start">
-            <span className="text-xl font-bold font-headline text-primary leading-none">{s.value}</span>
-            <span className="text-[10px] uppercase tracking-widest font-label text-on-surface-variant mt-0.5">{s.label}</span>
+            <span className="text-xl font-bold font-headline text-primary leading-none">
+              {s.value}
+            </span>
+            <span className="text-[10px] uppercase tracking-widest font-label text-on-surface-variant mt-0.5">
+              {s.label}
+            </span>
           </div>
         ))}
 
@@ -105,8 +112,12 @@ export default function HeroContent() {
 
         {/* Expertise tags */}
         <div className="flex flex-col gap-0.5">
-          <span className="text-[10px] uppercase tracking-widest font-label text-on-surface-variant">Specialises in</span>
-          <span className="text-xs font-body text-on-surface">Fullstack · APIs · Performance</span>
+          <span className="text-[10px] uppercase tracking-widest font-label text-on-surface-variant">
+            Specialises in
+          </span>
+          <span className="text-xs font-body text-on-surface">
+            Fullstack · APIs · Production
+          </span>
         </div>
       </motion.div>
 
@@ -123,25 +134,30 @@ export default function HeroContent() {
           download
           className="relative px-6 py-2.5 rounded-xl font-semibold font-headline text-sm flex items-center gap-2 text-on-primary overflow-hidden transition-all duration-300 hover:scale-105 backdrop-blur-xl bg-primary/80 border border-primary/40 shadow-[0_0_30px_rgba(199,185,245,0.35),inset_0_1px_0_rgba(255,255,255,0.15)] hover:bg-primary/95 hover:shadow-[0_0_55px_rgba(199,185,245,0.6),inset_0_1px_0_rgba(255,255,255,0.2)]"
         >
-          <span className="material-symbols-outlined text-[17px]">cloud_download</span>
+          <span className="material-symbols-outlined text-[17px]">
+            cloud_download
+          </span>
           Resume
         </a>
         <a
           href="#Contact"
           className="px-6 py-2.5 rounded-xl font-semibold font-headline text-sm text-white transition-all duration-300 backdrop-blur-xl bg-white/[0.06] border border-white/[0.12] shadow-[0_4px_24px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.08)] hover:bg-white/[0.11] hover:border-white/[0.22] hover:shadow-[0_8px_40px_rgba(255,255,255,0.07),inset_0_1px_0_rgba(255,255,255,0.14)] flex items-center gap-2"
         >
-          <span className="material-symbols-outlined text-[17px] text-secondary">handshake</span>
+          <span className="material-symbols-outlined text-[17px] text-secondary">
+            handshake
+          </span>
           Hire Me
         </a>
         <a
           href="#Projects"
           className="px-6 py-2.5 rounded-xl font-semibold font-headline text-sm text-on-surface-variant transition-all duration-300 backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] hover:text-on-surface hover:bg-white/[0.07] flex items-center gap-2"
         >
-          <span className="material-symbols-outlined text-[17px]">folder_open</span>
+          <span className="material-symbols-outlined text-[17px]">
+            folder_open
+          </span>
           See Work
         </a>
       </motion.div>
-
     </div>
   );
 }

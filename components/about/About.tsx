@@ -9,21 +9,21 @@ import ExperienceSection from "./Experience";
 
 const stats = [
   {
-    value: "05+",
+    value: "02+",
     label: "Years of Mastery",
-    sub: "Refining the craft across diverse industries.",
+    sub: "Enterprise, fintech, and government systems.",
     accentColor: "text-primary",
     glowColor: "bg-primary",
   },
   {
-    value: "120+",
-    label: "Realized Visions",
-    sub: "From startup MVPs to enterprise cloud ecosystems.",
+    value: "10+",
+    label: "Projects",
+    sub: "From side tools to production-grade platforms.",
     accentColor: "text-secondary",
     glowColor: "bg-secondary",
   },
   {
-    value: "40+",
+    value: "2+",
     label: "Global Alliances",
     sub: "Collaborating with visionary clients worldwide.",
     accentColor: "text-tertiary",
@@ -64,7 +64,7 @@ export default function About() {
             pre="About"
             accent="Me"
             accentClassName="text-secondary"
-            subtitle="Full-stack engineer with 5+ years building scalable web systems, clean APIs, and interfaces people actually enjoy using."
+            subtitle="Software engineer with 2+ years building scalable web systems, clean APIs, and interfaces people actually enjoy using."
             dividerColor="from-secondary"
           />
         </div>

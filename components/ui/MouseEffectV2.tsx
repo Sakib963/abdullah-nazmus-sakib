@@ -112,7 +112,7 @@ export default function MouseEffectV2() {
     };
 
     const onCtx = (e: MouseEvent) => {
-      e.preventDefault();
+      if (process.env.NODE_ENV === "production") e.preventDefault();
       const id = ++idRef.current;
       setBursts(p => [...p, { id, x: e.clientX, y: e.clientY, type: "right" }]);
       setTimeout(() => setBursts(p => p.filter(b => b.id !== id)), 1000);
