@@ -85,7 +85,7 @@ export default function HeroContent() {
       >
         I think about software the way a user thinks about a door. They never
         wonder how it was built. They just know if it opened smoothly .{" "}
-        <strong className="text-on-surface font-medium">2+ years</strong>{" "}of
+        <strong className="text-on-surface font-medium">2+ years</strong>{" "} of
         shipping production systems, and that&apos;s still the only metric I
         trust. If the person using it has to think, something went wrong.
       </motion.p>
@@ -130,12 +130,13 @@ export default function HeroContent() {
         className="flex flex-wrap gap-3 pt-1"
       >
         <a
-          href="/resume.pdf"
-          download
+          href="https://drive.google.com/file/d/18Jv5vS9cuPjKvtS-SLWnjpkh4_-NBNP2/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
           className="relative px-6 py-2.5 rounded-xl font-semibold font-headline text-sm flex items-center gap-2 text-on-primary overflow-hidden transition-all duration-300 hover:scale-105 backdrop-blur-xl bg-primary/80 border border-primary/40 shadow-[0_0_30px_rgba(199,185,245,0.35),inset_0_1px_0_rgba(255,255,255,0.15)] hover:bg-primary/95 hover:shadow-[0_0_55px_rgba(199,185,245,0.6),inset_0_1px_0_rgba(255,255,255,0.2)]"
         >
           <span className="material-symbols-outlined text-[17px]">
-            cloud_download
+            description
           </span>
           Resume
         </a>

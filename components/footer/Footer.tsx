@@ -1,23 +1,16 @@
-import Link from "next/link";
 import BrandIcon from "@/components/ui/BrandIcon";
 import { ScrollReveal } from "@/components/ui";
+import { navLinks, contactLink } from "@/components/navbar/navLinks";
+import FooterQuote from "./FooterQuote";
 
 const socialLinks = [
   { label: "GitHub",   icon: "github"   as const, href: "https://github.com/sakib963" },
-  { label: "LinkedIn", icon: "linkedin" as const, href: "https://linkedin.com/in/abdullahnazmussakib" },
-  { label: "Facebook", icon: "facebook" as const, href: "https://facebook.com" },
+  { label: "LinkedIn", icon: "linkedin" as const, href: "https://www.linkedin.com/in/abdullah-nazmus-sakib/" },
+  { label: "Facebook", icon: "facebook" as const, href: "https://www.facebook.com/abdullahNazmus.Sakib/" },
   { label: "Email",    icon: "email"    as const, href: "/#Contact" },
 ];
 
-const navLinks = [
-  { label: "About",        href: "#About" },
-  { label: "Services",     href: "#Services" },
-  { label: "Technologies", href: "#Technologies" },
-  { label: "Skills",       href: "#Skills" },
-  { label: "Projects",     href: "#Projects" },
-  { label: "Blog",         href: "#Blogs" },
-  { label: "Contact",      href: "#Contact" },
-];
+const footerNavLinks = [...navLinks, contactLink];
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -45,13 +38,12 @@ export default function Footer() {
                 </svg>
                 <div>
                   <p className="text-sm font-bold text-white font-headline leading-tight">Abdullah Nazmus Sakib</p>
-                  <p className="text-[10px] text-on-surface-variant font-label tracking-widest uppercase mt-0.5">Full Stack Developer</p>
+                  <p className="text-[10px] text-on-surface-variant font-label tracking-widest uppercase mt-0.5">Software Engineer</p>
                 </div>
               </div>
               <p className="text-xs text-on-surface-variant font-body leading-relaxed max-w-xs">
-                Building scalable web systems and clean APIs from Dhaka, Bangladesh. Open to remote opportunities worldwide.
+                Engineering software with care and curiosity. Based in Dhaka, Bangladesh.
               </p>
-              {/* Social icons */}
               <div className="flex items-center gap-2">
                 {socialLinks.map((s) => (
                   <a
@@ -68,25 +60,30 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Quick links */}
+            {/* Navigation — sourced from navLinks (single source of truth) */}
             <div className="flex flex-col gap-3">
               <p className="text-[10px] font-bold uppercase tracking-widest text-primary font-label mb-1">Navigation</p>
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-xs text-on-surface-variant hover:text-white transition-colors font-body w-fit"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+                {footerNavLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-xs text-on-surface-variant hover:text-white transition-colors font-body w-fit"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
             </div>
 
-            {/* Contact / availability */}
+            {/* Contact */}
             <div className="flex flex-col gap-4">
               <p className="text-[10px] font-bold uppercase tracking-widest text-primary font-label">Get in Touch</p>
               <div className="space-y-2">
-                <a href="mailto:abdullahnazmussakib@gmail.com" className="flex items-center gap-2 text-xs text-on-surface-variant hover:text-white transition-colors font-body group">
+                <a
+                  href="mailto:abdullahnazmussakib@gmail.com"
+                  className="flex items-center gap-2 text-xs text-on-surface-variant hover:text-white transition-colors font-body"
+                >
                   <span className="material-symbols-outlined text-[14px] text-primary">mail</span>
                   abdullahnazmussakib@gmail.com
                 </a>
@@ -100,11 +97,10 @@ export default function Footer() {
                 </div>
               </div>
 
-              {/* Availability badge */}
               <div className="flex items-center gap-2.5 px-3 py-2 glass-panel rounded-full border-white/5 w-fit mt-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant font-label">
-                  Open to opportunities
+                  Open to new work
                 </span>
               </div>
             </div>
@@ -113,12 +109,7 @@ export default function Footer() {
           {/* Bottom row */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 text-[10px] text-on-surface-variant font-label">
             <p>© {year} Abdullah Nazmus Sakib. All rights reserved.</p>
-            <p className="flex items-center gap-1.5">
-              Built with
-              <span className="text-primary">Next.js</span>·
-              <span className="text-primary">TypeScript</span>·
-              <span className="text-primary">Tailwind CSS</span>
-            </p>
+            <FooterQuote />
           </div>
 
         </div>

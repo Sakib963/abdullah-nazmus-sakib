@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { navLinks, contactLink } from "./navLinks";
 
-const SECTIONS = ["Home", "About", "Services", "Technologies", "Skills", "Projects", "Blogs", "Contact"];
+// Derived from navLinks — single source of truth
+const SECTION_IDS = [...navLinks, contactLink].map((l) => l.href.split("#")[1]);
 
 export function useActiveSection(): string {
   const [active, setActive] = useState("Home");
@@ -10,7 +12,7 @@ export function useActiveSection(): string {
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
 
-    SECTIONS.forEach((id) => {
+    SECTION_IDS.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
 
@@ -18,7 +20,7 @@ export function useActiveSection(): string {
         ([entry]) => {
           if (entry.isIntersecting) setActive(id);
         },
-        { threshold: 0.4 }
+        { threshold: 0.35 }
       );
 
       observer.observe(el);

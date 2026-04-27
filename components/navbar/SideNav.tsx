@@ -13,13 +13,13 @@ const socialLinks = [
   {
     label: "LinkedIn",
     icon: "linkedin" as const,
-    href: "https://linkedin.com/in/abdullahnazmussakib",
+    href: "https://www.linkedin.com/in/abdullah-nazmus-sakib/",
     hover: "hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 hover:border-[#0A66C2]/30 hover:shadow-[0_0_20px_rgba(10,102,194,0.25),inset_0_1px_0_rgba(255,255,255,0.08)]",
   },
   {
     label: "Facebook",
     icon: "facebook" as const,
-    href: "https://facebook.com",
+    href: "https://www.facebook.com/abdullahNazmus.Sakib/",
     hover: "hover:text-[#1877F2] hover:bg-[#1877F2]/10 hover:border-[#1877F2]/30 hover:shadow-[0_0_20px_rgba(24,119,242,0.25),inset_0_1px_0_rgba(255,255,255,0.08)]",
   },
   {

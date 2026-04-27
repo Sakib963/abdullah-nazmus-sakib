@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import NavLogo from "./NavLogo";
-import { navLinks, contactLink } from "./navLinks";
+import { navLinks, contactLink, type NavLink } from "./navLinks";
 import { useActiveSection } from "./useActiveSection";
 import ThemeToggle from "./ThemeToggle";
 
@@ -14,15 +13,8 @@ interface NavbarProps {
   isDark: boolean;
 }
 
-function getSectionId(href: string): string {
-  return href.includes("#") ? href.split("#")[1] : "";
-}
-
-/** On home page use bare #hash to avoid double-hash bug; on other pages use /path#hash */
-function resolveHref(href: string, isHome: boolean): string {
-  if (!href.includes("#")) return href;
-  const hash = href.split("#")[1];
-  return isHome ? `#${hash}` : href;
+function sectionId(href: string): string {
+  return href.split("#")[1] ?? "";
 }
 
 export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
@@ -39,14 +31,41 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  function isActive(link: typeof navLinks[0]): boolean {
-    if (!isHome) {
-      // On sub-pages: highlight Blog when on /blogs, nothing else
-      return link.isPage ? pathname === link.href : false;
-    }
-    const sectionId = getSectionId(link.href);
-    return sectionId ? active === sectionId : false;
+  // Close mobile nav on resize to desktop
+  useEffect(() => {
+    const handler = () => { if (window.innerWidth >= 768) setMobileOpen(false); };
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, link: NavLink) => {
+      const id = sectionId(link.href);
+      if (!id || !isHome) return; // let browser navigate to /#hash on other pages
+      e.preventDefault();
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+        history.pushState(null, "", `#${id}`);
+      }
+      setMobileOpen(false);
+    },
+    [isHome]
+  );
+
+  function isActiveLink(link: NavLink): boolean {
+    if (!isHome) return link.isPage ? pathname === link.href : false;
+    return active === sectionId(link.href);
   }
+
+  const allLinks = [...navLinks, contactLink];
+
+  const linkClass = (link: NavLink) =>
+    `flex items-center gap-1.5 px-3 py-2 rounded-full transition-all group text-[11px] font-semibold uppercase tracking-tight whitespace-nowrap ${
+      isActiveLink(link)
+        ? "bg-white/5 text-primary"
+        : "text-on-surface-variant hover:bg-white/5 hover:text-primary"
+    }`;
 
   return (
     <motion.header
@@ -62,40 +81,33 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
           }`}
           style={{ backdropFilter: "blur(56px)", WebkitBackdropFilter: "blur(56px)" }}
         >
-          {/* Logo */}
           <NavLogo />
 
-          {/* Desktop nav links + Contact */}
+          {/* Desktop links */}
           <div className="hidden md:flex items-center gap-0.5">
-            {[...navLinks, contactLink].map((link) => {
-              const active = isActive(link);
-              return (
-                <Link
-                  key={link.href}
-                  href={resolveHref(link.href, isHome)}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-full transition-all group text-[11px] font-semibold uppercase tracking-tight whitespace-nowrap ${
-                    active
-                      ? "bg-white/5 text-primary"
-                      : "text-on-surface-variant hover:bg-white/5 hover:text-primary"
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-[18px] group-hover:text-glow leading-none">
-                    {link.icon}
-                  </span>
-                  <span className="hidden lg:inline">{link.label}</span>
-                </Link>
-              );
-            })}
+            {allLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleClick(e, link)}
+                className={linkClass(link)}
+              >
+                <span className="material-symbols-outlined text-[18px] group-hover:text-glow leading-none">
+                  {link.icon}
+                </span>
+                <span className="hidden lg:inline">{link.label}</span>
+              </a>
+            ))}
           </div>
 
-          {/* Right: Theme toggle + Mobile burger */}
+          {/* Right: theme toggle + mobile burger */}
           <div className="flex items-center gap-2">
             <ThemeToggle isDark={isDark} onToggle={onThemeToggle} />
-
             <button
               onClick={() => setMobileOpen((prev) => !prev)}
               className="md:hidden p-2 rounded-full text-on-surface-variant hover:bg-white/5 transition-all"
               aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
             >
               <span className="material-symbols-outlined text-[20px]">
                 {mobileOpen ? "close" : "menu"}
@@ -115,26 +127,23 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
               className="md:hidden mt-2 glass-panel rounded-2xl px-3 py-3 flex flex-col gap-1"
               style={{ backdropFilter: "blur(56px)", WebkitBackdropFilter: "blur(56px)" }}
             >
-              {[...navLinks, contactLink].map((link) => {
-                const active = isActive(link);
-                return (
-                  <Link
-                    key={link.href}
-                    href={resolveHref(link.href, isHome)}
-                    onClick={() => setMobileOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-[11px] font-semibold uppercase tracking-tight ${
-                      active
-                        ? "bg-white/5 text-primary"
-                        : "text-on-surface-variant hover:bg-white/5 hover:text-primary"
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-[18px]">
-                      {link.icon}
-                    </span>
-                    {link.label}
-                  </Link>
-                );
-              })}
+              {allLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleClick(e, link)}
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-[11px] font-semibold uppercase tracking-tight ${
+                    isActiveLink(link)
+                      ? "bg-white/5 text-primary"
+                      : "text-on-surface-variant hover:bg-white/5 hover:text-primary"
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[18px]">
+                    {link.icon}
+                  </span>
+                  {link.label}
+                </a>
+              ))}
             </motion.div>
           )}
         </AnimatePresence>
