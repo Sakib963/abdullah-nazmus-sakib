@@ -11,8 +11,8 @@ export const navLinks: NavLink[] = [
   { label: "Services",    href: "/#Services",    icon: "handyman" },
   { label: "Skills",      href: "/#Skills",      icon: "bar_chart" },
   { label: "Projects",    href: "/#Projects",    icon: "rocket_launch" },
-  { label: "Reflections", href: "/#Reflections", icon: "forum" },
   { label: "Blog",        href: "/#Blogs",       icon: "article" },
+  { label: "Reflections", href: "/#Reflections", icon: "forum" },
 ];
 
 export const contactLink: NavLink = {
