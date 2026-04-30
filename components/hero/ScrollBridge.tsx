@@ -29,7 +29,7 @@ export default function ScrollBridge() {
           <motion.div
             animate={{ y: [0, 6, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="w-8 h-8 rounded-full glass-panel border-white/10 flex items-center justify-center"
+            className="w-8 h-8 rounded-full glass-panel flex items-center justify-center"
           >
             <span className="material-symbols-outlined text-primary text-[18px]">
               keyboard_arrow_down

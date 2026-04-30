@@ -26,7 +26,7 @@ export const techs: Tech[] = [
   { name: "Node.js",       category: "Backend",  color: "#339933", textColor: "text-[#339933]", borderColor: "border-[#339933]/30", glowColor: "shadow-[0_0_20px_rgba(51,153,51,0.3)]",   abbr: "No",  siIcon: "SiNodedotjs" },
   { name: "Hapi.js",       category: "Backend",  color: "#EF8C2A", textColor: "text-[#EF8C2A]", borderColor: "border-[#EF8C2A]/25", glowColor: "shadow-[0_0_20px_rgba(239,140,42,0.3)]",  abbr: "Hp",  siIcon: "SiHapi" },
   { name: "Express",       category: "Backend",  color: "#ABABAB", textColor: "text-[#ABABAB]", borderColor: "border-[#ABABAB]/20", glowColor: "shadow-[0_0_20px_rgba(171,171,171,0.2)]", abbr: "Ex",  siIcon: "SiExpress" },
-  { name: "Socket.io",     category: "Backend",  color: "#FFFFFF", textColor: "text-white",      borderColor: "border-white/20",     glowColor: "shadow-[0_0_20px_rgba(255,255,255,0.15)]", abbr: "Sk",  siIcon: "SiSocketdotio" },
+  { name: "Socket.io",     category: "Backend",  color: "#666666", textColor: "text-[#666666] dark:text-white", borderColor: "border-[#666666]/25 dark:border-white/20", glowColor: "shadow-[0_0_20px_rgba(102,102,102,0.25)]", abbr: "Sk",  siIcon: "SiSocketdotio" },
 
   // Database
   { name: "PostgreSQL",    category: "Database", color: "#4169E1", textColor: "text-[#4169E1]", borderColor: "border-[#4169E1]/25", glowColor: "shadow-[0_0_20px_rgba(65,105,225,0.3)]",  abbr: "Pg",  siIcon: "SiPostgresql" },
@@ -38,7 +38,7 @@ export const techs: Tech[] = [
   // DevOps
   { name: "Git",           category: "DevOps",   color: "#F05032", textColor: "text-[#F05032]", borderColor: "border-[#F05032]/25", glowColor: "shadow-[0_0_20px_rgba(240,80,50,0.3)]",   abbr: "Git", siIcon: "SiGit" },
   { name: "Docker",        category: "DevOps",   color: "#2496ED", textColor: "text-[#2496ED]", borderColor: "border-[#2496ED]/25", glowColor: "shadow-[0_0_20px_rgba(36,150,237,0.3)]",  abbr: "Dk",  siIcon: "SiDocker" },
-  { name: "Vercel",        category: "DevOps",   color: "#FFFFFF", textColor: "text-white",      borderColor: "border-white/20",     glowColor: "shadow-[0_0_20px_rgba(255,255,255,0.15)]", abbr: "▲",   siIcon: "SiVercel" },
+  { name: "Vercel",        category: "DevOps",   color: "#666666", textColor: "text-[#666666] dark:text-white", borderColor: "border-[#666666]/25 dark:border-white/20", glowColor: "shadow-[0_0_20px_rgba(102,102,102,0.25)]", abbr: "▲",   siIcon: "SiVercel" },
 
   // Tools
   { name: "Postman",       category: "Tools",    color: "#FF6C37", textColor: "text-[#FF6C37]", borderColor: "border-[#FF6C37]/25", glowColor: "shadow-[0_0_20px_rgba(255,108,55,0.3)]",  abbr: "Pm",  siIcon: "SiPostman" },

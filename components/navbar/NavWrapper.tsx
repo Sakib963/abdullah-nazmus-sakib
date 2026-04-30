@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { flushSync } from "react-dom";
 import Navbar from "./Navbar";
 import SideNav from "./SideNav";
 
@@ -32,9 +33,21 @@ export default function NavWrapper() {
   // Avoid flash of wrong theme before mount
   if (!mounted) return null;
 
+  function handleToggle(_e: React.MouseEvent) {
+    if (!("startViewTransition" in document)) {
+      setIsDark((prev) => !prev);
+      return;
+    }
+
+    (document as Document & { startViewTransition: (cb: () => void) => void })
+      .startViewTransition(() => {
+        flushSync(() => setIsDark((prev) => !prev));
+      });
+  }
+
   return (
     <>
-      <Navbar onThemeToggle={() => setIsDark((prev) => !prev)} isDark={isDark} />
+      <Navbar onThemeToggle={handleToggle} isDark={isDark} />
       <SideNav />
     </>
   );

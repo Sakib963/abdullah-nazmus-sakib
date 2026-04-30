@@ -37,9 +37,9 @@ const CONFIG = {
 };
 // ══════════════════════════════════════════════════════════════════
 
-const P  = (o: number) => `rgba(199,185,245,${o})`; // primary purple
-const T  = (o: number) => `rgba(201,232,238,${o})`; // teal
-const L  = (o: number) => `rgba(244,226,255,${o})`; // lavender
+const P  = (o: number) => `rgb(var(--color-primary) / ${o})`;
+const T  = (o: number) => `rgb(var(--color-secondary) / ${o})`;
+const L  = (o: number) => `rgb(var(--color-tertiary) / ${o})`;
 
 // ── Circuit trace pulse ───────────────────────────────────────────────────────
 function TracePulse({
@@ -61,14 +61,14 @@ function TracePulse({
   const gap  = pathLen + dash + 20;
   return (
     <g>
-      <path d={d} stroke={color} strokeWidth={strokeWidth * 0.6} fill="none" opacity={CONFIG.traceOpacity} />
+      <path d={d} style={{ stroke: color }} strokeWidth={strokeWidth * 0.6} fill="none" opacity={CONFIG.traceOpacity} />
       <motion.path
         d={d}
-        stroke={color}
         strokeWidth={strokeWidth * CONFIG.pulseWidth}
         fill="none"
         strokeLinecap="round"
         style={{
+          stroke: color,
           filter: `drop-shadow(0 0 ${CONFIG.glowBlur}px ${color})`,
           strokeDasharray: `${dash} ${gap}`,
         }}

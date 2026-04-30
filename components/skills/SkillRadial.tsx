@@ -106,7 +106,7 @@ export default function SkillRadial({ name, level, color, trackColor, index }: S
         <div className="absolute inset-0 flex items-center justify-center">
           <span
             ref={labelRef}
-            className="text-sm font-bold font-headline text-white"
+            className="text-sm font-bold font-headline text-on-surface"
           >
             0%
           </span>

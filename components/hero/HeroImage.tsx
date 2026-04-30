@@ -112,10 +112,9 @@ function Terminal() {
         height: CARD_H,
         backdropFilter: "blur(24px)",
         WebkitBackdropFilter: "blur(24px)",
-        background: "rgba(6,6,16,0.85)",
-        border: "1px solid rgba(199,185,245,0.15)",
-        boxShadow:
-          "0 8px 48px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.05)",
+        background: "var(--terminal-bg)",
+        border: "1px solid var(--terminal-border)",
+        boxShadow: "var(--terminal-shadow)",
       }}
       className="rounded-2xl overflow-hidden flex-1 min-w-0 flex flex-col"
     >
@@ -181,10 +180,9 @@ function PhotoCard() {
         height: CARD_H,
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(199,185,245,0.2)",
-        boxShadow:
-          "0 0 70px rgba(199,185,245,0.12), 0 28px 64px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)",
+        background: "var(--photo-card-bg)",
+        border: "1px solid var(--photo-card-border)",
+        boxShadow: "var(--photo-card-shadow)",
       }}
       className="rounded-3xl p-4 flex flex-col gap-3 w-[210px] flex-shrink-0"
     >
@@ -211,8 +209,8 @@ function PhotoCard() {
           className="absolute left-0 right-0 h-[3px] pointer-events-none"
           style={{
             background:
-              "linear-gradient(to right, transparent 10%, rgba(201,232,238,0.9) 50%, transparent 90%)",
-            boxShadow: "0 0 14px 4px rgba(201,232,238,0.5)",
+              "linear-gradient(to right, transparent 10%, rgb(var(--color-secondary) / 0.9) 50%, transparent 90%)",
+            boxShadow: "0 0 14px 4px rgb(var(--color-secondary) / 0.5)",
           }}
         />
 
@@ -234,10 +232,7 @@ function PhotoCard() {
         {/* Bottom fade */}
         <div
           className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(6,6,16,0.65), transparent)",
-          }}
+          style={{ background: "var(--photo-bottom-fade)" }}
         />
       </div>
 
@@ -246,7 +241,7 @@ function PhotoCard() {
         <p className="text-[12px] font-bold font-headline text-on-surface leading-snug">
           Abdullah Nazmus Sakib
         </p>
-        <p className="text-[10px] font-label text-secondary mt-0.5 tracking-wide">
+        <p className="text-[10px] font-label text-primary dark:text-secondary mt-0.5 tracking-wide">
           Full Stack Engineer
         </p>
       </div>
@@ -254,7 +249,7 @@ function PhotoCard() {
       {/* Stats */}
       <div
         className="flex items-center justify-between px-1 pt-2.5 pb-0.5 flex-shrink-0"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
+        style={{ borderTop: "1px solid var(--glass-border)" }}
       >
         <div className="text-center">
           <p className="text-sm font-bold font-headline text-primary leading-none">
@@ -264,7 +259,7 @@ function PhotoCard() {
             Yrs
           </p>
         </div>
-        <div className="w-px h-5 bg-white/10" />
+        <div className="w-px h-5 bg-black/10 dark:bg-white/10" />
         <div className="text-center">
           <p className="text-sm font-bold font-headline text-primary leading-none">
             20+
@@ -273,7 +268,7 @@ function PhotoCard() {
             Projects
           </p>
         </div>
-        <div className="w-px h-5 bg-white/10" />
+        <div className="w-px h-5 bg-black/10 dark:bg-white/10" />
         <div className="text-center">
           <motion.p
             animate={{ opacity: [1, 0.15, 1] }}

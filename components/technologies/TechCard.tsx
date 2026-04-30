@@ -20,7 +20,7 @@ export default function TechCard({ name, category, textColor, borderColor, glowC
       </div>
 
       <div className="text-center">
-        <p className="text-white text-xs font-semibold font-headline leading-tight">
+        <p className="text-on-surface text-xs font-semibold font-headline leading-tight">
           {name}
         </p>
         <p className={`text-[10px] ${textColor} opacity-70 font-label mt-0.5`}>

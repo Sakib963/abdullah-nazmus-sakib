@@ -4,17 +4,17 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface ThemeToggleProps {
   isDark: boolean;
-  onToggle: () => void;
+  onToggle: (e: React.MouseEvent) => void;
 }
 
 export default function ThemeToggle({ isDark, onToggle }: ThemeToggleProps) {
   return (
     <motion.button
-      onClick={onToggle}
+      onClick={(e) => onToggle(e)}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-sm bg-white/[0.06] border border-white/[0.12] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-colors duration-300 hover:bg-white/[0.11] hover:border-white/[0.2] hover:shadow-[0_0_16px_rgba(199,185,245,0.2),inset_0_1px_0_rgba(255,255,255,0.12)]"
+      className="w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-sm bg-black/[0.05] dark:bg-white/[0.06] border border-black/[0.09] dark:border-white/[0.12] shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-colors duration-300 hover:bg-black/[0.08] dark:hover:bg-white/[0.11] hover:border-black/[0.13] dark:hover:border-white/[0.2]"
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span

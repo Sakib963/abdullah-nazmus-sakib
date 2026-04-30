@@ -15,7 +15,7 @@ export default function GlassCard({
 }: GlassCardProps) {
   return (
     <div
-      className={`glass-panel rounded-2xl border-white/5 ${padding} ${
+      className={`glass-panel rounded-2xl ${padding} ${
         hover ? "glass-card-hover" : ""
       } ${className}`}
     >

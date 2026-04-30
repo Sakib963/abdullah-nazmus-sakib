@@ -17,7 +17,7 @@ export default function ServiceCard({
 }: Service & { index: number }) {
   return (
     <ScrollReveal direction="up" delay={index * 0.1} amount={0.1}>
-      <div className="glass-panel rounded-2xl border-white/5 glass-card-hover group relative overflow-hidden p-6 flex flex-col gap-5 h-full">
+      <div className="glass-panel rounded-2xl glass-card-hover group relative overflow-hidden p-6 flex flex-col gap-5 h-full">
 
         {/* Large watermark number */}
         <span className={`absolute -top-3 -right-1 text-[80px] font-black font-headline leading-none ${accentColor} opacity-[0.06] select-none pointer-events-none`}>
@@ -36,7 +36,7 @@ export default function ServiceCard({
             <p className={`text-[10px] font-bold font-label uppercase tracking-widest ${accentColor} mb-0.5`}>
               Service {number}
             </p>
-            <h3 className="text-base font-bold text-white font-headline leading-tight">
+            <h3 className="text-base font-bold text-on-surface font-headline leading-tight">
               {title}
             </h3>
           </div>
@@ -64,7 +64,7 @@ export default function ServiceCard({
         </div>
 
         {/* Stack pills */}
-        <div className="flex flex-wrap gap-1.5 pt-2 border-t border-white/5">
+        <div className="flex flex-wrap gap-1.5 pt-2 border-t border-black/[0.06] dark:border-white/5">
           {stack.map((tech) => (
             <span
               key={tech}

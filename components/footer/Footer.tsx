@@ -16,12 +16,12 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/5 relative overflow-hidden">
+    <footer className="border-t border-black/[0.06] dark:border-white/5 relative overflow-hidden">
       <ScrollReveal direction="up" amount={0.2}>
         <div className="max-w-6xl mx-auto px-6 md:px-16 lg:px-24 py-12 relative z-10">
 
           {/* Top row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-white/5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-black/[0.06] dark:border-white/5">
 
             {/* Brand */}
             <div className="flex flex-col gap-4">
@@ -29,15 +29,15 @@ export default function Footer() {
                 <svg className="w-9 h-9" viewBox="0 0 40 40" aria-hidden="true">
                   <defs>
                     <linearGradient id="footerLogoGrad" x1="0%" x2="100%" y1="0%" y2="100%">
-                      <stop offset="0%" stopColor="#c7b9f5" />
-                      <stop offset="100%" stopColor="#c9e8ee" />
+                      <stop offset="0%" style={{ stopColor: "rgb(var(--color-primary))" }} />
+                      <stop offset="100%" style={{ stopColor: "rgb(var(--color-secondary))" }} />
                     </linearGradient>
                   </defs>
                   <path d="M12 30L20 10L28 30M15 24H25" fill="none" stroke="url(#footerLogoGrad)" strokeLinecap="round" strokeWidth="2.5" />
                   <path d="M12 34C10 34 8 32 8 30C8 28 10 26 12 26C14 26 16 28 16 30" fill="none" stroke="url(#footerLogoGrad)" strokeWidth="1.5" />
                 </svg>
                 <div>
-                  <p className="text-sm font-bold text-white font-headline leading-tight">Abdullah Nazmus Sakib</p>
+                  <p className="text-sm font-bold text-on-surface font-headline leading-tight">Abdullah Nazmus Sakib</p>
                   <p className="text-[10px] text-on-surface-variant font-label tracking-widest uppercase mt-0.5">Software Engineer</p>
                 </div>
               </div>
@@ -52,7 +52,7 @@ export default function Footer() {
                     target={s.href.startsWith("http") ? "_blank" : undefined}
                     rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
                     aria-label={s.label}
-                    className="w-8 h-8 rounded-full glass-panel border-white/10 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/30 transition-all duration-300"
+                    className="w-8 h-8 rounded-full glass-panel flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/30 transition-all duration-300"
                   >
                     <BrandIcon name={s.icon} className="w-3.5 h-3.5" />
                   </a>
@@ -68,7 +68,7 @@ export default function Footer() {
                   <a
                     key={link.href}
                     href={link.href}
-                    className="text-xs text-on-surface-variant hover:text-white transition-colors font-body w-fit"
+                    className="text-xs text-on-surface-variant hover:text-on-surface transition-colors font-body w-fit"
                   >
                     {link.label}
                   </a>
@@ -82,7 +82,7 @@ export default function Footer() {
               <div className="space-y-2">
                 <a
                   href="mailto:abdullahnazmussakib@gmail.com"
-                  className="flex items-center gap-2 text-xs text-on-surface-variant hover:text-white transition-colors font-body"
+                  className="flex items-center gap-2 text-xs text-on-surface-variant hover:text-on-surface transition-colors font-body"
                 >
                   <span className="material-symbols-outlined text-[14px] text-primary">mail</span>
                   abdullahnazmussakib@gmail.com
@@ -97,10 +97,10 @@ export default function Footer() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2.5 px-3 py-2 glass-panel rounded-full border-white/5 w-fit mt-2">
+              <div className="flex items-center gap-2.5 px-3 py-2 glass-panel rounded-full w-fit mt-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant font-label">
-                  Open to new work
+                  Open to opportunities
                 </span>
               </div>
             </div>

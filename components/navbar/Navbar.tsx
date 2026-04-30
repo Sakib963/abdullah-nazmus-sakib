@@ -9,7 +9,7 @@ import { useActiveSection } from "./useActiveSection";
 import ThemeToggle from "./ThemeToggle";
 
 interface NavbarProps {
-  onThemeToggle: () => void;
+  onThemeToggle: (e: React.MouseEvent) => void;
   isDark: boolean;
 }
 
@@ -63,8 +63,8 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
   const linkClass = (link: NavLink) =>
     `flex items-center gap-1.5 px-3 py-2 rounded-full transition-all group text-[11px] font-semibold uppercase tracking-tight whitespace-nowrap ${
       isActiveLink(link)
-        ? "bg-white/5 text-primary"
-        : "text-on-surface-variant hover:bg-white/5 hover:text-primary"
+        ? "bg-black/[0.06] dark:bg-white/5 text-primary"
+        : "text-on-surface-variant hover:bg-black/[0.06] dark:hover:bg-white/5 hover:text-primary"
     }`;
 
   return (
@@ -77,7 +77,7 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
       <div className="max-w-6xl mx-auto">
         <nav
           className={`glass-panel rounded-full px-5 py-2.5 flex items-center justify-between text-sm font-headline transition-all duration-300 ${
-            scrolled ? "shadow-[0_8px_40px_rgba(0,0,0,0.4)]" : ""
+            scrolled ? "shadow-[0_4px_24px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.4)]" : ""
           }`}
           style={{ backdropFilter: "blur(56px)", WebkitBackdropFilter: "blur(56px)" }}
         >
@@ -105,7 +105,7 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
             <ThemeToggle isDark={isDark} onToggle={onThemeToggle} />
             <button
               onClick={() => setMobileOpen((prev) => !prev)}
-              className="md:hidden p-2 rounded-full text-on-surface-variant hover:bg-white/5 transition-all"
+              className="md:hidden p-2 rounded-full text-on-surface-variant hover:bg-black/[0.06] dark:hover:bg-white/5 transition-all"
               aria-label="Toggle menu"
               aria-expanded={mobileOpen}
             >
@@ -134,8 +134,8 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
                   onClick={(e) => handleClick(e, link)}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-[11px] font-semibold uppercase tracking-tight ${
                     isActiveLink(link)
-                      ? "bg-white/5 text-primary"
-                      : "text-on-surface-variant hover:bg-white/5 hover:text-primary"
+                      ? "bg-black/[0.06] dark:bg-white/5 text-primary"
+                      : "text-on-surface-variant hover:bg-black/[0.06] dark:hover:bg-white/5 hover:text-primary"
                   }`}
                 >
                   <span className="material-symbols-outlined text-[18px]">

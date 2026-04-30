@@ -70,7 +70,7 @@ export default function Skills() {
             <GlassCard key={group.category} padding="p-6" className="space-y-4">
               {/* Group header */}
               <div className="flex items-center gap-2 mb-4">
-                <div className={`w-7 h-7 rounded-lg glass-panel flex items-center justify-center border-white/10`}>
+                <div className={`w-7 h-7 rounded-lg glass-panel flex items-center justify-center`}>
                   <span className={`material-symbols-outlined text-[16px] ${accentMap[gi]}`}>
                     {group.icon}
                   </span>

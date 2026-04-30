@@ -23,8 +23,8 @@ export default function EducationSection() {
               {/* Dot */}
               <div className="absolute -left-[17px] top-1.5 w-2 h-2 rounded-full bg-secondary/60 border border-secondary/40" />
 
-              <div className="glass-panel rounded-xl p-4 border-white/5">
-                <p className="text-white text-sm font-bold font-headline leading-tight">
+              <div className="glass-panel rounded-xl p-4">
+                <p className="text-on-surface text-sm font-bold font-headline leading-tight">
                   {edu.degree}
                 </p>
                 <p className="text-on-surface-variant text-xs mt-1 font-body">
@@ -35,7 +35,7 @@ export default function EducationSection() {
                     {edu.period}
                   </span>
                   {edu.detail && (
-                    <span className="inline-block text-[10px] font-label text-on-surface-variant glass-panel px-2 py-0.5 rounded-full border-white/10">
+                    <span className="inline-block text-[10px] font-label text-on-surface-variant glass-panel px-2 py-0.5 rounded-full">
                       {edu.detail}
                     </span>
                   )}

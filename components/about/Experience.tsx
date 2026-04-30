@@ -23,12 +23,12 @@ export default function ExperienceSection() {
               {/* Company dot */}
               <div className="absolute -left-[17px] top-1.5 w-2.5 h-2.5 rounded-full bg-primary/70 border border-primary/40" />
 
-              <div className="glass-panel rounded-xl border-white/5 overflow-hidden">
+              <div className="glass-panel rounded-xl overflow-hidden">
                 {/* Company header */}
-                <div className="px-4 pt-4 pb-3 border-b border-white/5">
+                <div className="px-4 pt-4 pb-3 border-b border-black/[0.06] dark:border-white/5">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <p className="text-white text-sm font-bold font-headline">{exp.company}</p>
+                      <p className="text-on-surface text-sm font-bold font-headline">{exp.company}</p>
                       <p className="text-on-surface-variant text-[11px] font-label mt-0.5">
                         {exp.type}
                       </p>
@@ -43,11 +43,11 @@ export default function ExperienceSection() {
                 </div>
 
                 {/* Roles */}
-                <div className="divide-y divide-white/5">
+                <div className="divide-y divide-black/[0.06] dark:divide-white/5">
                   {exp.roles.map((role, ri) => (
                     <div key={ri} className="px-4 py-3 space-y-2">
                       <div className="flex items-start justify-between gap-2">
-                        <p className="text-white/90 text-xs font-semibold font-headline">
+                        <p className="text-on-surface text-xs font-semibold font-headline">
                           {role.title}
                         </p>
                         {role.current && (

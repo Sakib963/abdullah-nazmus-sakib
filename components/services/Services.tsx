@@ -51,9 +51,9 @@ export default function Services() {
         </div>
 
         {/* CTA strip */}
-        <div className="mt-10 glass-panel rounded-2xl border-white/5 px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-10 glass-panel rounded-2xl px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <p className="text-white font-bold font-headline text-sm">Have a project in mind?</p>
+            <p className="text-on-surface font-bold font-headline text-sm">Have a project in mind?</p>
             <p className="text-on-surface-variant text-xs font-body mt-0.5">Worst case, we have a good conversation about your idea.</p>
           </div>
           <a

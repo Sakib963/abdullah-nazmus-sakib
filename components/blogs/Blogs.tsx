@@ -38,7 +38,7 @@ export default function Blogs() {
           />
           <Link
             href="/blogs"
-            className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2 px-4 py-2 glass-panel text-xs text-on-surface-variant hover:text-white border-white/10 rounded-full hover:bg-white/5 transition-all font-headline"
+            className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2 px-4 py-2 glass-panel text-xs text-on-surface-variant hover:text-on-surface rounded-full hover:bg-black/[0.06] dark:hover:bg-white/5 transition-all font-headline"
           >
             View All
             <span className="material-symbols-outlined text-[14px]">open_in_new</span>
@@ -46,7 +46,7 @@ export default function Blogs() {
         </div>
 
         {visible.length === 0 ? (
-          <div className="glass-panel rounded-2xl p-12 border-white/5 text-center">
+          <div className="glass-panel rounded-2xl p-12 text-center">
             <span className="material-symbols-outlined text-4xl text-on-surface-variant/30">edit_note</span>
             <p className="text-on-surface-variant text-sm mt-3 font-body">First post coming soon.</p>
           </div>

@@ -24,7 +24,7 @@ export default function BlogCard({
     <ScrollReveal direction="up" delay={index * 0.08} amount={0.1}>
       <Link
         href={href}
-        className={`glass-panel rounded-2xl overflow-hidden border-white/5 glass-card-hover group flex flex-col sm:flex-row h-full ${imageRight ? "sm:flex-row-reverse" : ""}`}
+        className={`glass-panel rounded-2xl overflow-hidden glass-card-hover group flex flex-col sm:flex-row h-full ${imageRight ? "sm:flex-row-reverse" : ""}`}
       >
         {/* Image — fixed width on desktop */}
         <div className="relative h-52 sm:h-auto sm:w-72 lg:w-80 flex-shrink-0 overflow-hidden">
@@ -41,7 +41,7 @@ export default function BlogCard({
 
           {/* Label */}
           <div className="absolute top-3 left-3">
-            <span className={`text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 glass-panel rounded-full border-white/10 ${accentColor}`}>
+            <span className={`text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 glass-panel rounded-full ${accentColor}`}>
               {label}
             </span>
           </div>
@@ -67,7 +67,7 @@ export default function BlogCard({
             </span>
           </div>
 
-          <h3 className={`text-lg font-bold tracking-tight font-headline leading-snug text-white group-hover:${accentColor} transition-colors`}>
+          <h3 className={`text-lg font-bold tracking-tight font-headline leading-snug text-on-surface group-hover:${accentColor} transition-colors`}>
             {title}
           </h3>
 

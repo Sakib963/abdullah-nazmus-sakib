@@ -21,7 +21,7 @@ export default function SectionHeading({
 }: SectionHeadingProps) {
   return (
     <div className={`${centered ? "text-center" : ""} ${className}`}>
-      <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight font-headline">
+      <h2 className="text-3xl md:text-5xl font-bold text-on-surface tracking-tight font-headline">
         {pre && <>{pre} </>}
         <span className={accentClassName}>{accent}</span>
         {post && <> {post}</>}

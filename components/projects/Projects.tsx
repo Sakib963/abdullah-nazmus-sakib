@@ -38,7 +38,7 @@ export default function Projects() {
           />
           <Link
             href="/projects"
-            className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2 px-4 py-2 glass-panel text-xs text-on-surface-variant hover:text-white border-white/10 rounded-full hover:bg-white/5 transition-all font-headline"
+            className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2 px-4 py-2 glass-panel text-xs text-on-surface-variant hover:text-on-surface rounded-full hover:bg-black/[0.06] dark:hover:bg-white/5 transition-all font-headline"
           >
             View All
             <span className="material-symbols-outlined text-[14px]">open_in_new</span>

@@ -13,23 +13,56 @@ interface Burst {
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const SPRING = { stiffness: 140, damping: 18, mass: 0.6 };
-const LEFT_COLOR  = { solid: "rgba(199,185,245,", glow: "rgba(199,185,245," };
-const RIGHT_COLOR = { solid: "rgba(201,232,238,", glow: "rgba(201,232,238," };
-const PARTICLE_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315]; // 8 directions
+const PARTICLE_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315];
+
+// Dark mode: light pastels visible on dark bg
+const DARK = {
+  left:  { solid: "rgba(199,185,245,", glow: "rgba(199,185,245," },
+  right: { solid: "rgba(201,232,238,", glow: "rgba(201,232,238," },
+  dot:   "rgba(199,185,245,1)",
+  dotGlow: "0 0 6px rgba(199,185,245,0.9), 0 0 14px rgba(199,185,245,0.5)",
+  ringBorder: "rgba(199,185,245,0.28)",
+  ringBg:     "rgba(199,185,245,0.04)",
+  ringShadow: "0 0 10px rgba(199,185,245,0.12), inset 0 0 10px rgba(199,185,245,0.05)",
+  spot:       "rgba(199,185,245,0.7)",
+  spotGlow:   "0 0 6px rgba(199,185,245,0.8)",
+};
+
+// Light mode: deep primary/secondary visible on lavender bg
+const LIGHT = {
+  left:  { solid: "rgba(88,70,160,",  glow: "rgba(88,70,160,"  },
+  right: { solid: "rgba(25,105,116,", glow: "rgba(25,105,116," },
+  dot:   "rgba(88,70,160,1)",
+  dotGlow: "0 0 6px rgba(88,70,160,0.7), 0 0 14px rgba(88,70,160,0.35)",
+  ringBorder: "rgba(88,70,160,0.35)",
+  ringBg:     "rgba(88,70,160,0.06)",
+  ringShadow: "0 0 10px rgba(88,70,160,0.1), inset 0 0 10px rgba(88,70,160,0.05)",
+  spot:       "rgba(88,70,160,0.8)",
+  spotGlow:   "0 0 6px rgba(88,70,160,0.7)",
+};
 
 // ── Main component ────────────────────────────────────────────────────────────
 export default function MouseEffect() {
-  const [bursts, setBursts]     = useState<Burst[]>([]);
-  const [visible, setVisible]   = useState(false);
-  const idRef                   = useRef(0);
+  const [bursts, setBursts]   = useState<Burst[]>([]);
+  const [visible, setVisible] = useState(false);
+  const [isDark, setIsDark]   = useState(true);
+  const idRef = useRef(0);
 
   const mouseX = useMotionValue(-300);
   const mouseY = useMotionValue(-300);
   const ringX  = useSpring(mouseX, SPRING);
   const ringY  = useSpring(mouseY, SPRING);
 
+  // Track theme changes
   useEffect(() => {
-    // Only on desktop
+    const check = () => setIsDark(document.documentElement.classList.contains("dark"));
+    check();
+    const obs = new MutationObserver(check);
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
     document.body.style.cursor = "none";
@@ -41,7 +74,7 @@ export default function MouseEffect() {
     }
 
     function onDown(e: MouseEvent) {
-      if (e.button === 2) return; // handle right click via contextmenu
+      if (e.button === 2) return;
       const id = ++idRef.current;
       setBursts(prev => [...prev, { id, x: e.clientX, y: e.clientY, type: "left" }]);
       setTimeout(() => setBursts(prev => prev.filter(b => b.id !== id)), 900);
@@ -73,6 +106,8 @@ export default function MouseEffect() {
     };
   }, []);
 
+  const theme = isDark ? DARK : LIGHT;
+
   return (
     <>
       <style>{`@media (pointer: fine) { *, *::before, *::after { cursor: none !important; } }`}</style>
@@ -92,8 +127,8 @@ export default function MouseEffect() {
                 translateX: "-50%", translateY: "-50%",
                 width: 5, height: 5,
                 borderRadius: "50%",
-                background: "rgba(199,185,245,1)",
-                boxShadow: "0 0 6px rgba(199,185,245,0.9), 0 0 14px rgba(199,185,245,0.5)",
+                background: theme.dot,
+                boxShadow: theme.dotGlow,
                 zIndex: 99999,
                 pointerEvents: "none",
               }}
@@ -111,16 +146,14 @@ export default function MouseEffect() {
                 translateX: "-50%", translateY: "-50%",
                 width: 32, height: 32,
                 borderRadius: "50%",
-                border: "1px solid rgba(199,185,245,0.28)",
-                background: "rgba(199,185,245,0.04)",
+                border: `1px solid ${theme.ringBorder}`,
+                background: theme.ringBg,
                 backdropFilter: "blur(1px)",
-                boxShadow:
-                  "0 0 10px rgba(199,185,245,0.12), inset 0 0 10px rgba(199,185,245,0.05)",
+                boxShadow: theme.ringShadow,
                 zIndex: 99998,
                 pointerEvents: "none",
               }}
             >
-              {/* rotating highlight spot on ring */}
               <motion.span
                 animate={{ rotate: 360 }}
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
@@ -128,8 +161,8 @@ export default function MouseEffect() {
                   position: "absolute", top: -2, left: "50%",
                   marginLeft: -2, width: 4, height: 4,
                   borderRadius: "50%",
-                  background: "rgba(199,185,245,0.7)",
-                  boxShadow: "0 0 6px rgba(199,185,245,0.8)",
+                  background: theme.spot,
+                  boxShadow: theme.spotGlow,
                   transformOrigin: "2px 18px",
                 }}
               />
@@ -141,7 +174,7 @@ export default function MouseEffect() {
       {/* ── Click bursts ── */}
       <AnimatePresence>
         {bursts.map(burst => {
-          const c = burst.type === "left" ? LEFT_COLOR : RIGHT_COLOR;
+          const c = burst.type === "left" ? theme.left : theme.right;
           return (
             <div key={burst.id} style={{ position: "fixed", top: 0, left: 0, pointerEvents: "none", zIndex: 99997 }}>
 
@@ -201,7 +234,7 @@ export default function MouseEffect() {
               {/* Radial particles */}
               {PARTICLE_ANGLES.map((angle, i) => {
                 const rad  = (angle * Math.PI) / 180;
-                const dist = i % 2 === 0 ? 38 : 26; // alternating long/short
+                const dist = i % 2 === 0 ? 38 : 26;
                 return (
                   <motion.div
                     key={i}

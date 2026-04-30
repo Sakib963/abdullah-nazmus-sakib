@@ -93,7 +93,7 @@ export default function Technologies() {
               className={`px-3 py-1.5 rounded-full text-[11px] font-bold font-label uppercase tracking-wider transition-all duration-300 ${
                 activeCategory === cat
                   ? "bg-primary/20 text-primary border border-primary/30"
-                  : "glass-panel text-on-surface-variant hover:text-white border-white/5"
+                  : "glass-panel text-on-surface-variant hover:text-on-surface"
               }`}
             >
               {cat}

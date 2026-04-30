@@ -35,13 +35,13 @@ export default function Contact() {
       <div className="max-w-3xl mx-auto relative z-10">
         <div
           ref={cardRef}
-          className="glass-panel p-8 md:p-12 rounded-2xl relative overflow-hidden border-white/10"
+          className="glass-panel p-8 md:p-12 rounded-2xl relative overflow-hidden"
         >
           {/* Inner glow accent */}
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
           <div className="mb-8">
-            <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-3 font-headline">
+            <h2 className="text-3xl md:text-5xl font-bold text-on-surface tracking-tight mb-3 font-headline">
               Let&apos;s Craft the{" "}
               <span className="italic text-primary">Unseen</span>
             </h2>

@@ -86,7 +86,7 @@ export default function ContactForm() {
           <div className="w-14 h-14 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
             <span className="material-symbols-outlined text-primary text-2xl">check</span>
           </div>
-          <p className="text-white font-bold font-headline text-lg">Message Sent!</p>
+          <p className="text-on-surface font-bold font-headline text-lg">Message Sent!</p>
           <p className="text-on-surface-variant text-sm font-body">
             I&apos;ll get back to you soon.
           </p>
@@ -128,7 +128,7 @@ export default function ContactForm() {
                   onChange={(e) => setValues((v) => ({ ...v, [field.id]: e.target.value }))}
                   placeholder=" "
                   required
-                  className={`peer w-full bg-white/[0.05] backdrop-blur-sm border border-white/[0.10] rounded-xl px-4 pt-6 pb-3 text-white text-sm outline-none transition-all duration-300 focus:bg-white/[0.09] ${field.focusBorder} ${field.focusShadow}`}
+                  className={`peer w-full bg-black/[0.04] dark:bg-white/[0.05] backdrop-blur-sm border border-black/[0.09] dark:border-white/[0.10] rounded-xl px-4 pt-6 pb-3 text-on-surface text-sm outline-none transition-all duration-300 focus:bg-black/[0.07] dark:focus:bg-white/[0.09] ${field.focusBorder} ${field.focusShadow}`}
                 />
                 <label
                   htmlFor={field.id}
@@ -153,7 +153,7 @@ export default function ContactForm() {
                 placeholder=" "
                 rows={5}
                 required
-                className={`peer w-full bg-white/[0.05] backdrop-blur-sm border border-white/[0.10] rounded-xl px-4 pt-8 pb-3 text-white text-sm outline-none transition-all duration-300 resize-none focus:bg-white/[0.09] ${field.focusBorder} ${field.focusShadow}`}
+                className={`peer w-full bg-black/[0.04] dark:bg-white/[0.05] backdrop-blur-sm border border-black/[0.09] dark:border-white/[0.10] rounded-xl px-4 pt-8 pb-3 text-on-surface text-sm outline-none transition-all duration-300 resize-none focus:bg-black/[0.07] dark:focus:bg-white/[0.09] ${field.focusBorder} ${field.focusShadow}`}
               />
               <label
                 htmlFor={field.id}

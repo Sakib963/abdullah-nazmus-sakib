@@ -39,14 +39,15 @@ const DAILY = [
 ];
 
 const REGULAR = [
-  { name: "Next.js",    color: "#e8e8e8", siIcon: "SiNextdotjs",  note: "Personal and client projects. App router, SSR, image handling." },
-  { name: "React",      color: "#61DAFB", siIcon: "SiReact",      note: "Comfortable with hooks, context and component patterns." },
-  { name: "Express",    color: "#ABABAB", siIcon: "SiExpress",    note: "Lightweight APIs and middleware chains. Know it well." },
-  { name: "JavaScript", color: "#F7DF1E", siIcon: "SiJavascript", note: "Where it all started. Still write it, just with TypeScript on top." },
-  { name: "Oracle",     color: "#F80000", siIcon: undefined,      note: "Used extensively at Celloscope. SQL, stored procedures, views.", abbr: "Or" },
-  { name: "Firebase",   color: "#FFCA28", siIcon: "SiFirebase",   note: "Auth and Firestore for rapid prototypes and smaller projects." },
-  { name: "Cypress",    color: "#17D19B", siIcon: "SiCypress",    note: "E2E testing. Writing tests that actually catch real bugs." },
-  { name: "MongoDB",    color: "#47A248", siIcon: "SiMongodb",    note: "Document modelling and aggregation pipelines when relational is overkill." },
+  // CSS-variable colors adapt automatically: dark in light mode, light in dark mode
+  { name: "Next.js",    color: "rgb(var(--color-on-surface))",         siIcon: "SiNextdotjs",  note: "Personal and client projects. App router, SSR, image handling." },
+  { name: "React",      color: "#0E7490",                              siIcon: "SiReact",      note: "Comfortable with hooks, context and component patterns." },
+  { name: "Express",    color: "rgb(var(--color-on-surface-variant))", siIcon: "SiExpress",    note: "Lightweight APIs and middleware chains. Know it well." },
+  { name: "JavaScript", color: "#7A5E00",                              siIcon: "SiJavascript", note: "Where it all started. Still write it, just with TypeScript on top." },
+  { name: "Oracle",     color: "#F80000",                              siIcon: undefined,      note: "Used extensively at Celloscope. SQL, stored procedures, views.", abbr: "Or" },
+  { name: "Firebase",   color: "#B45309",                              siIcon: "SiFirebase",   note: "Auth and Firestore for rapid prototypes and smaller projects." },
+  { name: "Cypress",    color: "#17D19B",                              siIcon: "SiCypress",    note: "E2E testing. Writing tests that actually catch real bugs." },
+  { name: "MongoDB",    color: "#47A248",                              siIcon: "SiMongodb",    note: "Document modelling and aggregation pipelines when relational is overkill." },
 ];
 
 const PRINCIPLES = [
@@ -74,7 +75,7 @@ function FreqLabel({ label, color }: { label: string; color: string }) {
       <span className="text-[10px] font-label font-bold uppercase tracking-[0.2em] flex-shrink-0" style={{ color }}>
         {label}
       </span>
-      <div className="flex-1 h-px" style={{ background: `linear-gradient(to right, ${color}40, transparent)` }} />
+      <div className="flex-1 h-px opacity-25" style={{ background: `linear-gradient(to right, ${color}, transparent)` }} />
     </div>
   );
 }
@@ -116,8 +117,8 @@ function DailyRow({ name, color, siIcon, note, index, abbr = "??" }: { name: str
   return (
     <motion.div
       {...fadeUp(index)}
-      style={{ borderLeft: `2px solid ${color}`, background: "rgba(255,255,255,0.02)" }}
-      className="flex items-start gap-4 pl-4 py-3 rounded-r-xl hover:bg-white/[0.03] transition-colors"
+      style={{ borderLeft: `2px solid ${color}`, background: "var(--micro-card-bg)" }}
+      className="flex items-start gap-4 pl-4 py-3 rounded-r-xl hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors"
     >
       <div className="w-5 h-5 flex items-center justify-center flex-shrink-0 mt-[2px]">
         <TechIcon siIcon={siIcon} abbr={abbr} color={color} size={16} />
@@ -134,8 +135,8 @@ function RegularCard({ name, color, siIcon, note, index, abbr = "??" }: { name: 
   return (
     <motion.div
       {...fadeUp(index)}
-      style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)" }}
-      className="rounded-xl px-4 py-3 hover:bg-white/[0.04] transition-colors"
+      style={{ background: "var(--micro-card-bg)", border: "1px solid var(--micro-card-border)" }}
+      className="rounded-xl px-4 py-3 hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors"
     >
       <div className="flex items-center gap-2 mb-1.5">
         <TechIcon siIcon={siIcon} abbr={abbr} color={color} size={13} />
@@ -190,14 +191,14 @@ export default function SkillsV2() {
           {/* Left: Daily + Principles */}
           <div className="flex flex-col gap-10">
             <div>
-              <FreqLabel label="Reach for daily" color="#c7b9f5" />
+              <FreqLabel label="Reach for daily" color="rgb(var(--color-primary))" />
               <div className="space-y-1">
                 {DAILY.map((s, i) => <DailyRow key={s.name} {...s} index={i} />)}
               </div>
             </div>
 
             <div>
-              <FreqLabel label="How I work" color="#c7b9f5" />
+              <FreqLabel label="How I work" color="rgb(var(--color-primary))" />
               <div
                 style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}
                 className="rounded-xl divide-y divide-white/[0.05]"
@@ -215,14 +216,14 @@ export default function SkillsV2() {
           {/* Right: Regular + Toolbox */}
           <div className="space-y-10">
             <div>
-              <FreqLabel label="Comfortable with" color="#c9e8ee" />
+              <FreqLabel label="Comfortable with" color="rgb(var(--color-secondary))" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {REGULAR.map((s, i) => <RegularCard key={s.name} {...s} index={i} />)}
               </div>
             </div>
 
             <div>
-              <FreqLabel label="In the toolbox" color="#7bcf7b" />
+              <FreqLabel label="In the toolbox" color="rgb(var(--color-tertiary))" />
               <div className="flex flex-wrap gap-2">
                 {TOOLBOX.map((t, i) => (
                   <ToolboxPill key={t.name} name={t.name} color={t.color} siIcon={t.siIcon} abbr={t.abbr} index={i} />

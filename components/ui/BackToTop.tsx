@@ -37,7 +37,7 @@ export default function BackToTop() {
             whileTap={{ scale: 0.92 }}
             transition={{ type: "spring", stiffness: 300, damping: 22 }}
             aria-label="Back to top"
-            className="relative w-11 h-11 rounded-full glass-panel border-white/10 flex items-center justify-center text-primary shadow-[0_4px_24px_rgba(0,0,0,0.3)] hover:border-primary/30 hover:shadow-[0_4px_24px_rgba(199,185,245,0.15)] transition-[border,box-shadow] duration-300"
+            className="relative w-11 h-11 rounded-full glass-panel flex items-center justify-center text-primary shadow-[0_4px_24px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.3)] hover:border-primary/30 transition-[border,box-shadow] duration-300"
           >
             <span className="material-symbols-outlined text-[20px]">arrow_upward</span>
 

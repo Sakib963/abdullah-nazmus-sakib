@@ -12,11 +12,11 @@ export default function ReflectionCard({
   avatarText,
 }: Reflection) {
   return (
-    <div className="glass-panel rounded-2xl border-white/5 p-6 flex flex-col gap-5 h-full relative overflow-hidden group glass-card-hover">
+    <div className="glass-panel rounded-2xl p-6 flex flex-col gap-5 h-full relative overflow-hidden group glass-card-hover">
       {/* Decorative quote mark */}
       <span
         aria-hidden="true"
-        className="absolute -top-1 right-4 text-[88px] font-serif leading-none text-white opacity-[0.04] select-none pointer-events-none"
+        className="absolute -top-1 right-4 text-[88px] font-serif leading-none text-on-surface opacity-[0.06] select-none pointer-events-none"
       >
         &ldquo;
       </span>
@@ -47,7 +47,7 @@ export default function ReflectionCard({
           </div>
         )}
         <div>
-          <p className="text-white text-sm font-bold font-headline leading-tight">
+          <p className="text-on-surface text-sm font-bold font-headline leading-tight">
             {name}
           </p>
           <p className="text-on-surface-variant text-[11px] font-body mt-0.5">

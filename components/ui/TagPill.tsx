@@ -8,7 +8,7 @@ interface TagPillProps {
 export default function TagPill({
   label,
   colorClass = "text-on-surface-variant",
-  borderClass = "border-white/10",
+  borderClass = "border-black/[0.08] dark:border-white/10",
   size = "xs",
 }: TagPillProps) {
   const textSize = size === "xs" ? "text-[10px]" : "text-xs";
