@@ -19,7 +19,7 @@ export default function ProjectsPage() {
             All <span className="text-primary text-glow">Projects</span>
           </h1>
           <p className="text-on-surface-variant mt-2 text-sm font-body max-w-md">
-            {projects.length} projects — a complete archive.
+            {projects.length} projects. No progress bars, no made-up percentages.
           </p>
           <div className="w-16 h-0.5 bg-gradient-to-r from-primary to-transparent rounded-full mt-3" />
         </div>

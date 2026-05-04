@@ -1,117 +1,118 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useMotionValue, useSpring, useTransform, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ScrollReveal, TagPill, BrandIcon } from "@/components/ui";
+import { ScrollReveal, BrandIcon } from "@/components/ui";
 import type { Project } from "./projectData";
 
-const statusStyle: Record<Project["status"], string> = {
-  Production:      "text-emerald-400 border-emerald-400/25 bg-emerald-400/10",
-  "Open Source":   "text-primary border-primary/25 bg-primary/10",
-  "In Development":"text-amber-400 border-amber-400/25 bg-amber-400/10",
-  Archived:        "text-on-surface-variant border-black/[0.08] dark:border-white/10 bg-black/[0.04] dark:bg-white/5",
+const statusConfig: Record<
+  Project["status"],
+  { label: string; text: string; dot: string }
+> = {
+  Production:       { label: "Live",        text: "text-emerald-500 dark:text-emerald-400", dot: "bg-emerald-500 dark:bg-emerald-400" },
+  "Open Source":    { label: "Open Source", text: "text-primary",                           dot: "bg-primary" },
+  "In Development": { label: "In Progress", text: "text-amber-500 dark:text-amber-400",     dot: "bg-amber-500 dark:bg-amber-400" },
+  Archived:         { label: "Archived",    text: "text-on-surface-variant",                dot: "bg-on-surface-variant" },
 };
 
 export default function ProjectCard({
-  label,
   title,
   description,
   gitUrl,
   liveUrl,
   image,
-  accentColor,
   tags,
-  year,
   status,
   index,
 }: Project & { index: number }) {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [3, -3]), { stiffness: 200, damping: 32 });
+  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-3, 3]), { stiffness: 200, damping: 32 });
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [4, -4]), { stiffness: 180, damping: 28 });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-4, 4]), { stiffness: 180, damping: 28 });
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
+  function onMove(e: React.MouseEvent<HTMLDivElement>) {
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
   }
-  function handleMouseLeave() { x.set(0); y.set(0); }
+
+  const sc = statusConfig[status];
 
   return (
-    <ScrollReveal direction="up" delay={index * 0.1} amount={0.1}>
+    <ScrollReveal direction="up" delay={index * 0.12} amount={0.08}>
       <motion.div
-        ref={cardRef}
-        style={{ rotateX, rotateY, transformPerspective: 900 }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        className="glass-panel rounded-2xl overflow-hidden glass-card-hover group flex flex-col h-full"
+        style={{ rotateX, rotateY, transformPerspective: 1000 }}
+        onMouseMove={onMove}
+        onMouseLeave={() => { mx.set(0); my.set(0); }}
+        className="group relative glass-panel glass-card-hover rounded-2xl overflow-hidden flex flex-col h-full"
       >
-        {/* Image with overlay gradient */}
-        <div className="relative h-52 overflow-hidden flex-shrink-0">
+        {/* Image */}
+        <div className="relative h-52 flex-shrink-0 overflow-hidden rounded-t-2xl">
           <Image
             src={image}
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
+            loading="eager"
             className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
           />
-          {/* Bottom fade */}
-          <div className="absolute inset-0 bg-gradient-to-t from-surface/80 via-surface/10 to-transparent" />
+          {/* Gradient bleed into content area */}
+          <div className="absolute inset-0 bg-gradient-to-t from-surface/90 via-surface/10 to-transparent" />
 
-          {/* Top badges */}
-          <div className="absolute top-3 left-3 flex items-center gap-2">
-            <span className={`text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 glass-panel rounded-full ${accentColor}`}>
-              {label}
-            </span>
-            <span className={`text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full border ${statusStyle[status]}`}>
-              {status}
+          {/* Status badge */}
+          <div className="absolute top-3.5 right-3.5">
+            <span className={`inline-flex items-center gap-1.5 text-[9px] font-bold tracking-[0.13em] uppercase bg-surface/80 backdrop-blur-md border border-black/[0.1] dark:border-white/[0.12] px-2.5 py-[5px] rounded-full ${sc.text}`}>
+              <span className={`w-[5px] h-[5px] rounded-full flex-shrink-0 ${sc.dot}`} />
+              {sc.label}
             </span>
           </div>
-
-          {/* Year — bottom right of image */}
-          <span className="absolute bottom-3 right-3 text-[10px] font-label text-on-surface-variant/60 glass-panel px-2 py-0.5 rounded-full">
-            {year}
-          </span>
         </div>
 
         {/* Content */}
-        <div className="p-5 flex flex-col gap-3 flex-1">
-          <h3 className={`text-base font-bold tracking-tight font-headline leading-tight group-hover:${accentColor} transition-colors text-on-surface`}>
+        <div className="flex flex-col flex-1 px-5 pb-5 pt-3 gap-3">
+          <h3 className="text-[1.05rem] font-bold font-headline tracking-tight leading-snug text-on-surface group-hover:text-primary transition-colors duration-300">
             {title}
           </h3>
 
-          <p className="text-on-surface-variant text-xs leading-relaxed font-body line-clamp-3">
+          <p className="text-[0.8125rem] text-on-surface-variant leading-relaxed line-clamp-3 font-body">
             {description}
           </p>
 
-          <div className="flex flex-wrap gap-1.5 mt-auto pt-1">
-            {tags.map((tag) => <TagPill key={tag} label={tag} />)}
+          {/* Tags — deemphasized metadata */}
+          <div className="flex flex-wrap gap-x-3 gap-y-1 mt-auto pt-1">
+            {tags.map((tag) => (
+              <span key={tag} className="text-[10px] font-mono text-on-surface-variant/50 tracking-wide">
+                {tag}
+              </span>
+            ))}
           </div>
 
-          {/* Action row */}
-          <div className="flex items-center gap-2 pt-2 border-t border-black/[0.06] dark:border-white/5">
+          {/* Actions */}
+          <div className="flex items-center gap-2 pt-3.5 border-t border-black/[0.07] dark:border-white/[0.06]">
             <Link
               href={gitUrl}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="flex-1 flex items-center justify-center gap-1.5 py-2 glass-panel rounded-xl hover:border-black/20 dark:hover:border-white/25 hover:bg-black/[0.06] dark:hover:bg-white/5 transition-all text-[11px] font-bold font-headline text-on-surface-variant hover:text-on-surface dark:hover:text-white group/btn"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl border border-black/[0.1] dark:border-white/[0.12] bg-black/[0.04] dark:bg-white/[0.05] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] hover:border-black/[0.18] dark:hover:border-white/[0.24] active:scale-[0.97] transition-all text-[11px] font-bold font-headline text-on-surface-variant hover:text-on-surface dark:hover:text-white group/btn"
             >
               <BrandIcon name="github" className="w-3.5 h-3.5 group-hover/btn:text-primary transition-colors" />
               GitHub
             </Link>
+
             <Link
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 glass-panel rounded-xl hover:border-primary/30 hover:bg-primary/10 transition-all text-[11px] font-bold font-headline text-on-surface-variant hover:text-primary group/btn`}
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl border border-primary/[0.25] bg-primary/[0.1] hover:bg-primary/[0.2] hover:border-primary/[0.45] active:scale-[0.97] transition-all text-[11px] font-bold font-headline text-primary group/btn"
             >
-              <span className="material-symbols-outlined text-[15px] group-hover/btn:rotate-45 transition-transform">open_in_new</span>
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 flex-shrink-0 group-hover/btn:rotate-45 transition-transform" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
               Live Site
             </Link>
           </div>
