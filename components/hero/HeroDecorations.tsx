@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 // ╔══════════════════════════════════════════════════════════════╗
 // ║              DECORATION CONFIG — tweak here                 ║
@@ -222,8 +223,27 @@ const glyphs = [
 
 // ── Master component ──────────────────────────────────────────────────────────
 export default function HeroDecorationsV2() {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(true);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setActive(false);
+      return;
+    }
+    const node = rootRef.current;
+    if (!node) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setActive(entry.isIntersecting),
+      { rootMargin: "100px" }
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div ref={rootRef} className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      {active && (<>
 
       {/* ── Full-hero SVG circuit traces ── */}
       <svg
@@ -334,6 +354,7 @@ export default function HeroDecorationsV2() {
         <BinaryStream color={T(0.18)} delay={1.5} />
       </div>
 
+      </>)}
     </div>
   );
 }

@@ -105,9 +105,12 @@
   }
 
   html {
-    scroll-behavior: smooth;
     /* Smooth theme transition */
     transition: background-color 0.4s ease, color 0.4s ease;
+  }
+  /* Lenis handles smooth scrolling — opt-in via data attribute for native fallback (silences Next.js warning) */
+  html[data-scroll-behavior="smooth"] {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -142,6 +145,29 @@
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Background blob drift — pure CSS (cheaper than Framer Motion × N) ─ */
+@keyframes blob-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  40%      { transform: translate3d(12px, -8px, 0) scale(1.08); }
+  70%      { transform: translate3d(-6px, 5px, 0) scale(0.96); }
+}
+.blob-drift {
+  animation-name: blob-drift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* Pause expensive animations and disable smooth scroll for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .blob-drift { animation: none !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

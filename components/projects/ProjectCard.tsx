@@ -54,7 +54,7 @@ export default function ProjectCard({
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            loading="eager"
+            loading={index === 0 ? "eager" : "lazy"}
             className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
           />
           {/* Gradient bleed into content area */}

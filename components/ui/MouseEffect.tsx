@@ -64,6 +64,7 @@ export default function MouseEffect() {
 
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     document.body.style.cursor = "none";
 
@@ -110,7 +111,7 @@ export default function MouseEffect() {
 
   return (
     <>
-      <style>{`@media (pointer: fine) { *, *::before, *::after { cursor: none !important; } }`}</style>
+      <style>{`@media (pointer: fine) and (prefers-reduced-motion: no-preference) { html, body { cursor: none; } a, button, input, textarea, select, [role="button"], label { cursor: none; } }`}</style>
 
       <AnimatePresence>
         {visible && (
