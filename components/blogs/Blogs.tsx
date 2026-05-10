@@ -2,14 +2,18 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
-import { blogPosts, MAX_HOMEPAGE_BLOGS } from "./blogData";
 import BlogCard from "./BlogCard";
 import { AnimatedBlob, SectionHeading } from "@/components/ui";
 import Link from "next/link";
+import type { BlogMeta } from "@/lib/blog";
 
-export default function Blogs() {
+interface BlogsProps {
+  posts: BlogMeta[];
+  total: number;
+}
+
+export default function Blogs({ posts, total }: BlogsProps) {
   const headingRef = useRef<HTMLDivElement>(null);
-  const visible = blogPosts.slice(0, MAX_HOMEPAGE_BLOGS);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -27,25 +31,24 @@ export default function Blogs() {
       <AnimatedBlob color="bg-tertiary" size="w-[200px] h-[200px]" position="bottom-[15%] -left-[3%]" duration={10} delay={1.5} />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Heading — centered, View All floated right */}
         <div ref={headingRef} className="relative mb-12">
           <SectionHeading
             pre="The"
             accent="Codex"
             accentClassName="text-tertiary text-glow"
-            subtitle="Thoughts on engineering, design systems, and the craft of building software."
+            subtitle="Reflections on engineering, system design, and the craft of building software."
             dividerColor="from-tertiary"
           />
           <Link
-            href="/blogs"
+            href="/blog"
             className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-2 px-4 py-2 glass-panel text-xs text-on-surface-variant hover:text-on-surface rounded-full hover:bg-black/[0.06] dark:hover:bg-white/5 transition-all font-headline"
           >
             View All
-            <span className="material-symbols-outlined text-[14px]">open_in_new</span>
+            <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
           </Link>
         </div>
 
-        {visible.length === 0 ? (
+        {posts.length === 0 ? (
           <div className="glass-panel rounded-2xl p-12 text-center">
             <span className="material-symbols-outlined text-4xl text-on-surface-variant/30">edit_note</span>
             <p className="text-on-surface-variant text-sm mt-3 font-body">First post coming soon.</p>
@@ -53,15 +56,15 @@ export default function Blogs() {
         ) : (
           <>
             <div className="flex flex-col gap-5">
-              {visible.map((post, i) => (
-                <BlogCard key={post.id} {...post} index={i} />
+              {posts.map((post, i) => (
+                <BlogCard key={post.slug} {...post} index={i} />
               ))}
             </div>
 
-            {blogPosts.length > MAX_HOMEPAGE_BLOGS && (
+            {total > posts.length && (
               <p className="text-center text-xs text-on-surface-variant mt-8 font-label">
-                Showing {visible.length} of {blogPosts.length} posts.{" "}
-                <Link href="/blogs" className="text-tertiary hover:underline">See all →</Link>
+                Showing {posts.length} of {total} posts.{" "}
+                <Link href="/blog" className="text-tertiary hover:underline">See all →</Link>
               </p>
             )}
           </>

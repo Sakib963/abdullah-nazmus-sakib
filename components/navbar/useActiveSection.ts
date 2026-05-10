@@ -1,15 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { navLinks, contactLink } from "./navLinks";
 
-// Derived from navLinks — single source of truth
 const SECTION_IDS = [...navLinks, contactLink].map((l) => l.href.split("#")[1]);
 
 export function useActiveSection(): string {
   const [active, setActive] = useState("Home");
+  const pathname = usePathname();
 
   useEffect(() => {
+    if (pathname !== "/") return;
+
+    // Re-observe on each return to home — old observers point to unmounted nodes
+    setActive("Home");
+
     const observers: IntersectionObserver[] = [];
 
     SECTION_IDS.forEach((id) => {
@@ -28,7 +34,7 @@ export function useActiveSection(): string {
     });
 
     return () => observers.forEach((o) => o.disconnect());
-  }, []);
+  }, [pathname]);
 
   return active;
 }

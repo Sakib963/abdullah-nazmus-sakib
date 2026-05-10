@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
-// ── Types ─────────────────────────────────────────────────────────────────────
 interface Burst {
   id: number;
   x: number;
@@ -11,11 +10,9 @@ interface Burst {
   type: "left" | "right";
 }
 
-// ── Config ────────────────────────────────────────────────────────────────────
-const SPRING = { stiffness: 140, damping: 18, mass: 0.6 };
 const PARTICLE_ANGLES = [0, 45, 90, 135, 180, 225, 270, 315];
+const RING_LERP = 0.05;
 
-// Dark mode: light pastels visible on dark bg
 const DARK = {
   left:  { solid: "rgba(199,185,245,", glow: "rgba(199,185,245," },
   right: { solid: "rgba(201,232,238,", glow: "rgba(201,232,238," },
@@ -28,7 +25,6 @@ const DARK = {
   spotGlow:   "0 0 6px rgba(199,185,245,0.8)",
 };
 
-// Light mode: deep primary/secondary visible on lavender bg
 const LIGHT = {
   left:  { solid: "rgba(88,70,160,",  glow: "rgba(88,70,160,"  },
   right: { solid: "rgba(25,105,116,", glow: "rgba(25,105,116," },
@@ -41,17 +37,13 @@ const LIGHT = {
   spotGlow:   "0 0 6px rgba(88,70,160,0.7)",
 };
 
-// ── Main component ────────────────────────────────────────────────────────────
 export default function MouseEffect() {
-  const [bursts, setBursts]   = useState<Burst[]>([]);
-  const [visible, setVisible] = useState(false);
-  const [isDark, setIsDark]   = useState(true);
+  const [bursts, setBursts] = useState<Burst[]>([]);
+  const [isDark, setIsDark] = useState(true);
   const idRef = useRef(0);
 
-  const mouseX = useMotionValue(-300);
-  const mouseY = useMotionValue(-300);
-  const ringX  = useSpring(mouseX, SPRING);
-  const ringY  = useSpring(mouseY, SPRING);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
 
   // Track theme changes
   useEffect(() => {
@@ -62,48 +54,81 @@ export default function MouseEffect() {
     return () => obs.disconnect();
   }, []);
 
+  // Position tracking — direct DOM, no React re-renders, no framer-motion springs
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     document.body.style.cursor = "none";
 
-    function onMove(e: MouseEvent) {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-      if (!visible) setVisible(true);
-    }
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
 
-    function onDown(e: MouseEvent) {
+    let targetX = -300;
+    let targetY = -300;
+    let ringX = -300;
+    let ringY = -300;
+    let visible = false;
+    let raf = 0;
+
+    const showCursors = () => {
+      if (visible) return;
+      visible = true;
+      dot.style.opacity = "1";
+      ring.style.opacity = "1";
+    };
+
+    const hideCursors = () => {
+      visible = false;
+      dot.style.opacity = "0";
+      ring.style.opacity = "0";
+    };
+
+    const onMove = (e: MouseEvent) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      // Inner dot: snap instantly so it always sits exactly under the pointer
+      dot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0) translate(-50%, -50%)`;
+      showCursors();
+    };
+
+    const onDown = (e: MouseEvent) => {
       if (e.button === 2) return;
       const id = ++idRef.current;
-      setBursts(prev => [...prev, { id, x: e.clientX, y: e.clientY, type: "left" }]);
-      setTimeout(() => setBursts(prev => prev.filter(b => b.id !== id)), 900);
-    }
+      setBursts((prev) => [...prev, { id, x: e.clientX, y: e.clientY, type: "left" }]);
+      window.setTimeout(() => setBursts((prev) => prev.filter((b) => b.id !== id)), 900);
+    };
 
-    function onContext(e: MouseEvent) {
+    const onContext = (e: MouseEvent) => {
       if (process.env.NODE_ENV === "production") e.preventDefault();
       const id = ++idRef.current;
-      setBursts(prev => [...prev, { id, x: e.clientX, y: e.clientY, type: "right" }]);
-      setTimeout(() => setBursts(prev => prev.filter(b => b.id !== id)), 900);
-    }
+      setBursts((prev) => [...prev, { id, x: e.clientX, y: e.clientY, type: "right" }]);
+      window.setTimeout(() => setBursts((prev) => prev.filter((b) => b.id !== id)), 900);
+    };
 
-    function onLeave() { setVisible(false); }
-    function onEnter() { setVisible(true);  }
+    const tick = () => {
+      ringX += (targetX - ringX) * RING_LERP;
+      ringY += (targetY - ringY) * RING_LERP;
+      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
 
-    window.addEventListener("mousemove",   onMove);
-    window.addEventListener("mousedown",   onDown);
+    window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("mousedown", onDown);
     window.addEventListener("contextmenu", onContext);
-    document.addEventListener("mouseleave", onLeave);
-    document.addEventListener("mouseenter", onEnter);
+    document.addEventListener("mouseleave", hideCursors);
+    document.addEventListener("mouseenter", showCursors);
 
     return () => {
+      cancelAnimationFrame(raf);
       document.body.style.cursor = "";
-      window.removeEventListener("mousemove",   onMove);
-      window.removeEventListener("mousedown",   onDown);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mousedown", onDown);
       window.removeEventListener("contextmenu", onContext);
-      document.removeEventListener("mouseleave", onLeave);
-      document.removeEventListener("mouseenter", onEnter);
+      document.removeEventListener("mouseleave", hideCursors);
+      document.removeEventListener("mouseenter", showCursors);
     };
   }, []);
 
@@ -111,75 +136,77 @@ export default function MouseEffect() {
 
   return (
     <>
-      <style>{`@media (pointer: fine) and (prefers-reduced-motion: no-preference) { html, body { cursor: none; } a, button, input, textarea, select, [role="button"], label { cursor: none; } }`}</style>
+      <style>{`@media (pointer: fine) and (prefers-reduced-motion: no-preference) { *, *::before, *::after { cursor: none !important; } }`}</style>
 
+      {/* Inner precision dot — instant follow, direct DOM transforms */}
+      <div
+        ref={dotRef}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: 6,
+          height: 6,
+          borderRadius: "50%",
+          background: theme.dot,
+          boxShadow: theme.dotGlow,
+          opacity: 0,
+          zIndex: 99999,
+          pointerEvents: "none",
+          willChange: "transform",
+          transform: "translate3d(-300px, -300px, 0)",
+          transition: "opacity 150ms ease, background 200ms ease",
+        }}
+      />
+
+      {/* Trailing glass ring — eased follow via lerp */}
+      <div
+        ref={ringRef}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: 32,
+          height: 32,
+          borderRadius: "50%",
+          border: `1px solid ${theme.ringBorder}`,
+          background: theme.ringBg,
+          backdropFilter: "blur(1px)",
+          WebkitBackdropFilter: "blur(1px)",
+          boxShadow: theme.ringShadow,
+          opacity: 0,
+          zIndex: 99998,
+          pointerEvents: "none",
+          willChange: "transform",
+          transform: "translate3d(-300px, -300px, 0)",
+          transition: "opacity 200ms ease, border-color 200ms ease, background 200ms ease",
+        }}
+      >
+        <span
+          style={{
+            position: "absolute",
+            top: -2,
+            left: "50%",
+            marginLeft: -2,
+            width: 4,
+            height: 4,
+            borderRadius: "50%",
+            background: theme.spot,
+            boxShadow: theme.spotGlow,
+            transformOrigin: "2px 18px",
+            animation: "mouse-spot-rot 3s linear infinite",
+          }}
+        />
+      </div>
+
+      <style>{`@keyframes mouse-spot-rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
+
+      {/* Click bursts — rare, event-driven, framer-motion is fine here */}
       <AnimatePresence>
-        {visible && (
-          <>
-            {/* ── Inner precision dot ── */}
-            <motion.div
-              key="dot"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-              style={{
-                position: "fixed", top: 0, left: 0,
-                x: mouseX, y: mouseY,
-                translateX: "-50%", translateY: "-50%",
-                width: 5, height: 5,
-                borderRadius: "50%",
-                background: theme.dot,
-                boxShadow: theme.dotGlow,
-                zIndex: 99999,
-                pointerEvents: "none",
-              }}
-            />
-
-            {/* ── Trailing glass ring ── */}
-            <motion.div
-              key="ring"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-              style={{
-                position: "fixed", top: 0, left: 0,
-                x: ringX, y: ringY,
-                translateX: "-50%", translateY: "-50%",
-                width: 32, height: 32,
-                borderRadius: "50%",
-                border: `1px solid ${theme.ringBorder}`,
-                background: theme.ringBg,
-                backdropFilter: "blur(1px)",
-                boxShadow: theme.ringShadow,
-                zIndex: 99998,
-                pointerEvents: "none",
-              }}
-            >
-              <motion.span
-                animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                style={{
-                  position: "absolute", top: -2, left: "50%",
-                  marginLeft: -2, width: 4, height: 4,
-                  borderRadius: "50%",
-                  background: theme.spot,
-                  boxShadow: theme.spotGlow,
-                  transformOrigin: "2px 18px",
-                }}
-              />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* ── Click bursts ── */}
-      <AnimatePresence>
-        {bursts.map(burst => {
+        {bursts.map((burst) => {
           const c = burst.type === "left" ? theme.left : theme.right;
           return (
             <div key={burst.id} style={{ position: "fixed", top: 0, left: 0, pointerEvents: "none", zIndex: 99997 }}>
-
-              {/* Full-viewport X/Y axis flash */}
               <motion.div
                 style={{
                   position: "fixed", left: burst.x, top: 0, bottom: 0, width: 1,
@@ -201,7 +228,6 @@ export default function MouseEffect() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
               />
 
-              {/* Outer expanding ring */}
               <motion.div
                 style={{
                   position: "fixed",
@@ -217,7 +243,6 @@ export default function MouseEffect() {
                 transition={{ duration: 0.7, ease: "easeOut" }}
               />
 
-              {/* Inner fast ring */}
               <motion.div
                 style={{
                   position: "fixed",
@@ -232,9 +257,8 @@ export default function MouseEffect() {
                 transition={{ duration: 0.4, ease: "easeOut" }}
               />
 
-              {/* Radial particles */}
               {PARTICLE_ANGLES.map((angle, i) => {
-                const rad  = (angle * Math.PI) / 180;
+                const rad = (angle * Math.PI) / 180;
                 const dist = i % 2 === 0 ? 38 : 26;
                 return (
                   <motion.div
