@@ -2,89 +2,91 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { AnimatedBlob, ScrollReveal, SectionHeading } from "@/components/ui";
+import { ScrollReveal, SectionHeading } from "@/components/ui";
 import { reflections } from "./reflectionData";
 import ReflectionCard from "./ReflectionCard";
 
-const INTERVAL_MS = 4200;
-const DESKTOP_COUNT = 3;
+const AUTO_ROTATE_MS = 5000;
+const DESKTOP_WINDOW = 2;
+const total = reflections.length;
+
+const cardTransition = { duration: 0.55, ease: [0.22, 1, 0.36, 1] };
 
 const cardVariants = {
-  enter: { opacity: 0, x: 56, scale: 0.97 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    scale: 1,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-  },
+  enter: { opacity: 0, x: 40 },
+  visible: { opacity: 1, x: 0, transition: cardTransition },
   exit: {
     opacity: 0,
-    x: -56,
-    scale: 0.97,
-    transition: { duration: 0.45, ease: [0.55, 0, 0.78, 0] },
+    x: -40,
+    transition: { duration: 0.4, ease: [0.55, 0, 0.78, 0] },
   },
 };
 
 export default function Reflections() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const total = reflections.length;
+  const [expandedIds, setExpandedIds] = useState<Set<number>>(() => new Set());
 
-  const advance = useCallback(
-    () => setActive((a) => (a + 1) % total),
-    [total]
-  );
+  const next = useCallback(() => setActive((a) => (a + 1) % total), []);
+  const prev = useCallback(() => setActive((a) => (a - 1 + total) % total), []);
+
+  const handleExpandedChange = useCallback((id: number, expanded: boolean) => {
+    setExpandedIds((prev) => {
+      const updated = new Set(prev);
+      if (expanded) updated.add(id);
+      else updated.delete(id);
+      return updated;
+    });
+  }, []);
+
+  // Any manual page change drops the "reading" state — the expanded card unmounts anyway
+  useEffect(() => {
+    setExpandedIds(new Set());
+  }, [active]);
+
+  const isReading = expandedIds.size > 0;
 
   useEffect(() => {
-    if (paused) return;
-    const id = setInterval(advance, INTERVAL_MS);
+    if (paused || isReading) return;
+    const id = setInterval(next, AUTO_ROTATE_MS);
     return () => clearInterval(id);
-  }, [paused, advance]);
+  }, [paused, isReading, next]);
 
-  const desktopItems = Array.from({ length: DESKTOP_COUNT }, (_, i) =>
-    reflections[(active + i) % total]
+  const desktopItems = Array.from(
+    { length: DESKTOP_WINDOW },
+    (_, i) => reflections[(active + i) % total]
   );
+  const mobileItem = reflections[active];
 
   return (
     <section
       id="Reflections"
-      className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden"
+      className="py-32 md:py-40 px-6 md:px-16 lg:px-24 relative"
     >
-      <AnimatedBlob
-        color="bg-secondary"
-        size="w-[360px] h-[360px]"
-        position="top-[8%] -left-[7%]"
-        duration={12}
-        delay={1}
-      />
-      <AnimatedBlob
-        color="bg-primary"
-        size="w-[260px] h-[260px]"
-        position="bottom-[5%] -right-[5%]"
-        duration={10}
-        delay={2}
-      />
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        {/* Heading */}
+      <div className="max-w-5xl mx-auto relative z-10">
         <ScrollReveal direction="up">
           <SectionHeading
-            pre="Working With"
-            accent="Sakib"
+            accent="Reflections"
             accentClassName="text-secondary text-glow"
-            subtitle="A few words from people I've built things with."
+            subtitle="A few words from people I’ve built things with."
             dividerColor="from-secondary"
           />
         </ScrollReveal>
 
-        <div className="mt-14">
-          {/* ── Desktop: 3 cards rotating ── */}
-          <div
-            className="hidden md:block"
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-          >
-            <div className="grid grid-cols-3 gap-5 overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+          className="mt-14 md:mt-16"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocusCapture={() => setPaused(true)}
+          onBlurCapture={() => setPaused(false)}
+        >
+          {/* Desktop — 2 cards, rotating one at a time */}
+          <div className="hidden md:block">
+            <div className="grid grid-cols-2 gap-8 items-start">
               <AnimatePresence mode="popLayout" initial={false}>
                 {desktopItems.map((item) => (
                   <motion.div
@@ -94,56 +96,68 @@ export default function Reflections() {
                     initial="enter"
                     animate="visible"
                     exit="exit"
-                    className="h-full"
                   >
-                    <ReflectionCard {...item} />
+                    <ReflectionCard
+                      {...item}
+                      onExpandedChange={handleExpandedChange}
+                    />
                   </motion.div>
                 ))}
               </AnimatePresence>
             </div>
           </div>
 
-          {/* ── Mobile: 1 card rotating ── */}
-          <div
-            className="md:hidden overflow-hidden"
-            onTouchStart={() => setPaused(true)}
-            onTouchEnd={() => setPaused(false)}
-          >
+          {/* Mobile — single card */}
+          <div className="md:hidden">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
-                key={reflections[active].id}
+                key={`mobile-${mobileItem.id}`}
                 variants={cardVariants}
                 initial="enter"
                 animate="visible"
                 exit="exit"
               >
-                <ReflectionCard {...reflections[active]} />
+                <ReflectionCard
+                  {...mobileItem}
+                  onExpandedChange={handleExpandedChange}
+                />
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* ── Navigation dots ── */}
-          <div
-            className="flex justify-center items-center gap-2 mt-8"
-            role="tablist"
-            aria-label="Reflection navigation"
-          >
-            {reflections.map((_, i) => (
-              <button
-                key={i}
-                role="tab"
-                aria-selected={i === active}
-                aria-label={`View reflection ${i + 1}`}
-                onClick={() => setActive(i)}
-                className={`rounded-full transition-all duration-300 ease-out ${
-                  i === active
-                    ? "w-5 h-[5px] bg-secondary"
-                    : "w-[5px] h-[5px] bg-white/20 hover:bg-white/40"
-                }`}
-              />
-            ))}
+          {/* Navigation — fractional indicator + chevrons */}
+          <div className="flex items-center justify-center gap-7 mt-12">
+            <button
+              type="button"
+              onClick={prev}
+              aria-label="Previous reflection"
+              className="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant/60 hover:text-on-surface hover:bg-on-surface/[0.05] transition-colors duration-300"
+            >
+              <span className="material-symbols-outlined text-[18px]">
+                arrow_back
+              </span>
+            </button>
+            <div
+              className="font-mono text-[11px] tracking-[0.3em] text-on-surface-variant/70 tabular-nums"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {String(active + 1).padStart(2, "0")}
+              <span className="opacity-25 mx-2.5">/</span>
+              {String(total).padStart(2, "0")}
+            </div>
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Next reflection"
+              className="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant/60 hover:text-on-surface hover:bg-on-surface/[0.05] transition-colors duration-300"
+            >
+              <span className="material-symbols-outlined text-[18px]">
+                arrow_forward
+              </span>
+            </button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
