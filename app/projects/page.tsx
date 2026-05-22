@@ -3,7 +3,7 @@ import ProjectCard from "@/components/projects/ProjectCard";
 
 export const metadata = {
   title: "Projects",
-  description: "All projects by Abdullah Nazmus Sakib — full-stack engineer specialising in Angular, Next.js, and Node.js.",
+  description: "All projects by Abdullah Nazmus Sakib — full-stack engineer specializing in Angular, Next.js, and Node.js.",
   openGraph: {
     title: "Projects | Abdullah Nazmus Sakib",
     description: "Full-stack projects across web apps, dashboards, and APIs.",

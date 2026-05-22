@@ -105,6 +105,8 @@
   }
 
   html {
+    /* Prevent transformed children from driving document width on iOS Safari */
+    overflow-x: clip;
     /* Smooth theme transition */
     transition: background-color 0.4s ease, color 0.4s ease;
   }

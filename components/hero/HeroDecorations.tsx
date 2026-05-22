@@ -24,7 +24,7 @@ const CONFIG = {
   // Opacity of the static dim trace line underneath (0–1)
   traceOpacity: 0.18,
 
-  // Width of the travelling pulse stroke (multiplier on base strokeWidth)
+  // Width of the traveling pulse stroke (multiplier on base strokeWidth)
   pulseWidth: 1.2,
 
   // Length of the glowing dash in SVG units

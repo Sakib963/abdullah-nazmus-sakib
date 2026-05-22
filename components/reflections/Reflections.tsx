@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import { ScrollReveal, SectionHeading } from "@/components/ui";
 import { reflections } from "./reflectionData";
 import ReflectionCard from "./ReflectionCard";
@@ -23,6 +23,9 @@ const cardVariants = {
 };
 
 export default function Reflections() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const inView = useInView(sectionRef, { margin: "200px" });
+  const [tabVisible, setTabVisible] = useState(true);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [expandedIds, setExpandedIds] = useState<Set<number>>(() => new Set());
@@ -39,6 +42,14 @@ export default function Reflections() {
     });
   }, []);
 
+  // Track tab visibility — don't rotate cards while the user is on another tab
+  useEffect(() => {
+    const onVisibility = () => setTabVisible(document.visibilityState === "visible");
+    onVisibility();
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
   // Any manual page change drops the "reading" state — the expanded card unmounts anyway
   useEffect(() => {
     setExpandedIds(new Set());
@@ -47,10 +58,10 @@ export default function Reflections() {
   const isReading = expandedIds.size > 0;
 
   useEffect(() => {
-    if (paused || isReading) return;
+    if (paused || isReading || !inView || !tabVisible) return;
     const id = setInterval(next, AUTO_ROTATE_MS);
     return () => clearInterval(id);
-  }, [paused, isReading, next]);
+  }, [paused, isReading, inView, tabVisible, next]);
 
   const desktopItems = Array.from(
     { length: DESKTOP_WINDOW },
@@ -60,8 +71,9 @@ export default function Reflections() {
 
   return (
     <section
+      ref={sectionRef}
       id="Reflections"
-      className="py-32 md:py-40 px-6 md:px-16 lg:px-24 relative"
+      className="py-32 md:py-40 px-6 md:px-16 lg:px-24 relative overflow-hidden"
     >
       <div className="max-w-5xl mx-auto relative z-10">
         <ScrollReveal direction="up">

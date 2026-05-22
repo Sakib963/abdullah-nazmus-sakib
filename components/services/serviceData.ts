@@ -53,7 +53,7 @@ export const services: Service[] = [
       "APIs that say what they mean, databases that stay fast when the data grows, errors that get caught before the user sees them. The invisible layer that either holds everything up or quietly takes it all down.",
     deliverables: [
       "REST API design & implementation",
-      "Database modelling, indexing & optimization",
+      "Database modeling, indexing & optimization",
       "Authentication (JWT / session)",
       "Structured error handling & logging",
     ],

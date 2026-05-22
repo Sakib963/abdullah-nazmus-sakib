@@ -85,6 +85,7 @@ export default function MouseEffect() {
     let ringY = -300;
     let visible = false;
     let raf = 0;
+    let running = false;
 
     const showCursors = () => {
       if (visible) return;
@@ -99,12 +100,33 @@ export default function MouseEffect() {
       ring.style.opacity = "0";
     };
 
+    const tick = () => {
+      const dx = targetX - ringX;
+      const dy = targetY - ringY;
+      ringX += dx * RING_LERP;
+      ringY += dy * RING_LERP;
+      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      // Stop the loop once the ring has settled — restart on next mouse move
+      if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
+        running = false;
+        return;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+
+    const startTick = () => {
+      if (running) return;
+      running = true;
+      raf = requestAnimationFrame(tick);
+    };
+
     const onMove = (e: MouseEvent) => {
       targetX = e.clientX;
       targetY = e.clientY;
       // Inner dot: snap instantly so it always sits exactly under the pointer
       dot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0) translate(-50%, -50%)`;
       showCursors();
+      startTick();
     };
 
     const onDown = (e: MouseEvent) => {
@@ -120,14 +142,6 @@ export default function MouseEffect() {
       setBursts((prev) => [...prev, { id, x: e.clientX, y: e.clientY, type: "right" }]);
       window.setTimeout(() => setBursts((prev) => prev.filter((b) => b.id !== id)), 900);
     };
-
-    const tick = () => {
-      ringX += (targetX - ringX) * RING_LERP;
-      ringY += (targetY - ringY) * RING_LERP;
-      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
 
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("mousedown", onDown);

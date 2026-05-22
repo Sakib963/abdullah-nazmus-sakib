@@ -95,7 +95,7 @@ export default function HeroContent() {
         variants={fadeUp}
         initial="hidden"
         animate="show"
-        className="flex items-center gap-4"
+        className="flex items-center gap-4 flex-wrap"
       >
         {STATS.map((s, i) => (
           <div key={i} className="flex flex-col items-start">
@@ -108,12 +108,12 @@ export default function HeroContent() {
           </div>
         ))}
 
-        <div className="h-8 w-px bg-black/10 dark:bg-white/10 mx-1" />
+        <div className="hidden md:block h-8 w-px bg-black/10 dark:bg-white/10 mx-1" />
 
-        {/* Expertise tags */}
-        <div className="flex flex-col gap-0.5">
+        {/* Expertise tags — wraps below the stats on mobile */}
+        <div className="flex flex-col gap-0.5 w-full md:w-auto">
           <span className="text-[10px] uppercase tracking-widest font-label text-on-surface-variant">
-            Specialises in
+            Specializes in
           </span>
           <span className="text-xs font-body text-on-surface">
             Fullstack · APIs · Production

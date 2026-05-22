@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { SectionHeading, AnimatedBlob } from "@/components/ui";
 import { techs } from "@/components/technologies/techData";
 import {
@@ -47,7 +48,7 @@ const REGULAR = [
   { name: "Oracle",     color: "#F80000",                              siIcon: undefined,      note: "Used extensively at Celloscope. SQL, stored procedures, views.", abbr: "Or" },
   { name: "Firebase",   color: "#B45309",                              siIcon: "SiFirebase",   note: "Auth and Firestore for rapid prototypes and smaller projects." },
   { name: "Cypress",    color: "#17D19B",                              siIcon: "SiCypress",    note: "E2E testing. Writing tests that actually catch real bugs." },
-  { name: "MongoDB",    color: "#47A248",                              siIcon: "SiMongodb",    note: "Document modelling and aggregation pipelines when relational is overkill." },
+  { name: "MongoDB",    color: "#47A248",                              siIcon: "SiMongodb",    note: "Document modeling and aggregation pipelines when relational is overkill." },
 ];
 
 const PRINCIPLES = [
@@ -82,21 +83,27 @@ function FreqLabel({ label, color }: { label: string; color: string }) {
 
 // ── Marquee ───────────────────────────────────────────────────────────────────
 function Marquee() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { margin: "200px" });
   const items = [...techs, ...techs];
   return (
-    <div className="relative overflow-hidden py-1">
+    <div ref={ref} className="relative overflow-hidden py-1">
       <div className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
         style={{ background: "linear-gradient(to right, var(--color-background), transparent)" }} />
       <div className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
         style={{ background: "linear-gradient(to left, var(--color-background), transparent)" }} />
 
-      <div className="flex gap-3 w-max" style={{ animation: "marquee 42s linear infinite" }}>
+      <div
+        className="flex gap-3 w-max"
+        style={{
+          animation: "marquee 42s linear infinite",
+          animationPlayState: inView ? "running" : "paused",
+        }}
+      >
         {items.map((tech, i) => (
           <div
             key={i}
             style={{
-              backdropFilter: "blur(10px)",
-              WebkitBackdropFilter: "blur(10px)",
               background: "rgba(255,255,255,0.03)",
               border: `1px solid ${tech.color}28`,
             }}

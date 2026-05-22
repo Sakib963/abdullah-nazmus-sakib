@@ -26,7 +26,11 @@ export default function BackToTop() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.7, y: 12 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-8 right-8 z-50"
+          style={{
+            bottom: "max(1.25rem, calc(env(safe-area-inset-bottom) + 0.75rem))",
+            right: "max(1.25rem, calc(env(safe-area-inset-right) + 0.75rem))",
+          }}
+          className="fixed z-50"
         >
           {/* Button — position:relative so tooltip can anchor to it */}
           <motion.button

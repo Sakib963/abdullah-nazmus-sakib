@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // ── Card height shared between both cards ──────────────────────────────────────
 const CARD_H = 360; // px — change here to resize both
@@ -69,6 +69,8 @@ const SNIPPETS: Array<Array<{ text: string; col: string }>> = [
 
 // ── Live-typing terminal ───────────────────────────────────────────────────────
 function Terminal() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { margin: "200px" });
   const [snippet, setSnippet] = useState(0);
   const [lines, setLines] = useState(0);
   const [chars, setChars] = useState(0);
@@ -76,6 +78,8 @@ function Terminal() {
   const active = SNIPPETS[snippet];
 
   useEffect(() => {
+    if (!inView) return;
+
     const line = active[lines] ?? active[active.length - 1];
     if (chars < line.text.length) {
       const t = setTimeout(
@@ -99,12 +103,13 @@ function Terminal() {
       }
     }, 65);
     return () => clearTimeout(t);
-  }, [lines, chars, snippet, active]);
+  }, [lines, chars, snippet, active, inView]);
 
   const currentLine = Math.min(lines, active.length - 1);
 
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.9, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -154,7 +159,7 @@ function Terminal() {
             <span style={{ color: active[currentLine].col }}>
               {active[currentLine].text.slice(0, chars)}
               <motion.span
-                animate={{ opacity: [1, 0] }}
+                animate={inView ? { opacity: [1, 0] } : { opacity: 1 }}
                 transition={{
                   duration: 0.5,
                   repeat: Infinity,
@@ -172,9 +177,13 @@ function Terminal() {
 
 // ── Photo card ─────────────────────────────────────────────────────────────────
 function PhotoCard() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { margin: "200px" });
+
   return (
     <motion.div
-      animate={{ y: [0, -10, 0] }}
+      ref={ref}
+      animate={inView ? { y: [0, -10, 0] } : { y: 0 }}
       transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
       style={{
         height: CARD_H,
@@ -199,7 +208,7 @@ function PhotoCard() {
 
         {/* Scan sweep */}
         <motion.div
-          animate={{ top: ["-4%", "106%"] }}
+          animate={inView ? { top: ["-4%", "106%"] } : { top: "-4%" }}
           transition={{
             duration: 2.8,
             repeat: Infinity,
@@ -271,7 +280,7 @@ function PhotoCard() {
         <div className="w-px h-5 bg-black/10 dark:bg-white/10" />
         <div className="text-center">
           <motion.p
-            animate={{ opacity: [1, 0.15, 1] }}
+            animate={inView ? { opacity: [1, 0.15, 1] } : { opacity: 1 }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
             className="text-sm text-emerald-400 font-bold leading-none"
           >

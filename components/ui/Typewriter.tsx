@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useInView } from "framer-motion";
 
 interface TypewriterProps {
   phrases: string[];
@@ -8,12 +9,16 @@ interface TypewriterProps {
 }
 
 export default function Typewriter({ phrases, className = "" }: TypewriterProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { margin: "200px" });
   const [displayed, setDisplayed] = useState("");
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
+    if (!inView) return;
+
     const current = phrases[phraseIndex];
     let timeout: ReturnType<typeof setTimeout>;
 
@@ -30,10 +35,10 @@ export default function Typewriter({ phrases, className = "" }: TypewriterProps)
 
     setDisplayed(current.slice(0, charIndex));
     return () => clearTimeout(timeout);
-  }, [charIndex, deleting, phraseIndex, phrases]);
+  }, [charIndex, deleting, phraseIndex, phrases, inView]);
 
   return (
-    <span className={className}>
+    <span ref={ref} className={className}>
       {displayed}
       <span className="animate-pulse text-primary">|</span>
     </span>

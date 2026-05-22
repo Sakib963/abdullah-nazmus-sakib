@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <section
       id="Home"
-      className="min-h-screen flex flex-col px-6 md:px-16 lg:px-24 pt-28 pb-20 relative"
+      className="min-h-screen flex flex-col px-6 md:px-16 lg:px-24 pt-28 pb-20 relative overflow-hidden"
     >
       <AnimatedBlob color="bg-primary" size="w-[500px] h-[500px]" position="-top-[10%] -left-[5%]" duration={12} />
       <AnimatedBlob color="bg-secondary" size="w-[300px] h-[300px]" position="bottom-[10%] right-[5%]" duration={9} delay={2} />
