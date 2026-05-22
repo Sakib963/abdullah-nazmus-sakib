@@ -116,7 +116,7 @@ function Terminal() {
         border: "1px solid var(--terminal-border)",
         boxShadow: "var(--terminal-shadow)",
       }}
-      className="rounded-2xl overflow-hidden flex-1 min-w-0 flex flex-col"
+      className="rounded-2xl overflow-hidden flex-1 min-w-0 hidden md:flex flex-col"
     >
       {/* Window chrome */}
       <div
@@ -184,7 +184,7 @@ function PhotoCard() {
         border: "1px solid var(--photo-card-border)",
         boxShadow: "var(--photo-card-shadow)",
       }}
-      className="rounded-3xl p-4 flex flex-col gap-3 w-[210px] flex-shrink-0"
+      className="rounded-3xl p-4 flex flex-col gap-3 w-[280px] lg:w-[210px] flex-shrink-0"
     >
       {/* Photo — flex-1 fills remaining height */}
       <div className="relative rounded-2xl overflow-hidden flex-1">
@@ -293,7 +293,7 @@ export default function HeroImage() {
       initial={{ opacity: 0, x: 30 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.85, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className="relative flex justify-center lg:justify-end"
+      className="relative flex justify-start lg:justify-end"
     >
       <div
         className="absolute inset-0 pointer-events-none"

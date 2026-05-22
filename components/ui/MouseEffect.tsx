@@ -40,6 +40,7 @@ const LIGHT = {
 export default function MouseEffect() {
   const [bursts, setBursts] = useState<Burst[]>([]);
   const [isDark, setIsDark] = useState(true);
+  const [enabled, setEnabled] = useState(false);
   const idRef = useRef(0);
 
   const dotRef = useRef<HTMLDivElement>(null);
@@ -54,10 +55,23 @@ export default function MouseEffect() {
     return () => obs.disconnect();
   }, []);
 
+  // React to pointer / reduced-motion changes (e.g. toggling DevTools device toolbar)
+  useEffect(() => {
+    const coarse = window.matchMedia("(pointer: coarse)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const evaluate = () => setEnabled(!coarse.matches && !reduced.matches);
+    evaluate();
+    coarse.addEventListener("change", evaluate);
+    reduced.addEventListener("change", evaluate);
+    return () => {
+      coarse.removeEventListener("change", evaluate);
+      reduced.removeEventListener("change", evaluate);
+    };
+  }, []);
+
   // Position tracking — direct DOM, no React re-renders, no framer-motion springs
   useEffect(() => {
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!enabled) return;
 
     document.body.style.cursor = "none";
 
@@ -130,13 +144,15 @@ export default function MouseEffect() {
       document.removeEventListener("mouseleave", hideCursors);
       document.removeEventListener("mouseenter", showCursors);
     };
-  }, []);
+  }, [enabled]);
 
   const theme = isDark ? DARK : LIGHT;
 
   return (
     <>
-      <style>{`@media (pointer: fine) and (prefers-reduced-motion: no-preference) { *, *::before, *::after { cursor: none !important; } }`}</style>
+      {enabled && (
+        <style>{`*, *::before, *::after { cursor: none !important; }`}</style>
+      )}
 
       {/* Inner precision dot — instant follow, direct DOM transforms */}
       <div

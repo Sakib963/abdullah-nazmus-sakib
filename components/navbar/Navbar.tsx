@@ -76,7 +76,7 @@ export default function Navbar({ onThemeToggle, isDark }: NavbarProps) {
     >
       <div className="max-w-6xl mx-auto">
         <nav
-          className={`glass-panel rounded-full px-5 py-2.5 flex items-center justify-between text-sm font-headline transition-all duration-300 ${
+          className={`glass-panel rounded-full px-5 py-2.5 flex items-center justify-between text-sm font-headline transition-shadow duration-300 ${
             scrolled ? "shadow-[0_4px_24px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.4)]" : ""
           }`}
           style={{ backdropFilter: "blur(56px)", WebkitBackdropFilter: "blur(56px)" }}

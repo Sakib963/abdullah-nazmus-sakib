@@ -16,7 +16,7 @@ const stats = [
     glowColor: "bg-primary",
   },
   {
-    value: "10+",
+    value: "7+",
     label: "Projects",
     sub: "From side tools to production-grade platforms.",
     accentColor: "text-secondary",
