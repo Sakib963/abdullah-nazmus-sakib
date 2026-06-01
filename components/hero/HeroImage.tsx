@@ -110,8 +110,8 @@ function Terminal() {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ y: 24 }}
+      animate={{ y: 0 }}
       transition={{ delay: 0.9, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       style={{
         height: CARD_H,
@@ -299,8 +299,8 @@ function PhotoCard() {
 export default function HeroImage() {
   return (
     <motion.div
-      initial={{ opacity: 0, x: 30 }}
-      animate={{ opacity: 1, x: 0 }}
+      initial={{ x: 30 }}
+      animate={{ x: 0 }}
       transition={{ duration: 0.85, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className="relative flex justify-start lg:justify-end"
     >

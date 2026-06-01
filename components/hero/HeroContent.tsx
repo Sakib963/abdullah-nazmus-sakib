@@ -3,10 +3,11 @@
 import { motion } from "framer-motion";
 import Typewriter from "@/components/ui/Typewriter";
 
+// Transform-only entrance: elements stay fully opaque so they paint in the
+// server HTML (good LCP) and still slide up once hydration runs.
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { y: 24 },
   show: (i: number) => ({
-    opacity: 1,
     y: 0,
     transition: { delay: i * 0.11, duration: 0.6, ease: [0.22, 1, 0.36, 1] },
   }),

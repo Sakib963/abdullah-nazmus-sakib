@@ -7,6 +7,8 @@ import { categories } from "@/lib/blog/categories";
 import MarkdownContent from "@/lib/blog/render";
 import { TagPill, AnimatedBlob } from "@/components/ui";
 
+const SITE_URL = "https://www.sakib.app";
+
 export function generateStaticParams() {
   return getAllPostsMeta().map((p) => ({ slug: p.slug }));
 }
@@ -19,14 +21,20 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) return {};
+  const url = `${SITE_URL}/blog/${slug}`;
   return {
     title: post.title,
     description: post.excerpt,
+    keywords: post.tags,
+    alternates: { canonical: url },
     openGraph: {
       title: post.title,
       description: post.excerpt,
+      url,
       type: "article",
       publishedTime: post.date,
+      authors: ["Abdullah Nazmus Sakib"],
+      tags: post.tags,
       images: post.cover ? [post.cover] : undefined,
     },
     twitter: {
@@ -56,8 +64,38 @@ export default async function BlogPostPage({
 
   const cat = categories[post.label];
 
+  const url = `${SITE_URL}/blog/${post.slug}`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    image: post.cover ? `${SITE_URL}${post.cover}` : undefined,
+    datePublished: post.date,
+    dateModified: post.date,
+    keywords: post.tags.join(", "),
+    articleSection: post.label,
+    inLanguage: "en",
+    url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    author: {
+      "@type": "Person",
+      name: "Abdullah Nazmus Sakib",
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Abdullah Nazmus Sakib",
+      url: SITE_URL,
+    },
+  };
+
   return (
     <main className="relative z-10 min-h-screen pt-32 pb-28 overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <AnimatedBlob color="bg-tertiary" size="w-[400px] h-[400px]" position="top-[5%] -right-[8%]" duration={14} />
       <AnimatedBlob color="bg-primary" size="w-[260px] h-[260px]" position="bottom-[15%] -left-[5%]" duration={11} delay={2} />
 

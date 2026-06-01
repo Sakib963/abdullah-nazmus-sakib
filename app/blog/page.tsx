@@ -4,11 +4,22 @@ import BlogCard from "@/components/blogs/BlogCard";
 export const metadata = {
   title: "The Codex",
   description:
-    "Reflections on software engineering, system design, and the craft of building web systems.",
+    "Reflections on software engineering, system design, and the craft of building web systems — by Abdullah Nazmus Sakib.",
+  keywords: [
+    "software engineering blog",
+    "Angular",
+    "Node.js",
+    "PostgreSQL",
+    "system design",
+    "Abdullah Nazmus Sakib",
+  ],
+  alternates: { canonical: "/blog" },
   openGraph: {
     title: "The Codex | Abdullah Nazmus Sakib",
     description:
       "Reflections on software engineering, system design, and the craft of building web systems.",
+    url: "/blog",
+    type: "website",
   },
 };
 
