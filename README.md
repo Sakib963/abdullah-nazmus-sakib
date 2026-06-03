@@ -47,7 +47,7 @@ Personal portfolio website built with Next.js 16, TypeScript, Tailwind CSS, Fram
 │
 └── public/
     ├── favicon.svg
-    └── abdullah_nazmus_sakib.png
+    └── headshot_abdullah_nazmus_sakib.jpg
 ```
 
 ## Sections
