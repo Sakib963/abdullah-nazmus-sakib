@@ -35,7 +35,7 @@ export const reflections: Reflection[] = [
   {
     id: 3,
     comment:
-      "You have impressive individual skills, but showing more interest in working together as a team will take your contributions to the next level. You’re already a strong developer, but with a little more focus on leadership, you’ll inspire and motivate the team even more.",
+      "Sakib is a genuinely strong developer with impressive individual skills. He takes real ownership of hard problems, and as he grows into more collaboration and leadership, he has clear potential to inspire and motivate the whole team.",
     name: "Kamruzzaman Tanim",
     designation: "Assistant Manager",
     company: "Celloscope Ltd.",
