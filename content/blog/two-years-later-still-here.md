@@ -6,7 +6,7 @@ date: "2025-09-03"
 label: "Career"
 tags: ["Career", "Reflection", "Growth"]
 cover: "/blog/two-years-later-still-here/cover.png"
-featured: true
+featured: false
 published: true
 ---
 

@@ -6,7 +6,7 @@ date: "2026-07-04"
 label: "Engineering Notes"
 tags: ["Angular", "Vite", "Debugging", "ng-zorro"]
 cover: "/blog/vite-dep-discovery-angular/cover.png"
-featured: false
+featured: true
 published: true
 ---
 
