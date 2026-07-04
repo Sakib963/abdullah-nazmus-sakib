@@ -5,7 +5,7 @@ excerpt: "Phase 2 of StockFlow. Sales, invoices, returns, attendance, thermal re
 date: "2026-01-10"
 label: "Engineering Notes"
 tags: ["StockFlow", "Angular", "Express.js", "POS", "Side Project"]
-cover: "/blog/stockflow-phase-2.png"
+cover: "/blog/stockflow-phase-2/cover.png"
 featured: false
 published: true
 ---

@@ -5,7 +5,7 @@ excerpt: "Small glossary for the words devs throw around without explaining. Pla
 date: "2026-04-13"
 label: "Engineering Notes"
 tags: ["Next.js", "TypeScript", "ISR", "Side Project"]
-cover: "/blog/devterms.jpg"
+cover: "/blog/devterms/cover.jpg"
 featured: false
 published: true
 ---

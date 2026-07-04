@@ -5,7 +5,7 @@ excerpt: "A connection that looked alive. It was not. Notes on pools, retries, a
 date: "2026-01-15"
 label: "Engineering Notes"
 tags: ["PostgreSQL", "Node.js", "Vercel", "Debugging"]
-cover: "/blog/the-database-bug.png"
+cover: "/blog/the-database-bug/cover.png"
 featured: true
 published: true
 ---

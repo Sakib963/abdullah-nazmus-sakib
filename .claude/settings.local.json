@@ -2,7 +2,30 @@
   "permissions": {
     "allow": [
       "Bash(npm install:*)",
-      "Bash(node -e \"const si = require\\('react-icons/si'\\); const keys = Object.keys\\(si\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\('nuxt'\\)\\)\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\('oracle'\\)\\)\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\('hapi'\\)\\)\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\('socket'\\)\\)\\);\")"
+      "Bash(node -e \"const si = require\\('react-icons/si'\\); const keys = Object.keys\\(si\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\('nuxt'\\)\\)\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\('oracle'\\)\\)\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\('hapi'\\)\\)\\); console.log\\(keys.filter\\(k => k.toLowerCase\\(\\).includes\\('socket'\\)\\)\\);\")",
+      "Bash(ls -la \"C:/Users/user/Downloads/blog-post\")",
+      "Read(//c/Users/user/Downloads/blog-post/**)",
+      "Bash(grep -iE \"^\\(playwright|puppeteer|canvas|@napi-rs|@playwright|sharp\\)$\")",
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Read(//c/Program Files \\(x86\\)/Microsoft/Edge/Application/**)",
+      "Bash(cp \"C:/Users/user/Downloads/blog-post/diagram-1-vite-prebundle-flow.png\" \"public/blog/vite-dep-discovery-prebundle-flow.png\")",
+      "Bash(cp \"C:/Users/user/Downloads/blog-post/diagram-2-routes-before-after.png\" \"public/blog/vite-dep-discovery-routes.png\")",
+      "Bash(sed -e 's/min-height: 100vh;//' -e 's/padding: 40px;//' -e 's/gap: 24px;//' poster.html)",
+      "Bash(python -c \"print\\('ok'\\)\")",
+      "Bash(npx next *)",
+      "Bash(echo \"started, pid $!\")",
+      "Bash(sed -i 's#cover: \"/blog/celebrating-one-year-celloscope.png\"#cover: \"/blog/celebrating-one-year-celloscope/cover.png\"#' celebrating-one-year-celloscope.md)",
+      "Bash(sed -i 's#cover: \"/blog/devterms.jpg\"#cover: \"/blog/devterms/cover.jpg\"#' devterms.md)",
+      "Bash(sed -i 's#cover: \"/blog/stockflow-phase-1.png\"#cover: \"/blog/stockflow-phase-1/cover.png\"#' stockflow-phase-1.md)",
+      "Bash(sed -i 's#cover: \"/blog/stockflow-phase-2.png\"#cover: \"/blog/stockflow-phase-2/cover.png\"#' stockflow-phase-2.md)",
+      "Bash(sed -i 's#cover: \"/blog/two-years-later-still-here.png\"#cover: \"/blog/two-years-later-still-here/cover.png\"#' two-years-later-still-here.md)",
+      "Bash(curl -s -o /dev/null -w \"post page: %{http_code}\\\\n\" http://localhost:3124/blog/vite-dep-discovery-angular)",
+      "Bash(curl -s -o /dev/null -w \"cover img: %{http_code}\\\\n\" http://localhost:3124/blog/vite-dep-discovery-angular/cover.png)",
+      "Bash(curl -s -o /dev/null -w \"diagram1: %{http_code}\\\\n\" http://localhost:3124/blog/vite-dep-discovery-angular/prebundle-flow.png)",
+      "Bash(curl -s -o /dev/null -w \"diagram2: %{http_code}\\\\n\" http://localhost:3124/blog/vite-dep-discovery-angular/routes.png)",
+      "Bash(rm -f _verify_post.png)",
+      "Bash(kill %1)",
+      "Bash(curl -s http://localhost:3125/sitemap.xml)"
     ]
   }
 }

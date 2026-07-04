@@ -5,7 +5,7 @@ excerpt: "Two years at Celloscope. Less novelty. More depth."
 date: "2025-09-03"
 label: "Career"
 tags: ["Career", "Reflection", "Growth"]
-cover: "/blog/two-years-later-still-here.png"
+cover: "/blog/two-years-later-still-here/cover.png"
 featured: true
 published: true
 ---

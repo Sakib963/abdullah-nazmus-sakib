@@ -5,7 +5,7 @@ excerpt: "First demo of StockFlow. Categories, suppliers, warehouses. The boring
 date: "2025-05-15"
 label: "Engineering Notes"
 tags: ["StockFlow", "Angular", "Express.js", "PostgreSQL", "Side Project"]
-cover: "/blog/stockflow-phase-1.png"
+cover: "/blog/stockflow-phase-1/cover.png"
 featured: false
 published: true
 ---

@@ -5,7 +5,7 @@ excerpt: "One year at Celloscope. Three projects, an unfamiliar stack, a few les
 date: "2024-09-03"
 label: "Career"
 tags: ["Celloscope", "Career", "Angular", "Hapi.js", "PostgreSQL"]
-cover: "/blog/celebrating-one-year-celloscope.png"
+cover: "/blog/celebrating-one-year-celloscope/cover.png"
 featured: false
 published: true
 ---

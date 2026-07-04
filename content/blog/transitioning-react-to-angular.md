@@ -5,7 +5,7 @@ excerpt: "First post on LinkedIn. Notes on switching from MERN to Angular, Postg
 date: "2024-02-20"
 label: "Career"
 tags: ["Angular", "PostgreSQL", "Hapi.js", "Career"]
-cover: "/blog/transitioning-react-to-angular.jpg"
+cover: "/blog/transitioning-react-to-angular/cover.jpg"
 featured: false
 published: true
 ---

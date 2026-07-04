@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Fragment, type ReactNode } from "react";
 
 type Block =
@@ -6,13 +7,17 @@ type Block =
   | { type: "ul" | "ol"; items: string[] }
   | { type: "quote"; text: string }
   | { type: "code"; lang: string; code: string }
+  | { type: "img"; src: string; alt: string }
   | { type: "hr" };
+
+const IMG_RE = /^!\[([^\]]*)\]\(([^)]+)\)\s*$/;
 
 const isBlockStarter = (line: string): boolean =>
   line.startsWith("```") ||
   line.startsWith("## ") ||
   line.startsWith("### ") ||
   line.startsWith("> ") ||
+  IMG_RE.test(line) ||
   /^[-*]\s+/.test(line) ||
   /^\d+\.\s+/.test(line) ||
   /^---+$/.test(line.trim());
@@ -40,6 +45,9 @@ function tokenize(md: string): Block[] {
 
     if (line.startsWith("### ")) { blocks.push({ type: "h3", text: line.slice(4) }); i++; continue; }
     if (line.startsWith("## "))  { blocks.push({ type: "h2", text: line.slice(3) }); i++; continue; }
+
+    const img = line.match(IMG_RE);
+    if (img) { blocks.push({ type: "img", alt: img[1], src: img[2] }); i++; continue; }
 
     if (/^---+$/.test(line.trim())) { blocks.push({ type: "hr" }); i++; continue; }
 
@@ -205,6 +213,26 @@ export default function MarkdownContent({ source }: { source: string }) {
               <pre key={i} className="my-7 p-5 rounded-xl glass-panel overflow-x-auto text-[0.85rem] font-mono leading-relaxed">
                 <code>{b.code}</code>
               </pre>
+            );
+          case "img":
+            return (
+              <figure key={i} className="my-10">
+                <div className="rounded-2xl overflow-hidden glass-panel">
+                  <Image
+                    src={b.src}
+                    alt={b.alt}
+                    width={0}
+                    height={0}
+                    sizes="(max-width: 768px) 100vw, 768px"
+                    className="w-full h-auto"
+                  />
+                </div>
+                {b.alt && (
+                  <figcaption className="mt-3 text-center text-[0.8rem] text-on-surface-variant/80 font-label italic">
+                    {b.alt}
+                  </figcaption>
+                )}
+              </figure>
             );
           case "hr":
             return <hr key={i} className="my-12 border-black/[0.08] dark:border-white/[0.08]" />;
