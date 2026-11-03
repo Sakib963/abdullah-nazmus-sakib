@@ -45,6 +45,8 @@ export const techs: Tech[] = [
   { name: "Cypress",       category: "Tools",    color: "#17D19B", textColor: "text-[#17D19B]", borderColor: "border-[#17D19B]/25", glowColor: "shadow-[0_0_20px_rgba(23,209,155,0.3)]",  abbr: "Cy",  siIcon: "SiCypress" },
   { name: "DBeaver",       category: "Tools",    color: "#5B6EAE", textColor: "text-[#5B6EAE]", borderColor: "border-[#5B6EAE]/30", glowColor: "shadow-[0_0_20px_rgba(91,110,174,0.3)]",  abbr: "DB",  siIcon: undefined },
   { name: "Jasper Report", category: "Tools",    color: "#1DAADD", textColor: "text-[#1DAADD]", borderColor: "border-[#1DAADD]/25", glowColor: "shadow-[0_0_20px_rgba(29,170,221,0.3)]",  abbr: "Jr",  siIcon: undefined },
+  { name: "Claude",        category: "Tools",    color: "#C15F3C", textColor: "text-[#C15F3C]", borderColor: "border-[#C15F3C]/25", glowColor: "shadow-[0_0_20px_rgba(193,95,60,0.3)]",  abbr: "Cl",  siIcon: "SiClaude" },
+  { name: "Codex",         category: "Tools",    color: "#666666", textColor: "text-[#666666] dark:text-white", borderColor: "border-[#666666]/25 dark:border-white/20", glowColor: "shadow-[0_0_20px_rgba(102,102,102,0.25)]", abbr: "Cx",  siIcon: "SiOpenai" },
 
   // Design
   { name: "Figma",         category: "Design",   color: "#F24E1E", textColor: "text-[#F24E1E]", borderColor: "border-[#F24E1E]/25", glowColor: "shadow-[0_0_20px_rgba(242,78,30,0.3)]",   abbr: "Fig", siIcon: "SiFigma" },

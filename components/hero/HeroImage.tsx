@@ -89,16 +89,16 @@ function PhotoCard() {
         className="flex items-center justify-between px-1 pt-2.5 pb-0.5 flex-shrink-0"
         style={{ borderTop: "1px solid var(--glass-border)" }}
       >
-        <div className="text-center">
+        <div className="flex gap-1.5 items-center">
           <p className="text-sm font-bold font-headline text-primary leading-none">
             3+
           </p>
-          <p className="text-[8px] text-on-surface-variant font-label uppercase tracking-wider mt-1">
+          <p className="text-[8px] text-on-surface-variant font-label uppercase tracking-wider leading-none">
             Yrs
           </p>
         </div>
         <div className="w-px h-5 bg-black/10 dark:bg-white/10" />
-        <div className="text-center">
+        <div className="flex gap-1.5 items-center">
           <motion.p
             animate={inView ? { opacity: [1, 0.15, 1] } : { opacity: 1 }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
@@ -106,7 +106,7 @@ function PhotoCard() {
           >
             ●
           </motion.p>
-          <p className="text-[8px] text-on-surface-variant font-label uppercase tracking-wider mt-1">
+          <p className="text-[8px] text-on-surface-variant font-label uppercase tracking-wider leading-none">
             Live
           </p>
         </div>
@@ -133,7 +133,7 @@ export default function HeroImage() {
         }}
       />
 
-      <div className="relative flex justify-center w-full">
+      <div className="relative flex justify-end w-full">
         <PhotoCard />
       </div>
     </motion.div>

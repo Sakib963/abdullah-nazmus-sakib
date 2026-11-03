@@ -11,6 +11,7 @@ import {
   SiPostgresql, SiMongodb, SiRedis, SiFirebase,
   SiGit, SiDocker, SiVercel,
   SiPostman, SiCypress, SiFigma,
+  SiClaude, SiOpenai,
 } from "react-icons/si";
 import type { IconType } from "react-icons";
 
@@ -22,6 +23,7 @@ const SI_MAP: Record<string, IconType> = {
   SiPostgresql, SiMongodb, SiRedis, SiFirebase,
   SiGit, SiDocker, SiVercel,
   SiPostman, SiCypress, SiFigma,
+  SiClaude, SiOpenai,
 };
 
 function TechIcon({ siIcon, abbr, color, size = 16 }: { siIcon?: string; abbr: string; color: string; size?: number }) {
@@ -51,6 +53,11 @@ const REGULAR = [
   { name: "MongoDB",    color: "#47A248",                              siIcon: "SiMongodb",    note: "Document modeling and aggregation pipelines when relational is overkill." },
 ];
 
+const AGENTS = [
+  { name: "Claude", color: "#C15F3C",                      siIcon: "SiClaude", note: "Part of how I build now. I scope the task, let the agent work, and review what it produces." },
+  { name: "Codex",  color: "rgb(var(--color-on-surface))", siIcon: "SiOpenai", note: "Another agent in the workflow. The code still has to meet my standards before it ships." },
+];
+
 const PRINCIPLES = [
   "Structure first. Messy foundations always come back to bite.",
   "I like understanding how all the pieces connect. Even when I'm deep in one layer, I want to know why it exists.",
@@ -60,7 +67,8 @@ const PRINCIPLES = [
 
 const DAILY_NAMES   = new Set(DAILY.map(s => s.name));
 const REGULAR_NAMES = new Set(REGULAR.map(s => s.name));
-const TOOLBOX = techs.filter(t => !DAILY_NAMES.has(t.name) && !REGULAR_NAMES.has(t.name));
+const AGENT_NAMES   = new Set(AGENTS.map(s => s.name));
+const TOOLBOX = techs.filter(t => !DAILY_NAMES.has(t.name) && !REGULAR_NAMES.has(t.name) && !AGENT_NAMES.has(t.name));
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const fadeUp = (i: number) => ({
@@ -220,7 +228,7 @@ export default function SkillsV2() {
             </div>
           </div>
 
-          {/* Right: Regular + Toolbox */}
+          {/* Right: Regular + Toolbox + Agents */}
           <div className="space-y-10">
             <div>
               <FreqLabel label="Comfortable with" color="rgb(var(--color-secondary))" />
@@ -235,6 +243,13 @@ export default function SkillsV2() {
                 {TOOLBOX.map((t, i) => (
                   <ToolboxPill key={t.name} name={t.name} color={t.color} siIcon={t.siIcon} abbr={t.abbr} index={i} />
                 ))}
+              </div>
+            </div>
+
+            <div>
+              <FreqLabel label="Agent-driven development" color="rgb(var(--color-primary))" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {AGENTS.map((s, i) => <RegularCard key={s.name} {...s} index={i} />)}
               </div>
             </div>
           </div>
