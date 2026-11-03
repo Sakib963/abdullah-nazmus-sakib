@@ -8,7 +8,7 @@ export interface NavLink {
 export const navLinks: NavLink[] = [
   { label: "Home",        href: "/#Home",        icon: "home" },
   { label: "About",       href: "/#About",       icon: "person" },
-  { label: "Services",    href: "/#Services",    icon: "handyman" },
+  // { label: "Services",    href: "/#Services",    icon: "handyman" }, // hidden with the Services section
   { label: "Skills",      href: "/#Skills",      icon: "bar_chart" },
   { label: "Projects",    href: "/#Projects",    icon: "rocket_launch" },
   { label: "Blog",        href: "/#Blogs",       icon: "article" },

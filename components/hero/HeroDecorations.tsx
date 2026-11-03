@@ -327,7 +327,7 @@ export default function HeroDecorationsV2() {
       <div className="absolute bottom-10 left-10 hidden lg:block">
         <HudLabel
           color={T(0.4)}
-          lines={["LAT:24.8617N", "LNG:91.8833E"]}
+          lines={["LAT:23.8103N", "LNG:90.4125E"]}
         />
       </div>
 

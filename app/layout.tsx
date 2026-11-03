@@ -156,7 +156,7 @@ export default function RootLayout({
                   ],
                   sameAs: [
                     "https://github.com/sakib963",
-                    "https://linkedin.com/in/abdullahnazmussakib",
+                    "https://www.linkedin.com/in/abdullah-nazmus-sakib/",
                   ],
                 },
                 {

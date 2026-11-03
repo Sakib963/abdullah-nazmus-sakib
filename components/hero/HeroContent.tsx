@@ -14,9 +14,7 @@ const fadeUp = {
 };
 
 const STATS = [
-  { value: "2+", label: "Years Exp", icon: "timeline" },
-  { value: "7+", label: "Projects", icon: "folder_open" },
-  { value: "Global", label: "Clients", icon: "public" },
+  { value: "3+", label: "Years Exp", icon: "timeline" },
 ];
 
 export default function HeroContent() {
@@ -85,8 +83,8 @@ export default function HeroContent() {
         className="text-on-surface-variant text-sm leading-relaxed font-body max-w-[420px]"
       >
         I think about software the way a user thinks about a door. They never
-        wonder how it was built. They just know if it opened smoothly .{" "}
-        <strong className="text-on-surface font-medium">2+ years</strong>{" "} of
+        wonder how it was built. They just know if it opened smoothly.{" "}
+        <strong className="text-on-surface font-medium">3+ years</strong>{" "} of
         shipping production systems, and that&apos;s still the only metric I
         trust. If the person using it has to think, something went wrong.
       </motion.p>

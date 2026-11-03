@@ -3,33 +3,9 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { AnimatedBlob, SectionHeading } from "@/components/ui";
-import StatCard from "./StatCard";
 import EducationSection from "./Education";
 import ExperienceSection from "./Experience";
 
-const stats = [
-  {
-    value: "02+",
-    label: "Years of Mastery",
-    sub: "Enterprise, fintech, and government systems.",
-    accentColor: "text-primary",
-    glowColor: "bg-primary",
-  },
-  {
-    value: "7+",
-    label: "Projects",
-    sub: "From side tools to production-grade platforms.",
-    accentColor: "text-secondary",
-    glowColor: "bg-secondary",
-  },
-  {
-    value: "2+",
-    label: "Global Alliances",
-    sub: "Collaborating with visionary clients worldwide.",
-    accentColor: "text-tertiary",
-    glowColor: "bg-tertiary",
-  },
-];
 
 export default function About() {
   const headingRef = useRef<HTMLDivElement>(null);
@@ -64,16 +40,9 @@ export default function About() {
             pre="About"
             accent="Me"
             accentClassName="text-secondary"
-            subtitle="Software engineer with 2+ years building scalable web systems, clean APIs, and interfaces people actually enjoy using."
+            subtitle="Software engineer with 3+ years building scalable web systems, clean APIs, and interfaces people actually enjoy using."
             dividerColor="from-secondary"
           />
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {stats.map((stat, i) => (
-            <StatCard key={stat.label} {...stat} index={i} />
-          ))}
         </div>
 
         {/* Education + Experience */}

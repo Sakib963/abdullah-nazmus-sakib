@@ -60,7 +60,9 @@ export const experiences: Experience[] = [
         period: "Jul 2025 – Present",
         location: "Dhaka, Bangladesh",
         mode: "On-site",
-        skills: ["Angular", "TypeScript", "Node.js", "Hapi.js", "PostgreSQL"],
+        description:
+          "Rebuilt a bank's legacy internet banking portals in Angular, with config-driven tables and reports, CASL permissions and GitLab CI/CD with Docker. Before that, owned the HR and employee self-service modules of a 12-module system for a government regulator.",
+        skills: ["Angular", "TypeScript", "Node.js", "Hapi.js", "PostgreSQL", "Docker"],
         current: true,
       },
       {
@@ -69,21 +71,8 @@ export const experiences: Experience[] = [
         location: "Dhaka, Bangladesh",
         mode: "On-site",
         description:
-          "Built and maintained web applications using Angular, Node.js, and PostgreSQL. Developed new features, resolved bugs, improved performance, and focused on clean, maintainable code.",
-        skills: ["Angular", "JavaScript", "Node.js", "Express.js", "PostgreSQL"],
-      },
-    ],
-  },
-  {
-    company: "Ovigo",
-    type: "Full-time",
-    roles: [
-      {
-        title: "Junior MERN Stack Developer",
-        period: "Jun 2023 – Aug 2023",
-        location: "Dhaka, Bangladesh",
-        mode: "Hybrid",
-        skills: ["React", "Node.js", "Express.js", "MongoDB", "TypeScript"],
+          "Worked on government systems: an office management system for a regulator, a customs advance-ruling e-filing system that passed UAT, and a microfinance system where I ported a service from Java to Node.js and made it run on both Oracle and PostgreSQL.",
+        skills: ["Angular", "TypeScript", "Node.js", "Hapi.js", "PostgreSQL", "Oracle"],
       },
     ],
   },

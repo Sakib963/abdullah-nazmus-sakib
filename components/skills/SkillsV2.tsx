@@ -32,7 +32,7 @@ function TechIcon({ siIcon, abbr, color, size = 16 }: { siIcon?: string; abbr: s
 
 // ── Skill tiers ───────────────────────────────────────────────────────────────
 const DAILY = [
-  { name: "Angular",    color: "#DD0031", siIcon: "SiAngular",    note: "Primary framework at work. RxJS, signals, lazy modules — been in this daily for 2+ years." },
+  { name: "Angular",    color: "#DD0031", siIcon: "SiAngular",    note: "Primary framework at work. RxJS, signals, lazy modules — been in this daily for 3+ years." },
   { name: "TypeScript", color: "#3178C6", siIcon: "SiTypescript", note: "Write nothing without types these days. Plain JS feels wrong now." },
   { name: "Node.js",    color: "#339933", siIcon: "SiNodedotjs",  note: "Backend runtime of choice. Async patterns, REST APIs, event-driven stuff." },
   { name: "PostgreSQL", color: "#4169E1", siIcon: "SiPostgresql", note: "First database I reach for. Schema design, indexing, complex queries." },

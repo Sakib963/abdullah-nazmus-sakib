@@ -1,6 +1,6 @@
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
-import { Services } from "@/components/services";
+// import { Services } from "@/components/services"; // hidden for now, kept for later
 import { SkillsV2 as Skills } from "@/components/skills";
 import { Projects } from "@/components/projects";
 import { Reflections } from "@/components/reflections";
@@ -20,7 +20,7 @@ export default function Home() {
       <main className="relative z-10">
         <Hero />
         <About />
-        <Services />
+        {/* <Services /> */}
         <Skills />
         <Projects />
         <Blogs posts={featured} total={total} />
