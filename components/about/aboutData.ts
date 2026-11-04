@@ -37,9 +37,9 @@ export const education: Education[] = [
     icon: "terminal",
   },
   {
-    degree: "The Complete JavaScript Course",
+    degree: "MERN Stack Bootcamp 2023",
     institution: "Udemy",
-    period: "Dec 2022",
+    period: "May 2023",
     icon: "play_circle",
   },
   {
