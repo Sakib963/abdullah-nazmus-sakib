@@ -8,15 +8,18 @@ type Block =
   | { type: "quote"; text: string }
   | { type: "code"; lang: string; code: string }
   | { type: "img"; src: string; alt: string }
+  | { type: "video"; src: string; caption: string }
   | { type: "hr" };
 
 const IMG_RE = /^!\[([^\]]*)\]\(([^)]+)\)\s*$/;
+const VIDEO_RE = /^!video\[([^\]]*)\]\(([^)]+)\)\s*$/;
 
 const isBlockStarter = (line: string): boolean =>
   line.startsWith("```") ||
   line.startsWith("## ") ||
   line.startsWith("### ") ||
   line.startsWith("> ") ||
+  VIDEO_RE.test(line) ||
   IMG_RE.test(line) ||
   /^[-*]\s+/.test(line) ||
   /^\d+\.\s+/.test(line) ||
@@ -45,6 +48,9 @@ function tokenize(md: string): Block[] {
 
     if (line.startsWith("### ")) { blocks.push({ type: "h3", text: line.slice(4) }); i++; continue; }
     if (line.startsWith("## "))  { blocks.push({ type: "h2", text: line.slice(3) }); i++; continue; }
+
+    const video = line.match(VIDEO_RE);
+    if (video) { blocks.push({ type: "video", caption: video[1], src: video[2] }); i++; continue; }
 
     const img = line.match(IMG_RE);
     if (img) { blocks.push({ type: "img", alt: img[1], src: img[2] }); i++; continue; }
@@ -127,11 +133,11 @@ function inline(text: string): ReactNode {
     },
     {
       re: /^\*\*([^*]+)\*\*/,
-      render: (m, k) => <strong key={k} className="font-semibold text-on-surface">{m[1]}</strong>,
+      render: (m, k) => <strong key={k} className="font-semibold text-on-surface">{inline(m[1])}</strong>,
     },
     {
       re: /^\*([^*]+)\*/,
-      render: (m, k) => <em key={k} className="italic">{m[1]}</em>,
+      render: (m, k) => <em key={k} className="italic">{inline(m[1])}</em>,
     },
   ];
 
@@ -230,6 +236,26 @@ export default function MarkdownContent({ source }: { source: string }) {
                 {b.alt && (
                   <figcaption className="mt-3 text-center text-[0.8rem] text-on-surface-variant/80 font-label italic">
                     {b.alt}
+                  </figcaption>
+                )}
+              </figure>
+            );
+          case "video":
+            return (
+              <figure key={i} className="my-10">
+                <div className="max-w-[480px] mx-auto rounded-2xl overflow-hidden glass-panel">
+                  <video
+                    src={b.src}
+                    poster={b.src.replace(/\.mp4$/, "-poster.jpg")}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-auto block"
+                  />
+                </div>
+                {b.caption && (
+                  <figcaption className="mt-3 text-center text-[0.8rem] text-on-surface-variant/80 font-label italic">
+                    {b.caption}
                   </figcaption>
                 )}
               </figure>

@@ -18,6 +18,7 @@ export default function BlogCard({
   title,
   excerpt,
   cover,
+  coverVideo,
   date,
   readMinutes,
   label,
@@ -42,6 +43,19 @@ export default function BlogCard({
             sizes="(max-width: 640px) 100vw, 320px"
             className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
           />
+          {coverVideo && (
+            <video
+              src={coverVideo}
+              poster={cover}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 motion-reduce:hidden"
+            />
+          )}
           <div className={`absolute inset-0 bg-gradient-to-${imageRight ? "l" : "r"} from-transparent via-transparent to-surface/60 hidden sm:block`} />
           <div className="absolute inset-0 bg-gradient-to-t from-surface/70 via-transparent to-transparent sm:hidden" />
         </div>

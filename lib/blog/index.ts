@@ -14,6 +14,8 @@ export type BlogMeta = {
   label: Category;
   tags: string[];
   cover: string;
+  /** Optional muted loop shown in place of the cover on blog cards. */
+  coverVideo: string;
   readMinutes: number;
   featured: boolean;
   published: boolean;
@@ -42,6 +44,7 @@ function loadAll(): BlogPost[] {
       label: (meta.label as Category) ?? "Engineering Notes",
       tags: Array.isArray(meta.tags) ? meta.tags : [],
       cover: String(meta.cover ?? ""),
+      coverVideo: String(meta.coverVideo ?? ""),
       readMinutes: readTime(body),
       featured: meta.featured === true,
       published: meta.published !== false, // default true unless explicitly false
@@ -63,6 +66,7 @@ function toMeta(p: BlogPost): BlogMeta {
     label: p.label,
     tags: p.tags,
     cover: p.cover,
+    coverVideo: p.coverVideo,
     readMinutes: p.readMinutes,
     featured: p.featured,
     published: p.published,

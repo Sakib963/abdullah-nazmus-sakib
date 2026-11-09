@@ -147,6 +147,19 @@ export default async function BlogPostPage({
               sizes="(max-width: 768px) 100vw, 768px"
               className="object-cover"
             />
+            {post.coverVideo && (
+              <video
+                src={post.coverVideo}
+                poster={post.cover}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover motion-reduce:hidden"
+              />
+            )}
           </div>
         )}
 
